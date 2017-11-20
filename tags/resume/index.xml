@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Resume on Recency Bias</title>
+    <link>http://badu.github.io/tags/resume/</link>
+    <description>Recent content in Resume on Recency Bias</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <copyright>Powered by [Hugo](https://gohugo.io).</copyright>
+    <lastBuildDate>Fri, 10 Nov 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://badu.github.io/tags/resume/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Who is Bogdan?</title>
+      <link>http://badu.github.io/about/</link>
+      <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/about/</guid>
+      <description>Skills | Experience | Education | Facts | Download a PDF version
+Summary I&amp;rsquo;ve started to program computers in 1991.
+I was an entrepreneur. I&amp;rsquo;ve been a mentor.
+Proven leader and project manager, providing technical oversight for small teams of software developers.
+I&amp;rsquo;ve driven architecture decisions and lead projects from concept through the release process.
+I learn quickly (and continuously), care about detail, and love computers, physics and mathematics.</description>
+    </item>
+    
+  </channel>
+</rss>

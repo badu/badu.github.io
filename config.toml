@@ -1,0 +1,175 @@
+
+archetypeDir =                "_archetypes"
+# hostname (and path) to the root, e.g. http://spf13.com/
+baseURL =                     "http://badu.github.io/"
+# include content marked as draft
+buildDrafts =                 false
+# include content with publishdate in the future
+buildFuture =                 false
+# include content already expired
+buildExpired =                false
+# enable this to make all relative URLs relative to content root. Note that this does not affect absolute URLs.
+relativeURLs =                false
+canonifyURLs =                false
+# config file (default is path/config.yaml|json|toml)
+config =                     "config.toml"
+contentDir =                  "_content"
+dataDir =                     "data"
+defaultExtension =            "html"
+defaultLayout =               "post"
+# Missing translations will default to this content language
+defaultContentLanguage =      "en"
+# Renders the default content language in subdir, e.g. /en/. The root directory / will redirect to /en/
+defaultContentLanguageInSubdir =  false
+disableLiveReload =           false
+# Do not build RSS files
+disableRSS =                  false
+# Do not build Sitemap file
+disableSitemap =              false
+# Enable GitInfo feature
+enableGitInfo =               false
+# Build robots.txt file
+enableRobotsTXT =             false
+# Do not render 404 page
+disable404 =                  false
+# Do not inject generator meta tag on homepage
+disableHugoGeneratorInject =  false
+# Allows you to disable all page types and will render nothing related to 'kind';
+# values = "page", "home", "section", "taxonomy", "taxonomyTerm", "RSS", "sitemap", "robotsTXT", "404"
+disableKinds = []
+# Do not make the url/path to lowercase
+disablePathToLower =          false
+# Enable Emoji emoticons support for page content; see emoji-cheat-sheet.com
+enableEmoji =                 false
+# Show a placeholder instead of the default value or an empty string if a translation is missing
+enableMissingTranslationPlaceholders = false
+footnoteAnchorPrefix =        ""
+footnoteReturnLinkContents =  ""
+# google analytics tracking id
+googleAnalytics =             "UA-687869-6"
+# if true, auto-detect Chinese/Japanese/Korean Languages in the content. (.Summary and .WordCount can work properly in CJKLanguage)
+hasCJKLanguage =              false
+languageCode =                "en-US"
+# the length of text to show in a .Summary
+summaryLength =              70
+layoutDir =                   "layouts"
+# Enable Logging
+log =                         false
+# Log File path (if set, logging enabled automatically)
+#logFile =
+# maximum number of items in the RSS feed
+rssLimit =                    15
+# "toml","yaml", or "json"
+metaDataFormat =              "toml"
+newContentEditor =            ""
+# Don't sync permission mode of files
+noChmod =                     false
+# Don't sync modification time of files
+noTimes =                     false
+# Pagination
+paginate =                    10
+paginatePath =                "page"
+# See "content-management/permalinks"
+#permalinks =
+# Pluralize titles in lists using inflect
+pluralizeListTitles =         true
+# Preserve special characters in taxonomy names ("Gérard Depardieu" vs "Gerard Depardieu")
+preserveTaxonomyNames =       false
+# filesystem path to write files to
+publishDir =                  ""
+# enables syntax guessing for code fences without specified language
+pygmentsCodeFencesGuessSyntax = false
+# color-codes for highlighting derived from this style
+pygmentsStyle =               "monokai"
+# true: use pygments-css or false: color-codes directly
+pygmentsUseClasses =          false
+# see "Section Menu for Lazy Bloggers", /templates/menu-templates for more info
+#SectionPagesMenu =
+# default sitemap configuration map
+#sitemap =
+# filesystem path to read files relative from
+source =                      ""
+staticDir =                   "static"
+# display memory and timing of different steps of the program
+stepAnalysis =                false
+# theme to use (located by default in /themes/THEMENAME/)
+themesDir =                   "../"
+theme =                       "minimal"
+title =                       "Recency Bias"
+# if true, use /filename.html instead of /filename/
+uglyURLs =                    false
+# verbose output
+verbose =                     false
+# verbose logging
+verboseLog =                  false
+# watch filesystem for changes and recreate as needed
+watch =                       true
+
+#Other settings
+disqusShortname = "recency-bias"
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[params]
+    copyright = "Powered by [Hugo](https://gohugo.io)."
+    author = "Bogdan Dinu"
+    description = "Recency Bias"
+    bio = "Golang Developer"
+    email = "badu@badu.ro"
+    enableRSS = true
+    favicon = "favicon.ico" # A favicon file located in your static directory
+    logo = "" # Logo located in static directory
+    accent = "#00bcd4"
+    showBorder = true
+    backgroundColor = "white"
+    font = "Roboto" # should match the name on Google Fonts!
+    highlight = true
+    highlightStyle = "solarized-dark"
+    highlightLanguages = ["go", "haskell", "kotlin", "scala", "swift"]
+
+
+[[menu.main]]
+    url = "/post/"
+    name = "Posts"
+    weight = 1
+
+[[menu.main]]
+    url = "/about/"
+    name = "About"
+    weight = 2
+
+[[menu.main]]
+    url = "/why-recency-bias/"
+    name = "Why Recency Bias?"
+    weight = 3
+
+[[menu.main]]
+    url = "/hire-me/"
+    name = "Hire me"
+    weight = 4
+
+# Social icons to be shown on the right-hand side of the navigation bar
+# The "name" field should match the name of the icon to be used
+# The list of available icons can be found at http://fontawesome.io/icons/
+
+[[menu.icon]]
+    url = "mailto:badu@badu.ro"
+    name = "envelope-o"
+    weight = 1
+
+[[menu.icon]]
+    url = "https://github.com/badu/"
+    name = "github"
+    weight = 2
+
+[[menu.icon]]
+    url = "https://twitter.com/baduro/"
+    name = "twitter"
+    weight = 3
+
+[[menu.icon]]
+    url = "https://www.linkedin.com/in/flexprogramming/"
+    name = "linkedin"
+    weight = 4

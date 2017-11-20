@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Recency Bias</title>
+    <link>http://badu.github.io/</link>
+    <description>Recent content on Recency Bias</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <copyright>Powered by [Hugo](https://gohugo.io).</copyright>
+    <lastBuildDate>Wed, 15 Nov 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://badu.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Comparing Go with Other Languages is Wrong</title>
+      <link>http://badu.github.io/post/comparing-go-is-wrong/</link>
+      <pubDate>Wed, 15 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/post/comparing-go-is-wrong/</guid>
+      <description>TL;DR &amp;ldquo;Java is to Javascript like Car is to Carpet.&amp;rdquo; - Collective Genius
+My Computer Language is Better than Yours Some programming languages were - let&amp;rsquo;s say - discovered over time, whereas others were created academically by carefully selecting the features that would provide solutions to a set of problems. There’s nothing terribly new about spawning programming languages. However, haters gonna hate and will always find one, in an office near you or over the Internet.</description>
+    </item>
+    
+    <item>
+      <title>Why I left Activemall</title>
+      <link>http://badu.github.io/post/why-i-left-activemall/</link>
+      <pubDate>Tue, 14 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/post/why-i-left-activemall/</guid>
+      <description>TL;DR 10 things that require zero talent :
+ being on time work ethic effort body language energy attitude passion being coach-able doing extra being prepared  Before Activemall It was 2015. I was leaving a Altfactor because they split and in the process, they killed the most interesting project I&amp;rsquo;ve ever worked on.
+That project was an awesome second screen smart TV application, that allowed the user to interact with a smart TV from a mobile device like a table or phone.</description>
+    </item>
+    
+    <item>
+      <title>Who is Bogdan?</title>
+      <link>http://badu.github.io/about/</link>
+      <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/about/</guid>
+      <description>Skills | Experience | Education | Facts | Download a PDF version
+Summary I&amp;rsquo;ve started to program computers in 1991.
+I was an entrepreneur. I&amp;rsquo;ve been a mentor.
+Proven leader and project manager, providing technical oversight for small teams of software developers.
+I&amp;rsquo;ve driven architecture decisions and lead projects from concept through the release process.
+I learn quickly (and continuously), care about detail, and love computers, physics and mathematics.</description>
+    </item>
+    
+    <item>
+      <title>Working with me</title>
+      <link>http://badu.github.io/hire-me/</link>
+      <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/hire-me/</guid>
+      <description>Working with Bogdan (Badu) I&amp;rsquo;m wearing many hats, having a non trivial understanding of human resources, software development process, risk management, diplomacy and engineering. Nowadays I write tools in Go, web applications and automate stuff. I deal with data stores, schedulers, security, etc. and I&amp;rsquo;m always looking to improve things.
+What I will bring to the table  Excellent communication and technical skills Experience with customer-facing activities Experience with software engineering best practices (unit testing, code reviews, design documentation, methodologies) The confidence to input into architecture discussions around deployment topologies, scaling, performance and sizing Many years of experience on building complex systems  What you should bring to the table  Willing to work with remote consultants You should be an agent of change The best possible software and hardware available Use an Agile like software development methodology A competitive package, including flexible hours and unlimited paid holiday  Please feel free to contact me.</description>
+    </item>
+    
+    <item>
+      <title>Why Recency Bias?</title>
+      <link>http://badu.github.io/why-recency-bias/</link>
+      <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/why-recency-bias/</guid>
+      <description>The name of my blog came to me after reading this article. It&amp;rsquo;s defined as &amp;ldquo;Placing higher value on recent events than ones that occurred further in the past&amp;rdquo; by the author.
+Looking on Wikipedia, you will not find the recency bias in the cognitive biases list. My best guess is because recency bias is related to learning and intelligence.
+Yes, I find myself using the same design patterns over and over again.</description>
+    </item>
+    
+  </channel>
+</rss>
