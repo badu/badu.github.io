@@ -22,7 +22,7 @@ description : About a team leader without followers
 
 ## Before Activemall
 
-It was 2015. I was leaving a Altfactor because they split and in the process, they killed the most interesting project I've ever worked on.
+It was 2015. I was leaving Altfactor because they split and in the process, they killed the most interesting project I've ever worked on.
 
 That project was an awesome second screen smart TV application, that allowed the user to interact with a smart TV from a mobile device like a table or phone. It consisted from three components : a server (written in Java with Spring Boot framework), a TV application written in Javascript and was running on a Samsung TV and a Android application in Java.
 
