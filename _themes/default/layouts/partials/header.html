@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode }}">
+    <head>
+        {{ partial "head-open" . }}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}</title>
+        {{ if .IsHome }}
+            {{ with .Site.Params.description }}<meta name="description" content="{{ . }}">{{ end }}
+        {{ else }}
+            <meta name="description" content="{{ .Description }}">
+        {{ end }}
+        <meta property="site_name" content="{{ .Site.DisqusShortname }}">
+        <meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
+        <meta property="og:url" content="{{ .URL | absURL }}">
+        <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
+        <meta property="og:image" content="{{ .Site.Params.banner }}">
+        {{ if .IsHome }}
+        {{ with .Site.Params.description }}<meta property="og:description" content="{{ . }}">{{ end }}
+        {{ else }}
+            <meta property="og:description" content="{{ .Description }}">
+        {{ end }}
+            <meta name="twitter:url" content="{{ .URL | absURL }}">
+            <meta name="twitter:card" content="summary">
+            <meta name="twitter:site" content="@{{ .Site.DisqusShortname }}">
+            <meta name="twitter:creator" content="@{{ .Site.DisqusShortname }}">
+            <meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
+            <meta name="twitter:img:src" content="{{ .Site.Params.banner }}">
+        {{ if not .IsHome }}
+            <meta name="twitter:label1" content="Author">
+            <meta name="twitter:data1" content="{{ .Site.Params.author }}">
+            <meta name="twitter:label2" content="Published On">
+            <meta name="twitter:data2" content="{{ .Date.Format "January 2, 2006" }}">
+        {{ end }}
+        {{ if .Site.GoogleAnalytics }}
+            <link rel="dns-prefetch" href="//www.google-analytics.com">
+            <link rel="dns-prefetch" href="//stats.g.doubleclick.net">
+        {{ end }}
+        <link rel="canonical" href="{{ .URL | absURL }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+        <link rel="shortcut icon" href="{{ "favicon.ico" | absURL }}">
+
+        {{ partial "css" . }} {{ partial "js" . }} {{ .Hugo.Generator }}
+        {{ if .RSSLink }}
+        <link href="{{ .RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
+        <link href="{{ .RSSLink }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title }}" />
+        {{ end }}
+        
+        {{ if .Site.GoogleAnalytics }}
+        <!-- Global Site Tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.GoogleAnalytics }}"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', '{{ .Site.GoogleAnalytics }}');
+          (function() {
+          function ready(cb) {
+              /in/.test(document.readyState) // in = loadINg
+                      ? setTimeout(ready.bind(null, cb), 9)
+                      : cb();
+          }
+          ready(function() {
+              // reading progress
+              var indicator = document.querySelector('.scroll-progress');
+              if (indicator) {
+                  document.addEventListener('scroll', function (e) {
+                      var dh = document.body.scrollHeight;
+                      var wh = window.innerHeight;
+                      var pos = window.scrollY;
+                      var footerHeight = 50;
+                      var perc = pos / (dh - footerHeight - wh) * 100;
+                      indicator.style.setProperty('--scale', (perc / 100));
+                  })
+              }
+              // all external links should open in a new page
+              var links = document.links;
+              for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+                  if (links[i].hostname != window.location.hostname) {
+                      links[i].target = '_blank';
+                  }
+              }
+          });
+          }());
+        </script>
+        {{ end }}
+    </head>
+
+    <body>
+        {{ partial "body-open" . }}
+        <nav class="navbar navbar-default navbar-fixed-top">
+
+            <div class="container">
+
+                <div class="navbar-header">
+
+                    <a class="navbar-brand visible-xs" href="#">{{ .Title }}</a>
+
+                    <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+
+                    {{ if .Site.Menus.main }}
+                        <ul class="nav navbar-nav">
+                            {{ range sort .Site.Menus.main }}
+                                <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+                            {{ end }}
+                        </ul>
+                    {{ end }}
+
+                    {{ if .Site.Menus.icon }}
+                        <ul class="nav navbar-nav navbar-right">
+                            {{ range sort .Site.Menus.icon }}
+                                <li class="navbar-icon"><a href="{{ .URL }}"><i class="fa fa-{{ .Name }}"></i></a></li>
+                            {{ end }}
+                        </ul>
+                    {{ end }}
+
+                </div>
+
+            </div>
+            <!-- reading scroll progress -->
+            <div class="scroll-progress"></div>
+        </nav>

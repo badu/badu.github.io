@@ -93,8 +93,8 @@ staticDir =                   "static"
 # display memory and timing of different steps of the program
 stepAnalysis =                false
 # theme to use (located by default in /themes/THEMENAME/)
-themesDir =                   "../"
-theme =                       "minimal"
+themesDir =                   "_themes"
+theme =                       "default"
 title =                       "Recency Bias"
 # if true, use /filename.html instead of /filename/
 uglyURLs =                    false
