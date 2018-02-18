@@ -5,7 +5,7 @@ description: You can call me Badu.
 tags: ["Bogdan Dinu", "Curriculum Vitae", "Resume"]
 ---
 
-[Skills](#skills) | [Experience](#experience) | [Education](#education) | [Facts](#facts-about-me) | [Download a PDF version](/about/badu-cv-resume.pdf)
+[Skills](#skills) | [Experience](#experience) | [Education](#education) | [Facts](#facts-about-me) 
 
 ## Summary
 

@@ -22,5 +22,15 @@
 My Computer Language is Better than Yours Some programming languages were - let&amp;rsquo;s say - discovered over time, whereas others were created academically by carefully selecting the features that would provide solutions to a set of problems. There’s nothing terribly new about spawning programming languages. However, haters gonna hate and will always find one, in an office near you or over the Internet.</description>
     </item>
     
+    <item>
+      <title>Working with me</title>
+      <link>http://badu.github.io/hire-me/</link>
+      <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/hire-me/</guid>
+      <description>Working with Bogdan (Badu) I&amp;rsquo;m wearing many hats, having a non trivial understanding of human resources, software development process, risk management, diplomacy and engineering. Nowadays I write tools in Go, web applications and automate stuff. I deal with data stores, schedulers, security, etc. and I&amp;rsquo;m always looking to improve things.
+For those of you that are trying to relocate me, please understand this is not the case. At least not for now.</description>
+    </item>
+    
   </channel>
 </rss>

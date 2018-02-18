@@ -2,13 +2,15 @@
 title: Working with me
 date: 2017-11-10
 description: You bring the beer, I'll make the pizza.
-tags: ["hire", "consultant"]
+tags: ["hire", "consultant", "Golang", "developer"]
 ---
 
 #### Working with Bogdan (Badu)
 
 I'm wearing many hats, having a non trivial understanding of human resources, software development process, risk management, diplomacy and engineering.
 Nowadays I write tools in Go, web applications and automate stuff. I deal with data stores, schedulers, security, etc. and I'm always looking to improve things.
+
+For those of you that are trying to relocate me, please understand this is not the case. At least not for now.
 
 #### What I will bring to the table
 
