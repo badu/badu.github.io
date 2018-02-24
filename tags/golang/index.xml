@@ -1,36 +1,77 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Golang on Recency Bias</title>
-    <link>http://badu.github.io/tags/golang/</link>
-    <description>Recent content in Golang on Recency Bias</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-US</language>
-    <copyright>Powered by [Hugo](https://gohugo.io).</copyright>
-    <lastBuildDate>Wed, 15 Nov 2017 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="http://badu.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Comparing Go with Other Languages is Wrong</title>
-      <link>http://badu.github.io/post/comparing-go-is-wrong/</link>
-      <pubDate>Wed, 15 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/post/comparing-go-is-wrong/</guid>
-      <description>TL;DR &amp;ldquo;Java is to Javascript like Car is to Carpet.&amp;rdquo; - Collective Genius
-My Computer Language is Better than Yours Some programming languages were - let&amp;rsquo;s say - discovered over time, whereas others were created academically by carefully selecting the features that would provide solutions to a set of problems. There’s nothing terribly new about spawning programming languages. However, haters gonna hate and will always find one, in an office near you or over the Internet.</description>
-    </item>
-    
-    <item>
-      <title>Working with me</title>
-      <link>http://badu.github.io/hire-me/</link>
-      <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/hire-me/</guid>
-      <description>Working with Bogdan (Badu) I&amp;rsquo;m wearing many hats, having a non trivial understanding of human resources, software development process, risk management, diplomacy and engineering. Nowadays I write tools in Go, web applications and automate stuff. I deal with data stores, schedulers, security, etc. and I&amp;rsquo;m always looking to improve things.
-For those of you that are trying to relocate me, please understand this is not the case. At least not for now.</description>
-    </item>
-    
-  </channel>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Golang on Recency Bias</title>
+        <link>http://badu.github.io/tags/golang/</link>
+        <description>Recent content in Golang on Recency Bias</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-US</language>
+        <copyright>Powered by [Hugo](https://gohugo.io).</copyright>
+        <lastBuildDate>Sat, 24 Feb 2018 00:00:00 +0000</lastBuildDate>
+
+        <atom:link href="http://badu.github.io/tags/golang/index.xml" rel="self" type="application/rss+xml"/>
+
+
+        <item>
+            <title>My Thoughts On Net/Http Package - Week 2</title>
+            <link>http://badu.github.io/post/net-http-week2/</link>
+            <pubDate>Sat, 24 Feb 2018 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/post/net-http-week2/</guid>
+            <description>TL;DR This series is about my questions and thoughts regarding net/http package. The process of
+                learning is based on mistakes, therefor I&amp;rsquo;m inviting you to learn aside me.
+                You are allowed to judge the code. You are not allowed to judge the people.
+                Part 1
+                ListenAndServe As you might well know, using http package is easy :
+                package main import ( &amp;quot;io&amp;quot; &amp;quot;net/http&amp;quot; &amp;quot;log&amp;quot; ) func
+                main() { http.HandleFunc(&amp;quot;/hello&amp;quot;, func (w http.
+            </description>
+        </item>
+
+        <item>
+            <title>My Thoughts On Net/Http Package - Week 1</title>
+            <link>http://badu.github.io/post/net-http-week1/</link>
+            <pubDate>Sun, 18 Feb 2018 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/post/net-http-week1/</guid>
+            <description>TL;DR This series is about my questions and thoughts regarding net/http package. The process of
+                learning is based on mistakes, therefor I&amp;rsquo;m inviting you to learn aside me.
+                You are allowed to judge the code. You are not allowed to judge the people.
+                First Glance I have a confession to make : despite the fact that &amp;ldquo;Keep types close&amp;rdquo;
+                rule is fair enough, the architect in me needs to reorganize the code in such a manner that a 10000 feet
+                view to be possible.
+            </description>
+        </item>
+
+        <item>
+            <title>Comparing Go with Other Languages is Wrong</title>
+            <link>http://badu.github.io/post/comparing-go-is-wrong/</link>
+            <pubDate>Wed, 15 Nov 2017 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/post/comparing-go-is-wrong/</guid>
+            <description>TL;DR &amp;ldquo;Java is to Javascript like Car is to Carpet.&amp;rdquo; - Collective Genius
+                My Computer Language is Better than Yours Some programming languages were - let&amp;rsquo;s say -
+                discovered over time, whereas others were created academically by carefully selecting the features that
+                would provide solutions to a set of problems. There’s nothing terribly new about spawning programming
+                languages. However, haters gonna hate and will always find one, in an office near you or over the
+                Internet.
+            </description>
+        </item>
+
+        <item>
+            <title>Working with me</title>
+            <link>http://badu.github.io/hire-me/</link>
+            <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/hire-me/</guid>
+            <description>Working with Bogdan (Badu) I&amp;rsquo;m wearing many hats, having a non trivial understanding
+                of human resources, software development process, risk management, diplomacy and engineering. Nowadays I
+                write tools in Go, web applications and automate stuff. I deal with data stores, schedulers, security,
+                etc. and I&amp;rsquo;m always looking to improve things.
+                For those of you that are trying to relocate me, please understand this is not the case. At least not
+                for now.
+            </description>
+        </item>
+
+    </channel>
 </rss>

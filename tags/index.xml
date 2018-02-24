@@ -1,151 +1,151 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Tags on Recency Bias</title>
-    <link>http://badu.github.io/tags/</link>
-    <description>Recent content in Tags on Recency Bias</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-US</language>
-    <copyright>Powered by [Hugo](https://gohugo.io).</copyright>
-    <lastBuildDate>Tue, 14 Nov 2017 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="http://badu.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>Agile</title>
-      <link>http://badu.github.io/tags/agile/</link>
-      <pubDate>Tue, 14 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/agile/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Bias</title>
-      <link>http://badu.github.io/tags/bias/</link>
-      <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/bias/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Bogdan Dinu</title>
-      <link>http://badu.github.io/tags/bogdan-dinu/</link>
-      <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/bogdan-dinu/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Cognitive</title>
-      <link>http://badu.github.io/tags/cognitive/</link>
-      <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/cognitive/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Consultant</title>
-      <link>http://badu.github.io/tags/consultant/</link>
-      <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/consultant/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Curriculum Vitae</title>
-      <link>http://badu.github.io/tags/curriculum-vitae/</link>
-      <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/curriculum-vitae/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Developer</title>
-      <link>http://badu.github.io/tags/developer/</link>
-      <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/developer/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Golang</title>
-      <link>http://badu.github.io/tags/golang/</link>
-      <pubDate>Wed, 15 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/golang/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Hire</title>
-      <link>http://badu.github.io/tags/hire/</link>
-      <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/hire/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Languages</title>
-      <link>http://badu.github.io/tags/languages/</link>
-      <pubDate>Wed, 15 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/languages/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Management</title>
-      <link>http://badu.github.io/tags/management/</link>
-      <pubDate>Tue, 14 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/management/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>People</title>
-      <link>http://badu.github.io/tags/people/</link>
-      <pubDate>Tue, 14 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/people/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Programming</title>
-      <link>http://badu.github.io/tags/programming/</link>
-      <pubDate>Wed, 15 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/programming/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Recency</title>
-      <link>http://badu.github.io/tags/recency/</link>
-      <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/recency/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Resume</title>
-      <link>http://badu.github.io/tags/resume/</link>
-      <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/resume/</guid>
-      <description></description>
-    </item>
-    
-  </channel>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Tags on Recency Bias</title>
+        <link>http://badu.github.io/tags/</link>
+        <description>Recent content in Tags on Recency Bias</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-US</language>
+        <copyright>Powered by [Hugo](https://gohugo.io).</copyright>
+        <lastBuildDate>Tue, 14 Nov 2017 00:00:00 +0000</lastBuildDate>
+
+        <atom:link href="http://badu.github.io/tags/index.xml" rel="self" type="application/rss+xml"/>
+
+
+        <item>
+            <title>Agile</title>
+            <link>http://badu.github.io/tags/agile/</link>
+            <pubDate>Tue, 14 Nov 2017 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/tags/agile/</guid>
+            <description></description>
+        </item>
+
+        <item>
+            <title>Analysis</title>
+            <link>http://badu.github.io/tags/analysis/</link>
+            <pubDate>Sat, 24 Feb 2018 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/tags/analysis/</guid>
+            <description></description>
+        </item>
+
+        <item>
+            <title>Bias</title>
+            <link>http://badu.github.io/tags/bias/</link>
+            <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/tags/bias/</guid>
+            <description></description>
+        </item>
+
+        <item>
+            <title>Bogdan Dinu</title>
+            <link>http://badu.github.io/tags/bogdan-dinu/</link>
+            <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/tags/bogdan-dinu/</guid>
+            <description></description>
+        </item>
+
+        <item>
+            <title>Cognitive</title>
+            <link>http://badu.github.io/tags/cognitive/</link>
+            <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/tags/cognitive/</guid>
+            <description></description>
+        </item>
+
+        <item>
+            <title>Consultant</title>
+            <link>http://badu.github.io/tags/consultant/</link>
+            <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/tags/consultant/</guid>
+            <description></description>
+        </item>
+
+        <item>
+            <title>Curriculum Vitae</title>
+            <link>http://badu.github.io/tags/curriculum-vitae/</link>
+            <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/tags/curriculum-vitae/</guid>
+            <description></description>
+        </item>
+
+        <item>
+            <title>Developer</title>
+            <link>http://badu.github.io/tags/developer/</link>
+            <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/tags/developer/</guid>
+            <description></description>
+        </item>
+
+        <item>
+            <title>Golang</title>
+            <link>http://badu.github.io/tags/golang/</link>
+            <pubDate>Sat, 24 Feb 2018 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/tags/golang/</guid>
+            <description></description>
+        </item>
+
+        <item>
+            <title>Hire</title>
+            <link>http://badu.github.io/tags/hire/</link>
+            <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/tags/hire/</guid>
+            <description></description>
+        </item>
+
+        <item>
+            <title>Http</title>
+            <link>http://badu.github.io/tags/http/</link>
+            <pubDate>Sat, 24 Feb 2018 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/tags/http/</guid>
+            <description></description>
+        </item>
+
+        <item>
+            <title>Languages</title>
+            <link>http://badu.github.io/tags/languages/</link>
+            <pubDate>Wed, 15 Nov 2017 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/tags/languages/</guid>
+            <description></description>
+        </item>
+
+        <item>
+            <title>Management</title>
+            <link>http://badu.github.io/tags/management/</link>
+            <pubDate>Tue, 14 Nov 2017 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/tags/management/</guid>
+            <description></description>
+        </item>
+
+        <item>
+            <title>Net</title>
+            <link>http://badu.github.io/tags/net/</link>
+            <pubDate>Sat, 24 Feb 2018 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/tags/net/</guid>
+            <description></description>
+        </item>
+
+        <item>
+            <title>People</title>
+            <link>http://badu.github.io/tags/people/</link>
+            <pubDate>Tue, 14 Nov 2017 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/tags/people/</guid>
+            <description></description>
+        </item>
+
+    </channel>
 </rss>

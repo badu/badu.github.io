@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
- 
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Comparing Go with Other Languages is Wrong</title>
@@ -36,7 +36,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
     <link rel="shortcut icon" href="http://badu.github.io/favicon.ico">
 
-<style>
+    <style>
 
     html body {
         font-family: 'Roboto', sans-serif;
@@ -48,43 +48,50 @@
         --border-width:  5px ;
     }
 
-</style>
-
-
-<link rel="stylesheet" href="/css/main.css">
 
 
 
+    </style>
 
 
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="/css/main.css">
 
 
- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"> 
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css">
 
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
- 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script> 
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
 
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+    <meta name="generator" content="Hugo 0.31-DEV"/>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.31-DEV" />
-
-
-
-    
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-687869-6"></script>
     <script>
           window.dataLayer = window.dataLayer || [];
@@ -121,12 +128,15 @@
           });
           }());
 
+
+
+
     </script>
 
 </head>
 
 <body>
- 
+
 <nav class="navbar navbar-default navbar-fixed-top">
 
     <div class="container">
@@ -145,31 +155,31 @@
 
         <div class="collapse navbar-collapse">
 
-        
-            <ul class="nav navbar-nav">
-            
-                <li><a href="/post/">Posts</a></li>
-            
-                <li><a href="/about/">About</a></li>
-            
-                <li><a href="/why-recency-bias/">Why Recency Bias?</a></li>
-            
-                <li><a href="/hire-me/">Hire me</a></li>
-            
-            </ul>
-        
 
-        
+            <ul class="nav navbar-nav">
+
+                <li><a href="/post/">Posts</a></li>
+
+                <li><a href="/about/">About</a></li>
+
+                <li><a href="/why-recency-bias/">Why Recency Bias?</a></li>
+
+                <li><a href="/hire-me/">Hire me</a></li>
+
+            </ul>
+
+
             <ul class="nav navbar-nav navbar-right">
-            
+
                 <li class="navbar-icon"><a href="mailto:badu@badu.ro"><i class="fa fa-envelope-o"></i></a></li>
-            
+
                 <li class="navbar-icon"><a href="https://github.com/badu/"><i class="fa fa-github"></i></a></li>
-            
+
                 <li class="navbar-icon"><a href="https://twitter.com/baduro/"><i class="fa fa-twitter"></i></a></li>
-            
-                <li class="navbar-icon"><a href="https://www.linkedin.com/in/flexprogramming/"><i class="fa fa-linkedin"></i></a></li>
-            
+
+                <li class="navbar-icon"><a href="https://www.linkedin.com/in/flexprogramming/"><i
+                        class="fa fa-linkedin"></i></a></li>
+
                 <li>
                     <script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
                     <div id="SkypeButton_Call_badu.bogdan_1">
@@ -179,97 +189,172 @@
                                          "element": "SkypeButton_Call_badu.bogdan_1",
                                          "participants": ["badu.bogdan"]
                                          });
+
+
+
                         </script>
                     </div>
                 </li>
             </ul>
-        
+
 
         </div>
 
     </div>
-    
+
     <div class="scroll-progress"></div>
 </nav>
 
 <main>
     <div class="item">
-    
-    
-    
-      
-    <h4><a href="/post/comparing-go-is-wrong/">Comparing Go with Other Languages is Wrong</a></h4>
-    <h5>Java is to Javascript like Car is to Carpet</h5>
-    <h5>November 15, 2017</h5>
-     <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Programming</kbd>  <kbd class="item-tag">Languages</kbd> 
-    <p>About 5 minutes of reading.</p>
-</div>
 
-    <br> <div class="text-justify">
 
-<h2 id="tl-dr">TL;DR</h2>
+        <h4><a href="/post/comparing-go-is-wrong/">Comparing Go with Other Languages is Wrong</a></h4>
+        <h5>Java is to Javascript like Car is to Carpet</h5>
+        <h5>November 15, 2017</h5>
+        <kbd class="item-tag">Golang</kbd> <kbd class="item-tag">Programming</kbd> <kbd class="item-tag">Languages</kbd>
+        <p>About 5 minutes of reading.</p>
+    </div>
 
-<p>&ldquo;Java is to Javascript like Car is to Carpet.&rdquo; - Collective Genius</p>
+    <br>
+    <div class="text-justify">
 
-<h2 id="my-computer-language-is-better-than-yours">My Computer Language is Better than Yours</h2>
+        <h2 id="tl-dr">TL;DR</h2>
 
-<p>Some programming languages were - let&rsquo;s say - discovered over time, whereas others were created academically by carefully selecting the features that would provide solutions to a set of problems. There’s nothing terribly new about spawning programming languages. However, haters gonna hate and will always find one, in an office near you or over the Internet.</p>
+        <p>&ldquo;Java is to Javascript like Car is to Carpet.&rdquo; - Collective Genius</p>
 
-<p>I&rsquo;m not talking here about ranking languages. Comparing languages - that&rsquo;s this note about.</p>
+        <h2 id="my-computer-language-is-better-than-yours">My Computer Language is Better than Yours</h2>
 
-<p>In my morning routine, I&rsquo;m reading a lot of articles on various subjects, mostly related with Go and Java : once a week, I get across an article that compares Go to Scala, Java, you name it.</p>
+        <p>Some programming languages were - let&rsquo;s say - discovered over time, whereas others were created
+            academically by carefully selecting the features that would provide solutions to a set of problems. There’s
+            nothing terribly new about spawning programming languages. However, haters gonna hate and will always find
+            one, in an office near you or over the Internet.</p>
 
-<p>Comparing programming languages is like going to kindergarten all over again. Kids start arguing over the language features without having a clue what led the authors of that programming language to make an option over another option. Complaining that Go has no generics is from that mindset, where a young mind doesn&rsquo;t understand that Go is not object oriented, therefor there is no need for generics.</p>
+        <p>I&rsquo;m not talking here about ranking languages. Comparing languages - that&rsquo;s this note about.</p>
 
-<p>Go was an explicitly engineered language intended to solve problems with existing languages and tools while natively taking advantage of modern hardware architectures. It has been designed not only with teams of developers in mind, but also long-term maintainability. Comparing it to Java (which I know well) is wrong for the simple reason that they are designed in different ages of computing with different problems, hardware capabilities and needs.</p>
+        <p>In my morning routine, I&rsquo;m reading a lot of articles on various subjects, mostly related with Go and
+            Java : once a week, I get across an article that compares Go to Scala, Java, you name it.</p>
 
-<h2 id="the-right-tool-for-the-right-job">The right tool for the right job</h2>
+        <p>Comparing programming languages is like going to kindergarten all over again. Kids start arguing over the
+            language features without having a clue what led the authors of that programming language to make an option
+            over another option. Complaining that Go has no generics is from that mindset, where a young mind doesn&rsquo;t
+            understand that Go is not object oriented, therefor there is no need for generics.</p>
 
-<p>For me, understanding a programming language, framework or stack implies love and fun. You you are not having fun and you don&rsquo;t love it, it might because you don&rsquo;t understand it well enough, or you&rsquo;re using it in a wrong way.</p>
+        <p>Go was an explicitly engineered language intended to solve problems with existing languages and tools while
+            natively taking advantage of modern hardware architectures. It has been designed not only with teams of
+            developers in mind, but also long-term maintainability. Comparing it to Java (which I know well) is wrong
+            for the simple reason that they are designed in different ages of computing with different problems,
+            hardware capabilities and needs.</p>
 
-<p>If they choose a screwdriver handler to hammer some nails, fine by me.</p>
+        <h2 id="the-right-tool-for-the-right-job">The right tool for the right job</h2>
 
-<p>Convincing someone to jump from Java or Ruby to Go is not going to be achieved by comparing them. The influence by example, diplomacy and the spread of your worldview would do a better job.</p>
+        <p>For me, understanding a programming language, framework or stack implies love and fun. You you are not having
+            fun and you don&rsquo;t love it, it might because you don&rsquo;t understand it well enough, or you&rsquo;re
+            using it in a wrong way.</p>
 
-<p>To give you an example, I have a good friend which is coding Rust these days. We came to agreement that Go and Rust are not competitors and found <a href="https://dave.cheney.net/2015/07/02/why-go-and-rust-are-not-competitors">Dave</a>  Cheney&rsquo;s opinnion in the process. Last week I was presenting my friend with a few of Go advantages and he was impressed. Maybe he will give it a Go, maybe he wouldn&rsquo;t. That doesn&rsquo;t put us in disagreement, nor forcing me or him to choose sides.</p>
+        <p>If they choose a screwdriver handler to hammer some nails, fine by me.</p>
 
-<p>Over the time, some of my colleagues asked me what I think about some framework or language. I remember the discussion about TypeScript, that I had with one of them. My answer was simple : why should I learn a new language, when Javascript is enough for my needs? It&rsquo;s not about anything else, other than needs.</p>
+        <p>Convincing someone to jump from Java or Ruby to Go is not going to be achieved by comparing them. The
+            influence by example, diplomacy and the spread of your worldview would do a better job.</p>
 
-<h2 id="examples-from-history">Examples from History</h2>
+        <p>To give you an example, I have a good friend which is coding Rust these days. We came to agreement that Go
+            and Rust are not competitors and found <a
+                    href="https://dave.cheney.net/2015/07/02/why-go-and-rust-are-not-competitors">Dave</a> Cheney&rsquo;s
+            opinnion in the process. Last week I was presenting my friend with a few of Go advantages and he was
+            impressed. Maybe he will give it a Go, maybe he wouldn&rsquo;t. That doesn&rsquo;t put us in disagreement,
+            nor forcing me or him to choose sides.</p>
 
-<ul>
-<li><p>The year was 1964. <a href="https://en.wikipedia.org/wiki/John_G._Kemeny">John Kemeny</a> and <a href="https://en.wikipedia.org/wiki/Thomas_E._Kurtz">Thomas Kurtz</a> made their mission to allow non-expert users to interact with the computer. BASIC language was born - where B comes from Beginner. They had no language to compare to. Before BASIC, punched cards were top notch.</p></li>
+        <p>Over the time, some of my colleagues asked me what I think about some framework or language. I remember the
+            discussion about TypeScript, that I had with one of them. My answer was simple : why should I learn a new
+            language, when Javascript is enough for my needs? It&rsquo;s not about anything else, other than needs.</p>
 
-<li><p>A swiss computer scientist <a href="https://en.wikipedia.org/wiki/Niklaus_Wirth">Niklaus Wirth</a> creates a bunch of computer languages, in his search for Pascal. He made it back in 1970, despite the fact that Americans pronounce its name as &ldquo;nickel&rsquo;s worth&rdquo;. Again, the man hadn&rsquo;t needed to compare languages, mostly because C wasn&rsquo;t invented yet.</p></li>
+        <h2 id="examples-from-history">Examples from History</h2>
 
-<li><p>Aged 31, <a href="https://en.wikipedia.org/wiki/Dennis_Ritchie">Dennis Ritchie</a> creates the C language in which many of the language features &ldquo;looked like a good thing to do&rdquo;. So, again, a man who didn&rsquo;t had to look somewhere else to get his ideas. It seems to me that all C like languages were build with the same goal of doing good things.</p></li>
+        <ul>
+            <li><p>The year was 1964. <a href="https://en.wikipedia.org/wiki/John_G._Kemeny">John Kemeny</a> and <a
+                    href="https://en.wikipedia.org/wiki/Thomas_E._Kurtz">Thomas Kurtz</a> made their mission to allow
+                non-expert users to interact with the computer. BASIC language was born - where B comes from Beginner.
+                They had no language to compare to. Before BASIC, punched cards were top notch.</p></li>
 
-<li><p>While doing his PhD. in Cambridge, <a href="https://en.wikipedia.org/wiki/Bjarne_Stroustrup">Bjarne Stroustrup</a> - in his own words - &ldquo;invented C++, wrote its early definitions, and produced its first implementation&hellip; chose and formulated the design criteria for C++, designed all its major facilities, and was responsible for the processing of extension proposals in the C++ standards committee&rdquo;. My best guess is that came from necessity not similarities or dissimilarities.</p></li>
+            <li><p>A swiss computer scientist <a href="https://en.wikipedia.org/wiki/Niklaus_Wirth">Niklaus Wirth</a>
+                creates a bunch of computer languages, in his search for Pascal. He made it back in 1970, despite the
+                fact that Americans pronounce its name as &ldquo;nickel&rsquo;s worth&rdquo;. Again, the man hadn&rsquo;t
+                needed to compare languages, mostly because C wasn&rsquo;t invented yet.</p></li>
 
-<li><p>Dutch programmer <a href="https://en.wikipedia.org/wiki/Guido_van_Rossum">Guido van Rossum</a> was looking for a &ldquo;hobby&rdquo; programming project that would keep him occupied during the week around Christmas. Two years later (1991), Python was born.</p></li>
+            <li><p>Aged 31, <a href="https://en.wikipedia.org/wiki/Dennis_Ritchie">Dennis Ritchie</a> creates the C
+                language in which many of the language features &ldquo;looked like a good thing to do&rdquo;. So, again,
+                a man who didn&rsquo;t had to look somewhere else to get his ideas. It seems to me that all C like
+                languages were build with the same goal of doing good things.</p></li>
 
-<li><p>It&rsquo; already weird that most of the creators of programming languages come from Nordic countries, but it&rsquo;s a fact that <a href="https://en.wikipedia.org/wiki/Rasmus_Lerdorf">Rasmus Lerdorf</a> a Danish-Canadian programmer creates PHP in 1995. Rasmus  did not intend the early PHP to become a new programming language.</p></li>
+            <li><p>While doing his PhD. in Cambridge, <a href="https://en.wikipedia.org/wiki/Bjarne_Stroustrup">Bjarne
+                Stroustrup</a> - in his own words - &ldquo;invented C++, wrote its early definitions, and produced its
+                first implementation&hellip; chose and formulated the design criteria for C++, designed all its major
+                facilities, and was responsible for the processing of extension proposals in the C++ standards committee&rdquo;.
+                My best guess is that came from necessity not similarities or dissimilarities.</p></li>
 
-<li><p>In 1995 <a href="https://en.wikipedia.org/wiki/Brendan_Eich">Brendan Eich</a> created the first version of JavaScript in just ten days in order to accommodate the Navigator 2.0 Beta release schedule.</p></li>
+            <li><p>Dutch programmer <a href="https://en.wikipedia.org/wiki/Guido_van_Rossum">Guido van Rossum</a> was
+                looking for a &ldquo;hobby&rdquo; programming project that would keep him occupied during the week
+                around Christmas. Two years later (1991), Python was born.</p></li>
 
-<li><p><a href="https://en.wikipedia.org/wiki/James_Gosling">James Gosling</a> invents Java for providing an alternative to the C++/C programming languages, as an internal project at Sun Microsystems. The keyword here is alternative.</p></li>
-</ul>
+            <li><p>It&rsquo; already weird that most of the creators of programming languages come from Nordic
+                countries, but it&rsquo;s a fact that <a href="https://en.wikipedia.org/wiki/Rasmus_Lerdorf">Rasmus
+                    Lerdorf</a> a Danish-Canadian programmer creates PHP in 1995. Rasmus did not intend the early PHP to
+                become a new programming language.</p></li>
 
-<h2 id="you-need-your-own-language">You Need Your Own Language?</h2>
+            <li><p>In 1995 <a href="https://en.wikipedia.org/wiki/Brendan_Eich">Brendan Eich</a> created the first
+                version of JavaScript in just ten days in order to accommodate the Navigator 2.0 Beta release schedule.
+            </p></li>
 
-<p>If you feel like you need your own language or you want to have some fun, you can create it using a language that you know well and <a href="https://en.wikipedia.org/wiki/Parsing_expression_grammar">PEG</a> or <a href="https://en.wikipedia.org/wiki/ANTLR">ANTLR</a>.</p>
+            <li><p><a href="https://en.wikipedia.org/wiki/James_Gosling">James Gosling</a> invents Java for providing an
+                alternative to the C++/C programming languages, as an internal project at Sun Microsystems. The keyword
+                here is alternative.</p></li>
+        </ul>
 
-<p>On the subject of &ldquo;This has always bugged me and I can do better!&rdquo;, I&rsquo;ve spent some time playing with <a href="https://github.com/antlr/antlr4">ANTLR4</a> and created a grammar for a language called Greuceanu (in the Romanian mythology, Greuceanu is a young brave man who finds that the Sun and the Moon have been stolen by entities called zmei. After a long fight with the three zmei and their wives (zmeoaice), Greuceanu sets the Sun and the Moon free so the people on Earth have light again).</p>
+        <h2 id="you-need-your-own-language">You Need Your Own Language?</h2>
 
-<p>Indeed, writing the grammar for a new language takes time, but there is help for that too : <a href="https://marketplace.visualstudio.com/items?itemName=SamHarwell.ANTLRLanguageSupport">Visual Studio</a>, <a href="https://marketplace.eclipse.org/content/antlr-4-ide">Eclipse</a> and <a href="https://plugins.jetbrains.com/plugin/7358-antlr-v4-grammar-plugin">Intellij</a></p>
-</div>
-    
-    
-    
-    
-        <h4 class="page-header">Comments</h4>
-        <div id="disqus_thread"></div>
-<script>
+        <p>If you feel like you need your own language or you want to have some fun, you can create it using a language
+            that you know well and <a href="https://en.wikipedia.org/wiki/Parsing_expression_grammar">PEG</a> or <a
+                    href="https://en.wikipedia.org/wiki/ANTLR">ANTLR</a>.</p>
+
+        <p>On the subject of &ldquo;This has always bugged me and I can do better!&rdquo;, I&rsquo;ve spent some time
+            playing with <a href="https://github.com/antlr/antlr4">ANTLR4</a> and created a grammar for a language
+            called Greuceanu (in the Romanian mythology, Greuceanu is a young brave man who finds that the Sun and the
+            Moon have been stolen by entities called zmei. After a long fight with the three zmei and their wives
+            (zmeoaice), Greuceanu sets the Sun and the Moon free so the people on Earth have light again).</p>
+
+        <p>Indeed, writing the grammar for a new language takes time, but there is help for that too : <a
+                href="https://marketplace.visualstudio.com/items?itemName=SamHarwell.ANTLRLanguageSupport">Visual
+            Studio</a>, <a href="https://marketplace.eclipse.org/content/antlr-4-ide">Eclipse</a> and <a
+                href="https://plugins.jetbrains.com/plugin/7358-antlr-v4-grammar-plugin">Intellij</a></p>
+    </div>
+
+
+    <h4 class="page-header">Related</h4>
+    <div class="item">
+
+
+        <h4><a href="/post/net-http-week2/">My Thoughts On Net/Http Package - Week 2</a></h4>
+        <h5>A deep dive into it net/http package.</h5>
+        <h5>February 24, 2018</h5>
+        <kbd class="item-tag">Golang</kbd> <kbd class="item-tag">Net</kbd> <kbd class="item-tag">Http</kbd> <kbd
+            class="item-tag">Analysis</kbd>
+        <p>About 5 minutes of reading.</p>
+    </div>
+    <div class="item">
+
+
+        <h4><a href="/post/net-http-week1/">My Thoughts On Net/Http Package - Week 1</a></h4>
+        <h5>A deep dive into it net/http package. First glance.</h5>
+        <h5>February 18, 2018</h5>
+        <kbd class="item-tag">Golang</kbd> <kbd class="item-tag">Net</kbd> <kbd class="item-tag">Http</kbd> <kbd
+            class="item-tag">Analysis</kbd>
+        <p>About 5 minutes of reading.</p>
+    </div>
+
+
+    <h4 class="page-header">Comments</h4>
+    <div id="disqus_thread"></div>
+    <script>
     var disqus_config = function () {
     
     
@@ -285,14 +370,18 @@
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    
+
+
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
+        Disqus.</a></noscript>
+    <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
 </main>
-        <footer>
-            <p class="copyright text-muted"> Recency Bias &copy; 2017 - Powered by <a href="https://gohugo.io">Hugo</a>.</p>
-        </footer>
-    </body>
+<footer>
+    <p class="copyright text-muted"> Recency Bias &copy; 2017
+        - Powered by <a href="https://gohugo.io">Hugo</a>.</p>
+</footer>
+</body>
 </html>
 
