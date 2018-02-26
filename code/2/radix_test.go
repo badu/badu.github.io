@@ -1,6 +1,8 @@
 package radix
 
-import "testing"
+import (
+	"testing"
+)
 
 const (
 	Accept                  = "Accept"
@@ -52,6 +54,58 @@ const (
 	XPoweredBy              = "X-Powered-By"
 )
 
+var (
+	headers = []string{
+		Accept,
+		AcceptCharset,
+		AcceptEncoding,
+		AcceptLanguage,
+		AcceptRanges,
+		Authorization,
+		CacheControl,
+		Cc,
+		Connection,
+		ContentEncoding,
+		ContentId,
+		ContentLanguage,
+		ContentLength,
+		ContentRange,
+		ContentTransferEncoding,
+		ContentType,
+		CookieHeader,
+		Date,
+		DkimSignature,
+		Etag,
+		Expires,
+		Expect,
+		From,
+		Host,
+		IfModifiedSince,
+		IfNoneMatch,
+		InReplyTo,
+		LastModified,
+		Location,
+		MessageId,
+		MimeVersion,
+		Pragma,
+		Received,
+		Referer,
+		ReturnPath,
+		ServerHeader,
+		SetCookieHeader,
+		Subject,
+		TransferEncoding,
+		To,
+		Trailer,
+		UpgradeHeader,
+		UserAgent,
+		Via,
+		XForwardedFor,
+		XImforwards,
+		XPoweredBy,
+	}
+)
+
 type (
 	TreeTester struct {
 		Tree
@@ -86,40 +140,38 @@ func (t *TreeTester) PrintTree(currentNode *Node, treeLevel int) {
 	}
 }
 
+func prepareTest(t *testing.T, tree *TreeTester) {
+	for index, header := range headers {
+		tree.Insert(header, index)
+	}
+	t.Log("Test prepared.")
+}
+
 func TestLookup(t *testing.T) {
 	rTree := &TreeTester{logger: t.Logf}
-	rTree.Insert("test", 1)
-	rTree.Insert("team", 2)
-	rTree.Insert("trobot", 3)
-	rTree.Insert("apple", 4)
-	rTree.Insert("app", 5)
-	rTree.Insert("tesla", 6)
+	prepareTest(t, rTree)
 
-	ret, find := rTree.Search("team")
-	if !find || ret != 2 {
-		t.Errorf("Lookup failed, expect '2', but get %v", ret)
+	ret, find := rTree.Search(Accept)
+	if !find {
+		t.Error("Lookup failed")
+	} else {
+		t.Logf("Found : %v", ret)
 	}
 
-	ret, find = rTree.Search("apple")
-	if !find || ret != 4 {
-		t.Errorf("Lookup failed, expect '4', but get %v", ret)
+	ret, find = rTree.Search(AcceptLanguage)
+	if !find {
+		t.Error("Lookup failed")
+	} else {
+		t.Logf("Found : %v", ret)
 	}
 
-	ret, find = rTree.Search("tesla")
-	if !find || ret != 6 {
-		t.Errorf("Lookup failed, expect '6', but get %v", ret)
-	}
-
-	ret, find = rTree.Search("app")
-	if !find || ret != 5 {
-		t.Errorf("Lookup failed, expect '5', but get %v", ret)
-	}
-
-	rTree.Insert("app", 7)
-	rTree.PrintTree(nil, 1)
-	ret, find = rTree.Search("app")
-	t.Log(ret, find)
+	rTree.Insert("Foo-Header", 7)
+	ret, find = rTree.Search("Foo-Header")
 	if !find || ret != 7 {
 		t.Errorf("Insert update lookup failed, expect '7', but get %v", ret)
 	}
+	t.Log(find, " found freshly inserted ", ret)
+
+	rTree.PrintTree(nil, 1)
+
 }

@@ -12,25 +12,55 @@ type (
 	routes []routeAndValue
 )
 
+//PrintTree: Print out current tree struct, it will using \t for tree level
+func (t *TreeTester) PrintStarTree(currentNode *Node, treeLevel int) {
+	if currentNode == nil {
+		currentNode = &t.root
+	}
+	tabs := ""
+	for i := 1; i < treeLevel; i++ {
+		tabs = tabs + "\t"
+	}
+
+	if currentNode.isLeaf() {
+		//Reach  the end point
+		t.logger("%s[%d] Leaf key : %q value : %v\n", tabs, treeLevel, currentNode.leaf.key, currentNode.leaf.value)
+		return
+	}
+
+	t.logger("%s[%d] Node has %d edges \n", tabs, treeLevel, len(currentNode.edges))
+	for _, edge := range currentNode.edges {
+		if edge.isStar() {
+			t.logger("%s[%d] StarEdge [%q]\n", tabs, treeLevel, edge.label)
+		} else {
+			t.logger("%s[%d] NormalEdge [%q]\n", tabs, treeLevel, edge.label)
+		}
+		t.PrintTree(edge.child, treeLevel+1)
+	}
+
+	if treeLevel == 1 {
+		t.logger("Tree printed.\n\n")
+	}
+}
+
+// This should work with only one route defined
 func TestStarOneRoute(t *testing.T) {
 	useSortEdges = true
 	rTree := &TreeTester{logger: t.Logf}
 	rTree.Insert("*/*/*", 5555)
 
-	ret, find := rTree.StarSearch("app/blah")
+	ret, find := rTree.StarSearch("something/else")
 	if !find || ret != 5555 {
 		t.Errorf("Lookup failed, expect '5555', but got %v", ret)
 	} else {
-		t.Log("Ok `app/blah` ", ret)
+		t.Log("Ok `something/else` ", ret)
 	}
 
-	rTree.PrintTree(nil, 1)
-	t.Log("You had one route.")
+	rTree.PrintStarTree(nil, 1)
 }
 
 func TestStar(t *testing.T) {
 	useSortEdges = true
-	// TODO : Because of the sort operation we might not make it to []byte - or we need to find a way to sort [][]byte
 	rTree := &TreeTester{logger: t.Logf}
 
 	routes := routes{
@@ -41,7 +71,7 @@ func TestStar(t *testing.T) {
 		}, {
 			"team", 2,
 		}, {
-			"trobot", 3,
+			"trouble", 3,
 		}, {
 			"apple", 4,
 		}, {
@@ -63,7 +93,7 @@ func TestStar(t *testing.T) {
 		}, {
 			"tesla/copy/*?*", 202,
 		}, {
-			"tesla/calului/*?*", 220,
+			"tesla/particular/*?*", 220,
 		}, {
 			"tesla/*/*?*", 200,
 		}, {
@@ -149,20 +179,20 @@ func TestStar(t *testing.T) {
 		t.Log("Ok `tesla/457/doo?search=string` ", ret)
 	}
 
-	ret, find = rTree.StarSearch("trobot")
+	ret, find = rTree.StarSearch("trouble")
 	if !find || ret != 3 {
 		t.Errorf("Lookup failed, expect '3', but got %v", ret)
 	} else {
-		t.Log("Ok `trobot` ", ret)
+		t.Log("Ok `trouble` ", ret)
 	}
 
-	ret, find = rTree.StarSearch("wazabanga")
+	ret, find = rTree.StarSearch("something")
 	if !find || ret != 11 {
 		t.Errorf("Lookup failed, expect (universal) '11', but got %v", ret)
 	} else {
-		t.Log("Ok `wazabanga` ", ret)
+		t.Log("Ok `something` ", ret)
 	}
 
-	rTree.PrintTree(nil, 1)
+	rTree.PrintStarTree(nil, 1)
 	t.Log("Test finished.")
 }

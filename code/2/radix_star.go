@@ -53,6 +53,8 @@ func (t *Tree) starSearch(where *Node, what string) (interface{}, bool) {
 				// looking for the question mark - might be handy to give up on this for speed
 				index := strings.Index(what, "?")
 				if index > 0 {
+					//TODO : collect star key after question mark
+					//fmt.Println("Collect after question mark ", what[index:])
 					// lookup question marks - down in the tree
 					return t.starSearch(edge.child, what[index:])
 				}
@@ -60,9 +62,13 @@ func (t *Tree) starSearch(where *Node, what string) (interface{}, bool) {
 				if strings.HasPrefix(edge.label, "?*") && remove != "?" {
 					continue
 				}
+				//TODO : collect star key
+				//fmt.Println("Collect Path Part", what)
 				// we have a star, no question mark - looking for the node leaf
 				return t.starSearch(edge.child, "")
 			default:
+				//TODO : collect star key part of the path
+				//fmt.Println("Collect Path Part", parts[0])
 				// building a new key with the parts that we have
 				what = strings.Join(parts[1:], "/")
 				return t.starSearch(edge.child, what)
