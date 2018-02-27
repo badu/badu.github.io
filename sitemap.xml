@@ -3,6 +3,11 @@
 >
 
     <url>
+        <loc>http://badu.github.io/post/radix-story/</loc>
+        <lastmod>2018-02-27T00:00:00+00:00</lastmod>
+    </url>
+
+    <url>
         <loc>http://badu.github.io/post/net-http-week2/</loc>
         <lastmod>2018-02-24T00:00:00+00:00</lastmod>
     </url>
@@ -92,7 +97,7 @@
 
     <url>
         <loc>http://badu.github.io/tags/golang/</loc>
-        <lastmod>2018-02-24T00:00:00+00:00</lastmod>
+        <lastmod>2018-02-27T00:00:00+00:00</lastmod>
         <priority>0</priority>
     </url>
 
@@ -134,13 +139,19 @@
 
     <url>
         <loc>http://badu.github.io/post/</loc>
-        <lastmod>2018-02-24T00:00:00+00:00</lastmod>
+        <lastmod>2018-02-27T00:00:00+00:00</lastmod>
         <priority>0</priority>
     </url>
 
     <url>
         <loc>http://badu.github.io/tags/programming/</loc>
         <lastmod>2017-11-15T00:00:00+00:00</lastmod>
+        <priority>0</priority>
+    </url>
+
+    <url>
+        <loc>http://badu.github.io/tags/radix/</loc>
+        <lastmod>2018-02-27T00:00:00+00:00</lastmod>
         <priority>0</priority>
     </url>
 
@@ -152,7 +163,7 @@
 
     <url>
         <loc>http://badu.github.io/</loc>
-        <lastmod>2018-02-24T00:00:00+00:00</lastmod>
+        <lastmod>2018-02-27T00:00:00+00:00</lastmod>
         <priority>0</priority>
     </url>
 
@@ -163,8 +174,26 @@
     </url>
 
     <url>
+        <loc>http://badu.github.io/tags/router/</loc>
+        <lastmod>2018-02-27T00:00:00+00:00</lastmod>
+        <priority>0</priority>
+    </url>
+
+    <url>
+        <loc>http://badu.github.io/tags/search/</loc>
+        <lastmod>2018-02-27T00:00:00+00:00</lastmod>
+        <priority>0</priority>
+    </url>
+
+    <url>
         <loc>http://badu.github.io/tags/</loc>
         <lastmod>2017-11-14T00:00:00+00:00</lastmod>
+        <priority>0</priority>
+    </url>
+
+    <url>
+        <loc>http://badu.github.io/tags/tree/</loc>
+        <lastmod>2018-02-27T00:00:00+00:00</lastmod>
         <priority>0</priority>
     </url>
 

@@ -47,13 +47,21 @@ func (t *TreeTester) PrintStarTree(currentNode *Node, treeLevel int) {
 func TestStarOneRoute(t *testing.T) {
 	useSortEdges = true
 	rTree := &TreeTester{logger: t.Logf}
-	rTree.Insert("*/*/*", 5555)
-
+	rTree.Insert("*/*", 5555)
+	// without the below insertion, works fine, but you won't be able to collect the parameters correctly
+	rTree.Insert("*/never-matched", 10000)
 	ret, find := rTree.StarSearch("something/else")
 	if !find || ret != 5555 {
 		t.Errorf("Lookup failed, expect '5555', but got %v", ret)
 	} else {
 		t.Log("Ok `something/else` ", ret)
+	}
+
+	ret, find = rTree.StarSearch("do/else")
+	if !find || ret != 5555 {
+		t.Errorf("Lookup failed, expect '5555', but got %v", ret)
+	} else {
+		t.Log("Ok `do/else` ", ret)
 	}
 
 	rTree.PrintStarTree(nil, 1)

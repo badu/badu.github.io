@@ -157,6 +157,7 @@ func (t *Tree) search(where *Node, what string) (interface{}, bool) {
 }
 
 func (t *Tree) Search(what string) (interface{}, bool) {
+	// TODO : use a mutex here if you are using this concurrent
 	return t.search(&t.root, what)
 }
 
