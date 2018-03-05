@@ -3,6 +3,11 @@
 >
 
     <url>
+        <loc>http://badu.github.io/post/known-world-stops/</loc>
+        <lastmod>2018-03-05T00:00:00+00:00</lastmod>
+    </url>
+
+    <url>
         <loc>http://badu.github.io/post/radix-story/</loc>
         <lastmod>2018-02-27T00:00:00+00:00</lastmod>
     </url>
@@ -43,6 +48,12 @@
     </url>
 
     <url>
+        <loc>http://badu.github.io/tags/advanced/</loc>
+        <lastmod>2018-03-05T00:00:00+00:00</lastmod>
+        <priority>0</priority>
+    </url>
+
+    <url>
         <loc>http://badu.github.io/tags/agile/</loc>
         <lastmod>2017-11-14T00:00:00+00:00</lastmod>
         <priority>0</priority>
@@ -78,6 +89,12 @@
     </url>
 
     <url>
+        <loc>http://badu.github.io/tags/compiler/</loc>
+        <lastmod>2018-03-05T00:00:00+00:00</lastmod>
+        <priority>0</priority>
+    </url>
+
+    <url>
         <loc>http://badu.github.io/tags/consultant/</loc>
         <lastmod>2017-11-10T00:00:00+00:00</lastmod>
         <priority>0</priority>
@@ -96,8 +113,14 @@
     </url>
 
     <url>
+        <loc>http://badu.github.io/tags/directives/</loc>
+        <lastmod>2018-03-05T00:00:00+00:00</lastmod>
+        <priority>0</priority>
+    </url>
+
+    <url>
         <loc>http://badu.github.io/tags/golang/</loc>
-        <lastmod>2018-02-27T00:00:00+00:00</lastmod>
+        <lastmod>2018-03-05T00:00:00+00:00</lastmod>
         <priority>0</priority>
     </url>
 
@@ -139,7 +162,7 @@
 
     <url>
         <loc>http://badu.github.io/post/</loc>
-        <lastmod>2018-02-27T00:00:00+00:00</lastmod>
+        <lastmod>2018-03-05T00:00:00+00:00</lastmod>
         <priority>0</priority>
     </url>
 
@@ -163,7 +186,7 @@
 
     <url>
         <loc>http://badu.github.io/</loc>
-        <lastmod>2018-02-27T00:00:00+00:00</lastmod>
+        <lastmod>2018-03-05T00:00:00+00:00</lastmod>
         <priority>0</priority>
     </url>
 
@@ -187,7 +210,7 @@
 
     <url>
         <loc>http://badu.github.io/tags/</loc>
-        <lastmod>2017-11-14T00:00:00+00:00</lastmod>
+        <lastmod>2018-03-05T00:00:00+00:00</lastmod>
         <priority>0</priority>
     </url>
 
