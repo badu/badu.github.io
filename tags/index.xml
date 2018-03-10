@@ -7,7 +7,7 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-US</language>
         <copyright>Powered by [Hugo](https://gohugo.io).</copyright>
-        <lastBuildDate>Mon, 05 Mar 2018 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Sat, 10 Mar 2018 00:00:00 +0000</lastBuildDate>
 
         <atom:link href="http://badu.github.io/tags/index.xml" rel="self" type="application/rss+xml"/>
 
@@ -15,7 +15,7 @@
         <item>
             <title>Advanced</title>
             <link>http://badu.github.io/tags/advanced/</link>
-            <pubDate>Mon, 05 Mar 2018 00:00:00 +0000</pubDate>
+            <pubDate>Sat, 10 Mar 2018 00:00:00 +0000</pubDate>
 
             <guid>http://badu.github.io/tags/advanced/</guid>
             <description></description>
@@ -114,7 +114,7 @@
         <item>
             <title>Golang</title>
             <link>http://badu.github.io/tags/golang/</link>
-            <pubDate>Mon, 05 Mar 2018 00:00:00 +0000</pubDate>
+            <pubDate>Sat, 10 Mar 2018 00:00:00 +0000</pubDate>
 
             <guid>http://badu.github.io/tags/golang/</guid>
             <description></description>

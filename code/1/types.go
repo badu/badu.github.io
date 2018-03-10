@@ -720,22 +720,22 @@ const (
 	// active requests are complete. That means that ConnState
 	// cannot be used to do per-request work; ConnState only notes
 	// the overall state of the connection.
-	StateActive
+	StateActive 
 
 	// StateIdle represents a connection that has finished
 	// handling a request and is in the keep-alive state, waiting
 	// for a new request. Connections transition from StateIdle
 	// to either StateActive or StateClosed.
-	StateIdle
+	StateIdle 
 
 	// StateHijacked represents a hijacked connection.
 	// This is a terminal state. It does not transition to StateClosed.
-	StateHijacked
+	StateHijacked 
 
 	// StateClosed represents a closed connection.
 	// This is a terminal state. Hijacked connections do not
 	// transition to StateClosed.
-	StateClosed
+	StateClosed 
 )
 
 var stateName = map[ConnState]string{

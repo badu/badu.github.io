@@ -5,7 +5,7 @@ date: 2018-03-05
 description : I quote "This function is called with the world stopped, at the beginning of a garbage collection."
 ---
 
-Last week, I took the time searching for patterns inside the main packages. Besides a bunch of aha moments, I've realized that some neat tricks can be used to achieve some goals otherwise achievable by applying different techniques.
+Last week, I took the time searching for patterns inside the main packages. Besides a bunch of `aha moments`, I've realized that some neat tricks can be used to achieve some goals otherwise achievable by applying different techniques.
 
 For instance, let's say you have a pool or a cache. How do you call your cleanup function? 
 
@@ -105,4 +105,4 @@ func TrimPrefix(s, prefix string) (bool, string) // returning true if string had
 
 #### Directive Wish
 
-Would be really useful for testing to have a directive that instructs the compiler to include or exclude portions of code, thus we can avoid including testing portions in the production. 
+Would be really useful for testing to have a directive that instructs the compiler to include or exclude portions of code, thus we can avoid including testing portions in the production.

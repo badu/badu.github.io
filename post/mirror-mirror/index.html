@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mirror Mirror on ...</title>
+
+    <meta name="description" content="Of Mice (Unsafe) and Men (Reflect)">
+
+    <meta property="site_name" content="recency-bias">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://badu.github.io/post/mirror-mirror/">
+    <meta property="og:title" content="Mirror Mirror on ...">
+    <meta property="og:image" content="">
+
+    <meta property="og:description" content="Of Mice (Unsafe) and Men (Reflect)">
+
+    <meta name="twitter:url" content="http://badu.github.io/post/mirror-mirror/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@recency-bias">
+    <meta name="twitter:creator" content="@recency-bias">
+    <meta name="twitter:title" content="Mirror Mirror on ...">
+    <meta name="twitter:img:src" content="">
+
+    <meta name="twitter:label1" content="Author">
+    <meta name="twitter:data1" content="Bogdan Dinu">
+    <meta name="twitter:label2" content="Published On">
+    <meta name="twitter:data2" content="March 10, 2018">
+
+
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="dns-prefetch" href="//stats.g.doubleclick.net">
+
+    <link rel="canonical" href="http://badu.github.io/post/mirror-mirror/">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+    <link rel="shortcut icon" href="http://badu.github.io/favicon.ico">
+
+    <style>
+
+    html body {
+        font-family: 'Roboto', sans-serif;
+        background-color: white;
+    }
+
+    :root {
+        --accent: #00bcd4;
+        --border-width:  5px ;
+    }
+
+
+
+
+
+
+
+
+
+    </style>
+
+
+    <link rel="stylesheet" href="/css/main.css">
+
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
+    <meta name="generator" content="Hugo 0.31-DEV"/>
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-687869-6"></script>
+    <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'UA-687869-6');
+          (function() {
+          function ready(cb) {
+              /in/.test(document.readyState) 
+                      ? setTimeout(ready.bind(null, cb), 9)
+                      : cb();
+          }
+          ready(function() {
+              
+              var indicator = document.querySelector('.scroll-progress');
+              if (indicator) {
+                  document.addEventListener('scroll', function (e) {
+                      var dh = document.body.scrollHeight;
+                      var wh = window.innerHeight;
+                      var pos = window.scrollY;
+                      var footerHeight = 50;
+                      var perc = pos / (dh - footerHeight - wh) * 100;
+                      indicator.style.setProperty('--scale', (perc / 100));
+                  })
+              }
+              
+              var links = document.links;
+              for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+                  if (links[i].hostname != window.location.hostname) {
+                      links[i].target = '_blank';
+                  }
+              }
+          });
+          }());
+
+
+
+
+
+
+
+
+
+    </script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+
+    <div class="container">
+
+        <div class="navbar-header">
+
+            <a class="navbar-brand visible-xs" href="#">Mirror Mirror on ...</a>
+
+            <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+        </div>
+
+        <div class="collapse navbar-collapse">
+
+
+            <ul class="nav navbar-nav">
+
+                <li><a href="/post/">Posts</a></li>
+
+                <li><a href="/about/">About</a></li>
+
+                <li><a href="/why-recency-bias/">Why Recency Bias?</a></li>
+
+                <li><a href="/hire-me/">Hire me</a></li>
+
+            </ul>
+
+
+            <ul class="nav navbar-nav navbar-right">
+
+                <li class="navbar-icon"><a href="mailto:badu@badu.ro"><i class="fa fa-envelope-o"></i></a></li>
+
+                <li class="navbar-icon"><a href="https://github.com/badu/"><i class="fa fa-github"></i></a></li>
+
+                <li class="navbar-icon"><a href="https://twitter.com/baduro/"><i class="fa fa-twitter"></i></a></li>
+
+                <li class="navbar-icon"><a href="https://www.linkedin.com/in/flexprogramming/"><i
+                        class="fa fa-linkedin"></i></a></li>
+
+                <li>
+                    <script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
+                    <div id="SkypeButton_Call_badu.bogdan_1">
+                        <script type="text/javascript">
+                                         Skype.ui({
+                                         "name": "chat",
+                                         "element": "SkypeButton_Call_badu.bogdan_1",
+                                         "participants": ["badu.bogdan"]
+                                         });
+
+
+
+
+
+
+
+
+                        </script>
+                    </div>
+                </li>
+            </ul>
+
+
+        </div>
+
+    </div>
+
+    <div class="scroll-progress"></div>
+</nav>
+
+<main>
+    <div class="item">
+
+
+        <h4><a href="/post/mirror-mirror/">Mirror Mirror on ...</a></h4>
+        <h5>Of Mice (Unsafe) and Men (Reflect)</h5>
+        <h5>March 10, 2018</h5>
+        <kbd class="item-tag">Golang</kbd> <kbd class="item-tag">Advanced</kbd> <kbd class="item-tag">Reflect</kbd> <kbd
+            class="item-tag">Unsafe</kbd>
+        <p>About 10 minutes of reading.</p>
+    </div>
+
+    <br>
+    <div class="text-justify">
+
+        <h4 id="tl-dr">TL;DR</h4>
+
+        <p>While I was mentoring, I encouraged my pupils to break things so they understand how they work. Using reflect
+            package seems easy, but understanding the mechanics is hard. So, this week, following my own advice, I&rsquo;ve
+            tried to create my own reflect package. Here is what I&rsquo;ve learned.</p>
+
+        <h4 id="playing-with-fire">Playing with Fire</h4>
+
+        <p>Most of the articles on the subject I&rsquo;ve read have (more or less) the following advice : &ldquo;if you
+            find yourself doing this in a real program, stop immediately and seek help. You are doing something wrong.
+            You’ve been warned!&rdquo;. Now, wait a minute, mister. That is hypocrisy!</p>
+
+        <p>If you take a look at the importers of <a href="https://godoc.org/reflect?importers">reflect</a> you will
+            easily find that using the <code>fmt</code> implies you are using reflect. Using &ldquo;unsafe&rdquo;
+            features in Golang is only for developers that develop the language itself? Maybe looking on importers of <a
+                    href="https://godoc.org/unsafe?importers">unsafe</a> tells you otherwise.</p>
+
+        <h4 id="unsafe-after-that-we-reflect"><code>unsafe</code> - after that we <code>reflect</code></h4>
+
+        <p>I quote from the documentation : &ldquo;unsafe.Pointer type allows a program to defeat the type system and
+            read and write arbitrary memory. It should be used with extreme care&rdquo;.</p>
+
+        <p>Let&rsquo;s say you have type <code>John</code> which you are trying to convert to type <code>Ivan</code>.
+            The documentation states that Ivan has to be smaller or equal with John (in terms of properties it has) and
+            those to share the `equivalent memory layout.</p>
+
+        <p>Let&rsquo;s code:</p>
+
+        <pre><code class="language-go">func TestIsJohnIvan(t *testing.T) {
+    type John struct {
+        Name   string
+        Age    uint
+        Powers uint
+    }
+
+    type Ivan struct {
+        givenName  string // yes, you can use private fields
+        _          uint
+        ThirdField uint
+    }
+    
+    john := John{Name: &quot;John&quot;, Age: 40, Powers: 3}
+
+    ivan := *(*Ivan)(unsafe.Pointer(&amp;john))
+    t.Logf(&quot;John as Ivan : GivenName %v ThirdField %d&quot;, ivan.givenName, ivan.ThirdField)
+}
+</code></pre>
+
+        <p>First observation is that you can violate access to private fields using this conversion. Secondly, as long
+            as you respect the same number of fields and their types, you can omit properties. You can violate the
+            second rule and get unexpected results, as below:</p>
+
+        <pre><code class="language-go">    type ShortIvan struct {
+        Age uint
+    }
+    smallIvan := *(*ShortIvan)(unsafe.Pointer(&amp;john))
+    t.Logf(&quot;Small Ivan (just powers) : %v&quot;, smallIvan.Age)
+</code></pre>
+
+        <p>You would expect that age to be 40, but it&rsquo;s not : it&rsquo;s 5717318. Why? Because an uint is built by
+            taking the required value from the Name property of John. The correct way to get a smaller Ivan is to omit
+            the name property (observe that the third property is omitted too):</p>
+
+        <pre><code class="language-go">    type ShortIvan struct {
+        _ string
+        Age uint
+    }
+</code></pre>
+
+        <p>What if you violate the first rule, which states that types have to have an equal amount of properties:</p>
+
+        <pre><code class="language-go">    type UpgradedIvan struct {
+        //_ string // adding this at the beginning crashes
+        Name    string
+        Age     uint
+        Powers  uint
+        Address string // will get filled with the Name 
+        Guns    uint   // will get filled with Age 
+        //Say     string // adding yet another one will crash : &quot;bad pointer in frame&quot;
+        //Data []byte // same adding this or more
+        AFloat float32 // adding a different type seems safe
+    }
+    chuckNorris := *(*UpgradedIvan)(unsafe.Pointer(&amp;john))
+    t.Logf(&quot;Chuck Ivan : %v&quot;, chuckNorris)
+</code></pre>
+
+        <p>Well, it works, but with side effects : Address gets filled with same value as Name, Guns with Age and AFloat
+            get a value of 4e-45. So, this the non-safety point that a developer should never touch. As long as we&rsquo;re
+            respecting the rules, it&rsquo;s safe to play unsafe.</p>
+
+        <p>Also, <code>upgrading</code> John seems better (simpler) by using embedding:</p>
+
+        <pre><code class="language-go">    type EmbeddedJohn struct {
+        John
+        Address string // will get filled with the Name ??? Weird huh
+        Guns    uint   // will get filled with Age ???
+    }
+    // convert John to EmbeddedJohn
+    upgradedIvan := EmbeddedJohn{John: john}
+    t.Logf(&quot;Upgraded Ivan : %v&quot;, upgradedIvan)
+</code></pre>
+
+        <p>Surely, the bellow code is dangerous if it is misused. The code speaks for itself:</p>
+
+        <pre><code class="language-go">func TestAlteredPeople(t *testing.T) {
+    type John struct {
+        Name    string
+        Age     int
+        Altered bool
+    }
+
+    john := John{Name: &quot;John&quot;, Age: 30, Altered: false}
+
+    ptrToJohn := unsafe.Pointer(&amp;john)
+    ptrToName := (*string)(unsafe.Pointer(uintptr(ptrToJohn) + unsafe.Offsetof(john.Name)))
+    ptrToAge := (*int)(unsafe.Pointer(uintptr(ptrToJohn) + unsafe.Offsetof(john.Age)))
+    ptrToAltered := (*bool)(unsafe.Pointer(uintptr(ptrToJohn) + unsafe.Offsetof(john.Altered)))
+
+    *ptrToName = &quot;Chuck&quot;
+    *ptrToAge = 100000
+    *ptrToAltered = true
+
+    t.Logf(&quot;Now John is %v&quot;, john)
+}
+</code></pre>
+
+        <h4 id="unsafe-conclusions"><code>Unsafe</code> conclusions</h4>
+
+        <p>The unsafe package is serving for Go compiler instead of Go runtime, because it has facilities for low-level
+            programming including operations that violate the type system.</p>
+
+        <p>I would never use the above method of conversion, but investigation was needed because of what&rsquo;s about
+            to be described regarding reflect.</p>
+
+        <pre><code class="language-go">type Point struct {
+    x, y int
+}
+
+func Extract(ptr unsafe.Pointer, size uintptr) []byte {
+    out := make([]byte, size)
+    for i := range out {
+        out[i] = *((*byte)(unsafe.Pointer(uintptr(ptr) + uintptr(i))))
+    }
+    return out
+}
+
+func TestExtract(t *testing.T) {
+    p := Point{3, 4}
+    mem := Extract(unsafe.Pointer(&amp;p), unsafe.Sizeof(p))
+    t.Logf(&quot;What's the Point? %v&quot;, mem)
+}
+</code></pre>
+
+        <p>Yes, you can extract the content of the memory, but what&rsquo;s the point? Well, a friend of mine (with the
+            same name and the same passion for Golang) might find this as a useful way to hide sensitive data, by
+            reversing the extract into carefully filling it with secrets which comes from somewhere else.</p>
+
+        <h4 id="reflect"><code>reflect</code></h4>
+
+        <p>If you kept in mind that <code>unsafe</code> is about the compiler and not the runtime, here is the proof:
+        </p>
+
+        <pre><code class="language-go">func TestInTheBeginning(t *testing.T) {
+    type r struct {
+        sz  uintptr
+        dt  uintptr
+        _   uint32
+        f   uint8
+        _   uint8
+        _   uint8
+        knd uint8
+        _   *struct{}
+        c   *byte
+        str int32
+        w   int32
+    }
+    type e struct {
+        abracadabra *r
+    }
+    t := func(p interface{}) *r {
+        return (*(*e)(unsafe.Pointer(&amp;p))).abracadabra
+    }
+    p := Point{3, 4}
+    v := t(&amp;p)
+    t.Logf(&quot;After looking in the mirror : %v %v %v %v %v %v&quot;, v.sz, v.dt, v.f, v.knd, v.str, v.w)
+}
+</code></pre>
+
+        <p>Once you run the above test, you will get the properties filled in with some values which seem pure magic.
+            But there must be an explanation.
+            We didn&rsquo;t import <code>reflect</code> package. Also, the code is unreadable thus proving there is no
+            magic convention like structs named in certain way or properties have some particular names.</p>
+
+        <p>So, what happen? Well, these data structures (<code>e</code> and <code>r</code> types) are <a
+                href="https://github.com/golang/go/blob/master/src/cmd/compile/internal/gc/reflect.go">known</a> to the
+            compiler which does it&rsquo;s job and at the runtime we&rsquo;re getting those results. To reinforce that
+            truth, if we&rsquo;re replacing that <code>t</code> function with it&rsquo;s body <code>v
+                :=(*(*e)(unsafe.Pointer(&amp;p))).abracadabra</code>, it won&rsquo;t work anymore. And even more, if we&rsquo;re
+            changing the parameter type of the <code>t</code> function from <code>interface{}</code> to
+            <code>*Point</code> it will not work as expected.</p>
+
+        <p>If you <a href="https://github.com/golang/go/blob/master/src/reflect/type.go#L297">look</a> in reflect
+            package, you will see that <code>rtype</code> struct looks exactly the same as our <code>r</code> struct,
+            even if the properties are named different. Same goes for <a
+                    href="https://github.com/golang/go/blob/master/src/reflect/value.go#L181"><code>emptyInterface</code></a>
+            and our <code>e</code> struct - despite the fact that we are not using the <code>word</code> property -
+            remember omitting properties in the unsafe example above?</p>
+
+        <h4 id="building-your-own-reflection-package">Building your own reflection package</h4>
+
+        <p>Can you build your own <code>reflect</code> package? So far my conclusion is yes, you can. At least for
+            reading and writing the properties of structs it&rsquo;s quite easy.</p>
+
+        <p>However, I&rsquo;ve encountered some problems that I want to present here. First, the (long but minimal) code
+            (mostly copy pasted from reflect):</p>
+
+        <pre><code class="language-go">
+import (
+    &quot;testing&quot;
+    &quot;unsafe&quot; // also for linkname
+)
+const (
+    Invalid       Kind = iota
+    Bool
+    Int
+    Int8
+    Int16
+    Int32
+    Int64
+    Uint
+    Uint8
+    Uint16
+    Uint32
+    Uint64
+    Uintptr
+    Float32
+    Float64
+    Complex64
+    Complex128
+    Array
+    Chan
+    Func
+    Interface
+    Map
+    Ptr
+    Slice
+    String
+    Struct
+    UnsafePointer
+)
+// minimal version of flags
+const (
+    tflagUncommon  tflag = 1 &lt;&lt; 0
+    tflagExtraStar tflag = 1 &lt;&lt; 1
+)
+
+// minimal version of kinds
+const (
+    kindMask = (1 &lt;&lt; 5) - 1
+)
+
+// minimal version of types
+type (
+    Kind uint
+    nameOff int32
+    typeOff int32
+    textOff int32
+    tflag uint8
+    name struct {
+        bytes *byte
+    }
+    uncommonType struct {
+        pkgPath nameOff
+        mcount  uint16
+        _       uint16
+        moff    uint32
+        _       uint32
+    }
+    rtype struct {
+        size       uintptr
+        ptrdata    uintptr
+        hash       uint32
+        tflag      tflag
+        align      uint8
+        fieldAlign uint8
+        kind       uint8
+        alg        *typeAlg
+        gcdata     *byte
+        str        nameOff
+        ptrToThis  typeOff
+    }
+    typeAlg struct {
+        hash  func(unsafe.Pointer, uintptr) uintptr
+        equal func(unsafe.Pointer, unsafe.Pointer) bool
+    }
+    method struct {
+        name nameOff
+        mtyp typeOff
+        ifn  textOff
+        tfn  textOff
+    }
+    structField struct {
+        name       name
+        typ        *rtype
+        offsetAnon uintptr
+    }
+    structType struct {
+        rtype `reflect:&quot;struct&quot;`
+        pkgPath name
+        fields  []structField
+    }
+    emptyInterface struct {
+        typ  *rtype
+        word unsafe.Pointer
+    }
+    stringHeader struct {
+        Data unsafe.Pointer
+        Len  int
+    }
+)
+// utility function to find out the offsets
+func add(p unsafe.Pointer, x uintptr) unsafe.Pointer {
+    return unsafe.Pointer(uintptr(p) + x)
+}
+
+func (n name) isExported() bool {
+    return (*n.bytes)&amp;(1&lt;&lt;0) != 0
+}
+
+func (n name) name() (s string) {
+    if n.bytes == nil {
+        panic(&quot;no bytes present.&quot;)
+    }
+    b := (*[4]byte)(unsafe.Pointer(n.bytes))
+
+    hdr := (*stringHeader)(unsafe.Pointer(&amp;s))
+    hdr.Data = unsafe.Pointer(&amp;b[3])
+    hdr.Len = int(b[1])&lt;&lt;8 | int(b[2])
+    return s
+}
+
+func (t *rtype) nameOff(off nameOff) name { 
+    return name{(*byte)(resolveNameOff(unsafe.Pointer(t), int32(off)))} 
+}
+
+func (t *rtype) typeOff(off typeOff) *rtype { 
+    return (*rtype)(resolveTypeOff(unsafe.Pointer(t), int32(off))) 
+}
+
+func (t *rtype) Kind() Kind { return Kind(t.kind &amp; kindMask) }
+
+func (t *rtype) String() string {
+    s := t.nameOff(t.str).name()
+    if t.tflag&amp;tflagExtraStar != 0 {
+        return s[1:]
+    }
+    return s
+}
+
+func (t *uncommonType) methods() []method {
+    if t.mcount == 0 {
+        panic(&quot;zero methods.&quot;)
+    }
+    return (*[1 &lt;&lt; 16]method)(add(unsafe.Pointer(t), uintptr(t.moff)))[:t.mcount:t.mcount]
+}
+
+func (t *rtype) uncommon() *uncommonType {
+    if t.tflag&amp;tflagUncommon == 0 {
+        panic(&quot;bad flag.&quot;)
+    }
+    if t.Kind() != Struct {
+        panic(&quot;not struct.&quot;)
+    }
+    type u struct {
+        structType
+        u uncommonType
+    }
+    ptrToT := unsafe.Pointer(t)
+    return &amp;(*u)(ptrToT).u
+}
+
+func (t *rtype) exportedMethods() []method {
+    ut := t.uncommon()
+    if ut == nil {
+        panic(&quot;nil uncommon.&quot;)
+    }
+    allMethods := ut.methods()
+    allExported := true
+    for _, method := range allMethods {
+        name := t.nameOff(method.name)
+        if !name.isExported() {
+            allExported = false
+            break
+        }
+    }
+    var methods []method
+    if allExported {
+        methods = allMethods
+    } else {
+        methods = make([]method, 0, len(allMethods))
+        for _, m := range allMethods {
+            name := t.nameOff(m.name)
+            if name.isExported() {
+                methods = append(methods, m)
+            }
+        }
+        methods = methods[:len(methods):len(methods)]
+    }
+    return methods
+}
+// short variant of the TypeOf in the reflect package.
+func TypeOf(i interface{}) *rtype {
+    return (*(*emptyInterface)(ptrToI)).typ
+}
+</code></pre>
+
+        <p>Of course, to run tests, we have to create an <code>empty.s</code> file in the same folder and to add the
+            linkname directives for two functions:</p>
+
+        <pre><code class="language-go">//go:linkname resolveTypeOff reflect.resolveTypeOff
+func resolveTypeOff(rtype unsafe.Pointer, off int32) unsafe.Pointer
+
+//go:linkname resolveNameOff reflect.resolveNameOff
+func resolveNameOff(ptrInModule unsafe.Pointer, off int32) unsafe.Pointer
+</code></pre>
+
+        <p>On the <code>Point</code> struct declared above, we&rsquo;re adding the followings:</p>
+
+        <pre><code class="language-go">func (p Point) AnotherMethod(scale int) int {
+    return -1
+}
+func (p Point) Dist(scale int) int {
+    return p.x*p.x*scale + p.y*p.y*scale
+}
+func (p Point) NoArgs() {
+    println(&quot;NoArgs called.&quot;)
+}
+func (p Point) TotalDist(points ...Point) int {
+    tot := 0
+    for _, q := range points {
+        dx := q.x - p.x
+        dy := q.y - p.y
+        tot += dx*dx + dy*dy
+    }
+    return tot
+}
+func (p Point) NoArgsButReturn() string {
+    return &quot;something&quot;
+}
+</code></pre>
+
+        <p>And finally, the test :</p>
+
+        <pre><code class="language-go">
+func TestMethod(t *testing.T) {
+    p := Point{3, 4}
+    pType := TypeOf(p)
+    t.Logf(&quot;%v&quot;, pType)
+    methods := pType.exportedMethods()
+    for idx, method := range methods {
+        name := pType.nameOff(method.name)
+        typ := pType.typeOff(method.mtyp)
+        t.Logf(&quot;%d : Method %q %v %v %v\n&quot;, idx, name.name(), typ, method.tfn, method.ifn)
+    }
+}
+</code></pre>
+
+        <p>When we run this test, we&rsquo;re going to see that the methods signature are reported differently than what
+            we&rsquo;ve declared. This means we are not doing something that <code>reflect</code> package does.</p>
+
+        <p>Our version of TypeOf function doesn&rsquo;t return an interface and also, that interface is built by calling
+            toPtr() method of the rType. However, with that code added, the problem still doesn&rsquo;t get fixed.</p>
+
+        <p>Adding the following code, fixes the test (the signatures are correct).</p>
+
+        <pre><code class="language-go">    reflect.TypeOf(p).Method(0)
+</code></pre>
+
+        <p>Seems the function <code>func addReflectOff(ptr unsafe.Pointer) int32</code> which is implemented in the
+            runtime package gets called from <code>reflect</code> package which creates <a
+                    href="https://github.com/golang/go/blob/34db5f0c4d80b8fe3fb4b5be90efd9ee92bd1d4d/src/runtime/type.go#L147">reflectOffs
+                structs</a> for later lookups.</p>
+
+        <p>In the larger version (my own version of reflect), all Value.Call() tests were failing in a segmentation
+            fault, with no apparent reason - the code being the same as in reflect package. For this reason I&rsquo;ve
+            presented you with this small test and it&rsquo;s conclusions.</p>
+
+        <h4 id="conclusion">Conclusion</h4>
+
+        <p>It took me four days to learn the internals and modify the reflect package for my needs, but in the end I&rsquo;ve
+            done it and later I will probably integrate it into the <a href="https://github.com/badu/reflector">reflector</a>
+            package.</p>
+
+        <p>Probably the lack of documentation made things harder to understand and follow. Probably some things are
+            never meant to be - that - public, due to some sort of programming language politics. Who knows but mostly
+            who cares?</p>
+
+        <p>I encourage you to take my advice and break things so you can learn how they work, how other developers
+            solved problems that you cannot think about while just reading the code.</p>
+    </div>
+
+
+    <h4 class="page-header">Related</h4>
+    <div class="item">
+
+
+        <h4><a href="/post/known-world-stops/">Knowing when the world stops</a></h4>
+        <h5>I quote &#34;This function is called with the world stopped, at the beginning of a garbage
+            collection.&#34;</h5>
+        <h5>March 5, 2018</h5>
+        <kbd class="item-tag">Golang</kbd> <kbd class="item-tag">Advanced</kbd> <kbd class="item-tag">Compiler</kbd>
+        <kbd class="item-tag">Directives</kbd>
+        <p>About 3 minutes of reading.</p>
+    </div>
+    <div class="item">
+
+
+        <h4><a href="/post/radix-story/">A Radix Story</a></h4>
+        <h5>About routing and searching using radix trees.</h5>
+        <h5>February 27, 2018</h5>
+        <kbd class="item-tag">Golang</kbd> <kbd class="item-tag">Radix</kbd> <kbd class="item-tag">Tree</kbd> <kbd
+            class="item-tag">Router</kbd> <kbd class="item-tag">Search</kbd>
+        <p>About 10 minutes of reading.</p>
+    </div>
+    <div class="item">
+
+
+        <h4><a href="/post/net-http-week2/">My Thoughts On Net/Http Package - Week 2</a></h4>
+        <h5>A deep dive into it net/http package.</h5>
+        <h5>February 24, 2018</h5>
+        <kbd class="item-tag">Golang</kbd> <kbd class="item-tag">Net</kbd> <kbd class="item-tag">Http</kbd> <kbd
+            class="item-tag">Analysis</kbd>
+        <p>About 5 minutes of reading.</p>
+    </div>
+
+
+    <h4 class="page-header">Comments</h4>
+    <div id="disqus_thread"></div>
+    <script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "recency-bias" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
+        Disqus.</a></noscript>
+    <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</main>
+<footer>
+    <p class="copyright text-muted"> Recency Bias &copy; 2017
+        - Powered by <a href="https://gohugo.io">Hugo</a>.</p>
+</footer>
+</body>
+</html>
+
