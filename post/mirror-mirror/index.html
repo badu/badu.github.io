@@ -56,6 +56,7 @@
 
 
 
+
     </style>
 
 
@@ -141,6 +142,7 @@
 
 
 
+
     </script>
 
 </head>
@@ -207,6 +209,7 @@
 
 
 
+
                         </script>
                     </div>
                 </li>
@@ -229,7 +232,7 @@
         <h5>March 10, 2018</h5>
         <kbd class="item-tag">Golang</kbd> <kbd class="item-tag">Advanced</kbd> <kbd class="item-tag">Reflect</kbd> <kbd
             class="item-tag">Unsafe</kbd>
-        <p>About 10 minutes of reading.</p>
+        <p>About 12 minutes of reading.</p>
     </div>
 
     <br>
@@ -456,6 +459,7 @@ import (
     &quot;testing&quot;
     &quot;unsafe&quot; // also for linkname
 )
+
 const (
     Invalid       Kind = iota
     Bool
@@ -485,18 +489,16 @@ const (
     Struct
     UnsafePointer
 )
-// minimal version of flags
+
 const (
     tflagUncommon  tflag = 1 &lt;&lt; 0
     tflagExtraStar tflag = 1 &lt;&lt; 1
 )
 
-// minimal version of kinds
 const (
     kindMask = (1 &lt;&lt; 5) - 1
 )
 
-// minimal version of types
 type (
     Kind uint
     nameOff int32
@@ -554,10 +556,88 @@ type (
         Data unsafe.Pointer
         Len  int
     }
+    ptrType struct {
+        rtype `reflect:&quot;ptr&quot;`
+        elem *rtype // pointer element (pointed at) type
+    }
 )
-// utility function to find out the offsets
+
+func resolveReflectName(n name) nameOff {
+    return nameOff(addReflectOff(unsafe.Pointer(n.bytes)))
+}
+
 func add(p unsafe.Pointer, x uintptr) unsafe.Pointer {
     return unsafe.Pointer(uintptr(p) + x)
+}
+
+func fnv1(x uint32, list ...byte) uint32 {
+    for _, b := range list {
+        x = x*16777619 ^ uint32(b)
+    }
+    return x
+}
+
+func rtypeOff(section unsafe.Pointer, off int32) *rtype {
+    return (*rtype)(add(section, uintptr(off)))
+}
+
+func typesByString(s string) []*rtype {
+    sections, offset := typelinks()
+    var ret []*rtype
+
+    for offsI, offs := range offset {
+        section := sections[offsI]
+        i, j := 0, len(offs)
+        for i &lt; j {
+            h := i + (j-i)/2
+            if !(rtypeOff(section, offs[h]).String() &gt;= s) {
+                i = h + 1
+            } else {
+                j = h
+            }
+        }
+        for j := i; j &lt; len(offs); j++ {
+            typ := rtypeOff(section, offs[j])
+            if typ.String() != s {
+                break
+            }
+            ret = append(ret, typ)
+        }
+    }
+    return ret
+}
+
+func newName(n, tag string, exported bool) name {
+    if len(n) &gt; 1&lt;&lt;16-1 {
+        panic(&quot;reflect.nameFrom: name too long: &quot; + n)
+    }
+    if len(tag) &gt; 1&lt;&lt;16-1 {
+        panic(&quot;reflect.nameFrom: tag too long: &quot; + tag)
+    }
+
+    var bits byte
+    l := 1 + 2 + len(n)
+    if exported {
+        bits |= 1 &lt;&lt; 0
+    }
+    if len(tag) &gt; 0 {
+        l += 2 + len(tag)
+        bits |= 1 &lt;&lt; 1
+    }
+
+    b := make([]byte, l)
+    b[0] = bits
+    b[1] = uint8(len(n) &gt;&gt; 8)
+    b[2] = uint8(len(n))
+    copy(b[3:], n)
+    if len(tag) &gt; 0 {
+        tb := b[3+len(n):]
+        tb[0] = uint8(len(tag) &gt;&gt; 8)
+        tb[1] = uint8(len(tag))
+        copy(tb[2:], tag)
+    }
+
+    return name{bytes: &amp;b[0]}
 }
 
 func (n name) isExported() bool {
@@ -566,7 +646,7 @@ func (n name) isExported() bool {
 
 func (n name) name() (s string) {
     if n.bytes == nil {
-        panic(&quot;no bytes present.&quot;)
+        panic(&quot;no name&quot;)
     }
     b := (*[4]byte)(unsafe.Pointer(n.bytes))
 
@@ -576,12 +656,12 @@ func (n name) name() (s string) {
     return s
 }
 
-func (t *rtype) nameOff(off nameOff) name { 
-    return name{(*byte)(resolveNameOff(unsafe.Pointer(t), int32(off)))} 
+func (t *rtype) nameOff(off nameOff) name {
+    return name{(*byte)(resolveNameOff(unsafe.Pointer(t), int32(off)))}
 }
 
-func (t *rtype) typeOff(off typeOff) *rtype { 
-    return (*rtype)(resolveTypeOff(unsafe.Pointer(t), int32(off))) 
+func (t *rtype) typeOff(off typeOff) *rtype {
+    return (*rtype)(resolveTypeOff(unsafe.Pointer(t), int32(off)))
 }
 
 func (t *rtype) Kind() Kind { return Kind(t.kind &amp; kindMask) }
@@ -596,30 +676,46 @@ func (t *rtype) String() string {
 
 func (t *uncommonType) methods() []method {
     if t.mcount == 0 {
-        panic(&quot;zero methods.&quot;)
+        panic(&quot;zero methods&quot;)
     }
     return (*[1 &lt;&lt; 16]method)(add(unsafe.Pointer(t), uintptr(t.moff)))[:t.mcount:t.mcount]
 }
 
 func (t *rtype) uncommon() *uncommonType {
     if t.tflag&amp;tflagUncommon == 0 {
-        panic(&quot;bad flag.&quot;)
+        return nil
     }
-    if t.Kind() != Struct {
-        panic(&quot;not struct.&quot;)
-    }
-    type u struct {
-        structType
-        u uncommonType
+    if t.Kind() != Struct &amp;&amp; t.Kind() != Ptr {
+        panic(&quot;not struct or pointer&quot;)
     }
     ptrToT := unsafe.Pointer(t)
-    return &amp;(*u)(ptrToT).u
+
+    switch t.Kind() {
+    case Struct:
+        type u struct {
+            structType
+            u uncommonType
+        }
+        return &amp;(*u)(ptrToT).u
+    case Ptr:
+        type u struct {
+            ptrType
+            u uncommonType
+        }
+        return &amp;(*u)(ptrToT).u
+    default:
+        type u struct {
+            rtype
+            u uncommonType
+        }
+        return &amp;(*u)(ptrToT).u
+    }
 }
 
 func (t *rtype) exportedMethods() []method {
     ut := t.uncommon()
     if ut == nil {
-        panic(&quot;nil uncommon.&quot;)
+        return nil
     }
     allMethods := ut.methods()
     allExported := true
@@ -645,20 +741,50 @@ func (t *rtype) exportedMethods() []method {
     }
     return methods
 }
-// short variant of the TypeOf in the reflect package.
+
+func (t *rtype) ptrTo() *rtype {
+    if t.ptrToThis != 0 {
+        return t.typeOff(t.ptrToThis)
+    }
+    s := &quot;*&quot; + t.String()
+    for _, tt := range typesByString(s) {
+        p := (*ptrType)(unsafe.Pointer(tt))
+        if p.elem != t {
+            continue
+        }
+        return &amp;p.rtype
+    }
+    var iptr interface{} = (*unsafe.Pointer)(nil)
+    prototype := *(**ptrType)(unsafe.Pointer(&amp;iptr))
+    pp := *prototype
+    pp.str = resolveReflectName(newName(s, &quot;&quot;, false))
+    pp.ptrToThis = 0
+    pp.hash = fnv1(t.hash, '*')
+    pp.elem = t
+    return &amp;pp.rtype
+}
+
 func TypeOf(i interface{}) *rtype {
-    return (*(*emptyInterface)(ptrToI)).typ
+    return (*(*emptyInterface)(unsafe.Pointer(&amp;i))).typ.ptrTo()
 }
 </code></pre>
 
         <p>Of course, to run tests, we have to create an <code>empty.s</code> file in the same folder and to add the
             linkname directives for two functions:</p>
 
-        <pre><code class="language-go">//go:linkname resolveTypeOff reflect.resolveTypeOff
+        <pre><code class="language-go">
+//go:linkname resolveTypeOff runtime.resolveTypeOff
 func resolveTypeOff(rtype unsafe.Pointer, off int32) unsafe.Pointer
 
-//go:linkname resolveNameOff reflect.resolveNameOff
+//go:linkname resolveNameOff runtime.resolveNameOff
 func resolveNameOff(ptrInModule unsafe.Pointer, off int32) unsafe.Pointer
+
+//go:linkname typelinks reflect.typelinks
+func typelinks() (sections []unsafe.Pointer, offset [][]int32)
+
+//go:linkname addReflectOff reflect.addReflectOff
+func addReflectOff(ptr unsafe.Pointer) int32
+
 </code></pre>
 
         <p>On the <code>Point</code> struct declared above, we&rsquo;re adding the followings:</p>
@@ -710,17 +836,24 @@ func TestMethod(t *testing.T) {
 
         <p>Adding the following code, fixes the test (the signatures are correct).</p>
 
-        <pre><code class="language-go">    reflect.TypeOf(p).Method(0)
+        <pre><code class="language-go">    type dummy struct{}
+    func (d dummy) A() {}
+    var _ = reflect.TypeOf(dummy{}).Method(0)
 </code></pre>
 
         <p>Seems the function <code>func addReflectOff(ptr unsafe.Pointer) int32</code> which is implemented in the
             runtime package gets called from <code>reflect</code> package which creates <a
                     href="https://github.com/golang/go/blob/34db5f0c4d80b8fe3fb4b5be90efd9ee92bd1d4d/src/runtime/type.go#L147">reflectOffs
-                structs</a> for later lookups.</p>
+                structs</a> for later lookups. We need to force the compiler to allow us to use the same functions as
+            reflect does. Since we&rsquo;re not using reflect anywhere, dead code removal does not allow us to
+            initialize properly - so we need to force it.</p>
+
+        <p>Indeed, we&rsquo;re importing reflect to write our own reflect, but we&rsquo;re not using it in other than
+            dumb init.</p>
 
         <p>In the larger version (my own version of reflect), all Value.Call() tests were failing in a segmentation
-            fault, with no apparent reason - the code being the same as in reflect package. For this reason I&rsquo;ve
-            presented you with this small test and it&rsquo;s conclusions.</p>
+            fault, with a reason (method types were zero) - the code being the same as in reflect package. For this
+            reason I&rsquo;ve presented you with this small test and it&rsquo;s conclusions.</p>
 
         <h4 id="conclusion">Conclusion</h4>
 
