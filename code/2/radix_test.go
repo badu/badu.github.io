@@ -113,7 +113,7 @@ type (
 	}
 )
 
-//PrintTree: Print out current tree struct, it will using \t for tree level
+// PrintTree: Print out current tree struct, it will using \t for tree level
 func (t *TreeTester) PrintTree(currentNode *Node, treeLevel int) {
 	if currentNode == nil {
 		currentNode = &t.root
@@ -124,7 +124,7 @@ func (t *TreeTester) PrintTree(currentNode *Node, treeLevel int) {
 	}
 
 	if currentNode.isLeaf() {
-		//Reach  the end point
+		// Reach  the end point
 		t.logger("%s[%d] Leaf key : %q value : %v\n", tabs, treeLevel, currentNode.leaf.key, currentNode.leaf.value)
 		return
 	}

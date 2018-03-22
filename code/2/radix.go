@@ -55,7 +55,7 @@ func (n *Node) createNode(edgeKey, leafKey string, value interface{}) {
 
 func (n *Node) createNodeWithEdges(newKey string, edgeKey string) *Node {
 	if n.isLeaf() {
-		//node is leaf node could not split, return nil
+		// node is leaf node could not split, return nil
 		return nil
 	}
 
@@ -139,7 +139,7 @@ func (t *Tree) insert(target *Node, edgeKey string, leafKey string, value interf
 }
 
 func (t *Tree) Insert(what string, value interface{}) {
-	//leaf key and edge key are the same
+	// leaf key and edge key are the same
 	t.insert(&t.root, what, what, value)
 }
 

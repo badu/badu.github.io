@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Recency Bias</title>
         <link>http://badu.github.io/</link>
@@ -7,10 +7,26 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-US</language>
         <copyright>Powered by [Hugo](https://gohugo.io).</copyright>
-        <lastBuildDate>Sat, 10 Mar 2018 00:00:00 +0000</lastBuildDate>
+        <lastBuildDate>Thu, 22 Mar 2018 00:00:00 +0000</lastBuildDate>
 
         <atom:link href="http://badu.github.io/index.xml" rel="self" type="application/rss+xml"/>
 
+
+        <item>
+            <title>Open Letter to You, My Recruiter</title>
+            <link>http://badu.github.io/post/recruters/</link>
+            <pubDate>Thu, 22 Mar 2018 00:00:00 +0000</pubDate>
+
+            <guid>http://badu.github.io/post/recruters/</guid>
+            <description>Foreword So, you are my new connected-over-some-network-or-email-or-something recruiter.
+                What if I tell you that I posses recruiting skills? Understanding programmers and their psychology would
+                be the first measure of a good IT recruiter, right ?
+                Telling a good programmer from a not-so-good one comes in measuring both his analytical skills and his
+                human qualities.
+                I can totally understand that you might have no idea about programming skills, nor can we sustain a
+                conversation regarding philosophical concepts about programming.
+            </description>
+        </item>
 
         <item>
             <title>Mirror Mirror on ...</title>

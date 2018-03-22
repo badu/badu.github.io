@@ -452,23 +452,23 @@ func logf(r *Request, format string, args ...interface{}) {
 //
 // A trivial example server is:
 //
-//	package main
+// 	package main
 //
-//	import (
-//		"io"
-//		"net/http"
-//		"log"
-//	)
+// 	import (
+// 		"io"
+// 		"net/http"
+// 		"log"
+// 	)
 //
-//	// hello world, the web server
-//	func HelloServer(w http.ResponseWriter, req *http.Request) {
-//		io.WriteString(w, "hello, world!\n")
-//	}
+// 	// hello world, the web server
+// 	func HelloServer(w http.ResponseWriter, req *http.Request) {
+// 		io.WriteString(w, "hello, world!\n")
+// 	}
 //
-//	func main() {
-//		http.HandleFunc("/hello", HelloServer)
-//		log.Fatal(http.ListenAndServe(":12345", nil))
-//	}
+// 	func main() {
+// 		http.HandleFunc("/hello", HelloServer)
+// 		log.Fatal(http.ListenAndServe(":12345", nil))
+// 	}
 //
 // ListenAndServe always returns a non-nil error.
 func ListenAndServe(addr string, handler Handler) error {
@@ -484,22 +484,22 @@ func ListenAndServe(addr string, handler Handler) error {
 //
 // A trivial example server is:
 //
-//	import (
-//		"log"
-//		"net/http"
-//	)
+// 	import (
+// 		"log"
+// 		"net/http"
+// 	)
 //
-//	func handler(w http.ResponseWriter, req *http.Request) {
-//		w.Header().Set("Content-Type", "text/plain")
-//		w.Write([]byte("This is an example server.\n"))
-//	}
+// 	func handler(w http.ResponseWriter, req *http.Request) {
+// 		w.Header().Set("Content-Type", "text/plain")
+// 		w.Write([]byte("This is an example server.\n"))
+// 	}
 //
-//	func main() {
-//		http.HandleFunc("/", handler)
-//		log.Printf("About to listen on 10443. Go to https://127.0.0.1:10443/")
-//		err := http.ListenAndServeTLS(":10443", "cert.pem", "key.pem", nil)
-//		log.Fatal(err)
-//	}
+// 	func main() {
+// 		http.HandleFunc("/", handler)
+// 		log.Printf("About to listen on 10443. Go to https://127.0.0.1:10443/")
+// 		err := http.ListenAndServeTLS(":10443", "cert.pem", "key.pem", nil)
+// 		log.Fatal(err)
+// 	}
 //
 // One can use generate_cert.go in crypto/tls to generate cert.pem and key.pem.
 //
