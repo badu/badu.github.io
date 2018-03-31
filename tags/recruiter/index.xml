@@ -6,7 +6,6 @@
         <description>Recent content in Recruiter on Recency Bias</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-US</language>
-        <copyright>Powered by [Hugo](https://gohugo.io).</copyright>
         <lastBuildDate>Thu, 22 Mar 2018 00:00:00 +0000</lastBuildDate>
 
         <atom:link href="http://badu.github.io/tags/recruiter/index.xml" rel="self" type="application/rss+xml"/>
@@ -14,10 +13,10 @@
 
         <item>
             <title>Open Letter to You, My Recruiter</title>
-            <link>http://badu.github.io/post/recruters/</link>
+            <link>http://badu.github.io/post/recruiters/</link>
             <pubDate>Thu, 22 Mar 2018 00:00:00 +0000</pubDate>
 
-            <guid>http://badu.github.io/post/recruters/</guid>
+            <guid>http://badu.github.io/post/recruiters/</guid>
             <description>Foreword So, you are my new connected-over-some-network-or-email-or-something recruiter.
                 What if I tell you that I posses recruiting skills? Understanding programmers and their psychology would
                 be the first measure of a good IT recruiter, right ?

@@ -3,7 +3,7 @@
     <div class="intro">
         <h3>{{ .Site.Title }}</h3>
         <h4>{{ markdownify .Site.Params.Description }}</h4>
-    {{ range (.Paginator 5).Pages }} {{ partial "list-item" . }} {{ end }}
+    {{ range (.Paginator 100).Pages }} {{ partial "list-item" . }} {{ end }}
     </div>
 </main>
 {{ partial "footer" . }}
