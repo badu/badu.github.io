@@ -1,30 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>Languages on Recency Bias</title>
-        <link>http://badu.github.io/tags/languages/</link>
-        <description>Recent content in Languages on Recency Bias</description>
-        <generator>Hugo -- gohugo.io</generator>
-        <language>en-US</language>
-        <lastBuildDate>Wed, 15 Nov 2017 00:00:00 +0000</lastBuildDate>
-
-        <atom:link href="http://badu.github.io/tags/languages/index.xml" rel="self" type="application/rss+xml"/>
-
-
-        <item>
-            <title>Comparing Go with Other Languages is Wrong</title>
-            <link>http://badu.github.io/post/comparing-go-is-wrong/</link>
-            <pubDate>Wed, 15 Nov 2017 00:00:00 +0000</pubDate>
-
-            <guid>http://badu.github.io/post/comparing-go-is-wrong/</guid>
-            <description>TL;DR &amp;ldquo;Java is to Javascript like Car is to Carpet.&amp;rdquo; - Collective Genius
-                My Computer Language is Better than Yours Some programming languages were - let&amp;rsquo;s say -
-                discovered over time, whereas others were created academically by carefully selecting the features that
-                would provide solutions to a set of problems. There’s nothing terribly new about spawning programming
-                languages. However, haters gonna hate and will always find one, in an office near you or over the
-                Internet.
-            </description>
-        </item>
-
-    </channel>
+  <channel>
+    <title>Languages on Recency Bias</title>
+    <link>http://badu.github.io/tags/languages/</link>
+    <description>Recent content in Languages on Recency Bias</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Wed, 15 Nov 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://badu.github.io/tags/languages/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Comparing Go with Other Languages is Wrong</title>
+      <link>http://badu.github.io/post/comparing-go-is-wrong/</link>
+      <pubDate>Wed, 15 Nov 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/post/comparing-go-is-wrong/</guid>
+      <description>TL;DR &amp;ldquo;Java is to Javascript like Car is to Carpet.&amp;rdquo; - Collective Genius
+My Computer Language is Better than Yours Some programming languages were - let&amp;rsquo;s say - discovered over time, whereas others were created academically by carefully selecting the features that would provide solutions to a set of problems. There’s nothing terribly new about spawning programming languages. However, haters gonna hate and will always find one, in an office near you or over the Internet.</description>
+    </item>
+    
+  </channel>
 </rss>

@@ -1,29 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>Tree on Recency Bias</title>
-        <link>http://badu.github.io/tags/tree/</link>
-        <description>Recent content in Tree on Recency Bias</description>
-        <generator>Hugo -- gohugo.io</generator>
-        <language>en-US</language>
-        <lastBuildDate>Tue, 27 Feb 2018 00:00:00 +0000</lastBuildDate>
-
-        <atom:link href="http://badu.github.io/tags/tree/index.xml" rel="self" type="application/rss+xml"/>
-
-
-        <item>
-            <title>A Radix Story</title>
-            <link>http://badu.github.io/post/radix-story/</link>
-            <pubDate>Tue, 27 Feb 2018 00:00:00 +0000</pubDate>
-
-            <guid>http://badu.github.io/post/radix-story/</guid>
-            <description>A Radix Story Yes, All You Need is Standard &amp;ldquo;net/http&amp;rdquo; There are, out there
-                in the wild, an abundance of routers that a developer can use. In my opinion, one thing that they all
-                share is the lack of separation of concerns. By separation of concerns I mean mixing handlers with
-                routes and conditions, putting on top of that some cool optimized algorithm for looking up a route (or
-                maybe I should say inspecting a string&amp;hellip;).
-            </description>
-        </item>
-
-    </channel>
+  <channel>
+    <title>Tree on Recency Bias</title>
+    <link>http://badu.github.io/tags/tree/</link>
+    <description>Recent content in Tree on Recency Bias</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 27 Feb 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://badu.github.io/tags/tree/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>A Radix Story</title>
+      <link>http://badu.github.io/post/radix-story/</link>
+      <pubDate>Tue, 27 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/post/radix-story/</guid>
+      <description>A Radix Story Yes, All You Need is Standard &amp;ldquo;net/http&amp;rdquo; There are, out there in the wild, an abundance of routers that a developer can use. In my opinion, one thing that they all share is the lack of separation of concerns. By separation of concerns I mean mixing handlers with routes and conditions, putting on top of that some cool optimized algorithm for looking up a route (or maybe I should say inspecting a string&amp;hellip;).</description>
+    </item>
+    
+  </channel>
 </rss>

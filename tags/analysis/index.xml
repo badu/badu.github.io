@@ -1,46 +1,39 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>Analysis on Recency Bias</title>
-        <link>http://badu.github.io/tags/analysis/</link>
-        <description>Recent content in Analysis on Recency Bias</description>
-        <generator>Hugo -- gohugo.io</generator>
-        <language>en-US</language>
-        <lastBuildDate>Sat, 24 Feb 2018 00:00:00 +0000</lastBuildDate>
-
-        <atom:link href="http://badu.github.io/tags/analysis/index.xml" rel="self" type="application/rss+xml"/>
-
-
-        <item>
-            <title>My Thoughts On Net/Http Package - Week 2</title>
-            <link>http://badu.github.io/post/net-http-week2/</link>
-            <pubDate>Sat, 24 Feb 2018 00:00:00 +0000</pubDate>
-
-            <guid>http://badu.github.io/post/net-http-week2/</guid>
-            <description>TL;DR This series is about my questions and thoughts regarding net/http package. The process of
-                learning is based on mistakes, therefor I&amp;rsquo;m inviting you to learn aside me.
-                You are allowed to judge the code. You are not allowed to judge the people.
-                Part 1
-                ListenAndServe As you might well know, using http package is easy :
-                package main import ( &amp;quot;io&amp;quot; &amp;quot;net/http&amp;quot; &amp;quot;log&amp;quot; ) func
-                main() { http.HandleFunc(&amp;quot;/hello&amp;quot;, func (w http.
-            </description>
-        </item>
-
-        <item>
-            <title>My Thoughts On Net/Http Package - Week 1</title>
-            <link>http://badu.github.io/post/net-http-week1/</link>
-            <pubDate>Sun, 18 Feb 2018 00:00:00 +0000</pubDate>
-
-            <guid>http://badu.github.io/post/net-http-week1/</guid>
-            <description>TL;DR This series is about my questions and thoughts regarding net/http package. The process of
-                learning is based on mistakes, therefor I&amp;rsquo;m inviting you to learn aside me.
-                You are allowed to judge the code. You are not allowed to judge the people.
-                First Glance I have a confession to make : despite the fact that &amp;ldquo;Keep types close&amp;rdquo;
-                rule is fair enough, the architect in me needs to reorganize the code in such a manner that a 10000 feet
-                view to be possible.
-            </description>
-        </item>
-
-    </channel>
+  <channel>
+    <title>Analysis on Recency Bias</title>
+    <link>http://badu.github.io/tags/analysis/</link>
+    <description>Recent content in Analysis on Recency Bias</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Sat, 24 Feb 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://badu.github.io/tags/analysis/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>My Thoughts On Net/Http Package - Week 2</title>
+      <link>http://badu.github.io/post/net-http-week2/</link>
+      <pubDate>Sat, 24 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/post/net-http-week2/</guid>
+      <description>TL;DR This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I&amp;rsquo;m inviting you to learn aside me.
+You are allowed to judge the code. You are not allowed to judge the people.
+Part 1
+ListenAndServe As you might well know, using http package is easy :
+package main import ( &amp;quot;io&amp;quot; &amp;quot;net/http&amp;quot; &amp;quot;log&amp;quot; ) func main() { http.HandleFunc(&amp;quot;/hello&amp;quot;, func (w http.</description>
+    </item>
+    
+    <item>
+      <title>My Thoughts On Net/Http Package - Week 1</title>
+      <link>http://badu.github.io/post/net-http-week1/</link>
+      <pubDate>Sun, 18 Feb 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/post/net-http-week1/</guid>
+      <description>TL;DR This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I&amp;rsquo;m inviting you to learn aside me.
+You are allowed to judge the code. You are not allowed to judge the people.
+First Glance I have a confession to make : despite the fact that &amp;ldquo;Keep types close&amp;rdquo; rule is fair enough, the architect in me needs to reorganize the code in such a manner that a 10000 feet view to be possible.</description>
+    </item>
+    
+  </channel>
 </rss>

@@ -126,7 +126,7 @@ disqusShortname = "recency-bias"
     font = "Roboto" # should match the name on Google Fonts!
     highlight = true
     highlightStyle = "solarized-dark"
-    highlightLanguages = ["go", "haskell", "kotlin", "scala", "swift"]
+    highlightLanguages = ["go"]
 
 
 [[menu.main]]
@@ -143,11 +143,6 @@ disqusShortname = "recency-bias"
     url = "/why-recency-bias/"
     name = "Why Recency Bias?"
     weight = 3
-
-[[menu.main]]
-    url = "/hire-me/"
-    name = "Hire me"
-    weight = 4
 
 # Social icons to be shown on the right-hand side of the navigation bar
 # The "name" field should match the name of the icon to be used

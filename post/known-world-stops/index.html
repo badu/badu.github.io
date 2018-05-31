@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Knowing when the world stops</title>
 
-    <meta name="description"
-          content="I quote &#34;This function is called with the world stopped, at the beginning of a garbage collection.&#34;">
+    <meta name="description" content="I quote &#34;This function is called with the world stopped, at the beginning of a garbage collection.&#34;">
 
     <meta property="site_name" content="recency-bias">
     <meta property="og:type" content="article">
@@ -15,8 +14,7 @@
     <meta property="og:title" content="Knowing when the world stops">
     <meta property="og:image" content="">
 
-    <meta property="og:description"
-          content="I quote &#34;This function is called with the world stopped, at the beginning of a garbage collection.&#34;">
+    <meta property="og:description" content="I quote &#34;This function is called with the world stopped, at the beginning of a garbage collection.&#34;">
 
     <meta name="twitter:url" content="http://badu.github.io/post/known-world-stops/">
     <meta name="twitter:card" content="summary">
@@ -38,7 +36,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
     <link rel="shortcut icon" href="http://badu.github.io/favicon.ico">
 
-    <style>
+<style>
 
     html body {
         font-family: 'Roboto', sans-serif;
@@ -61,47 +59,50 @@
 
 
 
-    </style>
+</style>
 
 
-    <link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/main.css">
 
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 
 
-    <link rel="stylesheet"
-          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
 
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"> 
 
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/kotlin.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/scala.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/swift.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script> 
     <script>hljs.initHighlightingOnLoad();</script>
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-            crossorigin="anonymous"></script>
-
-    <script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script>
-    <meta name="generator" content="Hugo 0.38-DEV"/>
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.38-DEV" />
+
+
+
+    
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-687869-6"></script>
     <script>
           window.dataLayer = window.dataLayer || [];
@@ -137,18 +138,6 @@
               }
           });
           }());
-
-
-
-
-
-
-
-
-
-
-
-
     </script>
 
 </head>
@@ -156,48 +145,39 @@
 <body>
 
 <nav class="navbar navbar-default navbar-fixed-top">
-
     <div class="container">
-
         <div class="navbar-header">
-
             <a class="navbar-brand visible-xs" href="#">Knowing when the world stops</a>
-
             <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-
         </div>
-
         <div class="collapse navbar-collapse">
-
-
+        
             <ul class="nav navbar-nav">
-
+            
                 <li><a href="/post/">Posts</a></li>
-
+            
                 <li><a href="/about/">About</a></li>
-
+            
                 <li><a href="/why-recency-bias/">Why Recency Bias?</a></li>
-
-                <li><a href="/hire-me/">Hire me</a></li>
-
+            
             </ul>
+        
 
-
+        
             <ul class="nav navbar-nav navbar-right">
-
+            
                 <li class="navbar-icon"><a href="mailto:badu@badu.ro"><i class="fa fa-envelope-o"></i></a></li>
-
+            
                 <li class="navbar-icon"><a href="https://github.com/badu/"><i class="fa fa-github"></i></a></li>
-
+            
                 <li class="navbar-icon"><a href="https://twitter.com/baduro/"><i class="fa fa-twitter"></i></a></li>
-
-                <li class="navbar-icon"><a href="https://www.linkedin.com/in/flexprogramming/"><i
-                        class="fa fa-linkedin"></i></a></li>
-
+            
+                <li class="navbar-icon"><a href="https://www.linkedin.com/in/flexprogramming/"><i class="fa fa-linkedin"></i></a></li>
+            
                 <li>
                     <script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
                     <div id="SkypeButton_Call_badu.bogdan_1">
@@ -207,208 +187,179 @@
                                          "element": "SkypeButton_Call_badu.bogdan_1",
                                          "participants": ["badu.bogdan"]
                                          });
-
-
-
-
-
-
-
-
-
-
-
                         </script>
                     </div>
                 </li>
             </ul>
-
+        
 
         </div>
 
     </div>
-
+    
     <div class="scroll-progress"></div>
 </nav>
-
 <main>
-    <div class="item">
+<div class="item">
 
 
-        <h4><a href="/post/known-world-stops/">Knowing when the world stops</a></h4>
-        <h5>I quote &#34;This function is called with the world stopped, at the beginning of a garbage
-            collection.&#34;</h5>
-        <h5>March 5, 2018</h5>
-        <kbd class="item-tag">Golang</kbd> <kbd class="item-tag">Advanced</kbd> <kbd class="item-tag">Compiler</kbd>
-        <kbd class="item-tag">Directives</kbd>
-        <p>About 3 minutes of reading.</p>
-    </div>
+
+  
+    <h4><a href="/post/known-world-stops/">Knowing when the world stops</a></h4>
+    <h5>I quote &#34;This function is called with the world stopped, at the beginning of a garbage collection.&#34;</h5>
+    <h5>March 5, 2018</h5>
+ <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Advanced</kbd>  <kbd class="item-tag">Compiler</kbd>  <kbd class="item-tag">Directives</kbd> 
+<p>About 3 minutes of reading.</p>
+</div>
 
     <br>
     <div class="text-justify">
 
-        <p>Last week, I took the time searching for patterns inside the main packages. Besides a bunch of <code>aha
-            moments</code>, I&rsquo;ve realized that some neat tricks can be used to achieve some goals otherwise
-            achievable by applying different techniques.</p>
+<p>Last week, I took the time searching for patterns inside the main packages. Besides a bunch of <code>aha moments</code>, I&rsquo;ve realized that some neat tricks can be used to achieve some goals otherwise achievable by applying different techniques.</p>
 
-        <p>For instance, let&rsquo;s say you have a pool or a cache. How do you call your cleanup function?</p>
+<p>For instance, let&rsquo;s say you have a pool or a cache. How do you call your cleanup function?</p>
 
-        <p>Decisions regarding where to place that call can be made by testing and benchmarking. But what if there is
-            another neat way to do so : just before the garbage collection runs, you can mount yourself a function and
-            receive a call on it.</p>
+<p>Decisions regarding where to place that call can be made by testing and benchmarking. But what if there is another neat way to do so : just before the garbage collection runs, you can mount yourself a function and receive a call on it.</p>
 
-        <h4 id="compiler-directives">Compiler Directives</h4>
+<h4 id="compiler-directives">Compiler Directives</h4>
 
-        <p>A <a href="https://golang.org/cmd/compile/#hdr-Compiler_Directives">compiler directive</a> is a meta
-            information that instructs the compiler on how to behave in certain conditions.</p>
+<p>A <a href="https://golang.org/cmd/compile/#hdr-Compiler_Directives">compiler directive</a> is a meta information that instructs the compiler on how to behave in certain conditions.</p>
 
-        <p>In our case, we&rsquo;re using the <code>sync.pool</code> <a
-                href="https://github.com/golang/go/blob/release-branch.go1.9/src/sync/pool.go#L218">method</a> of
-            cleaning up the pool:</p>
+<p>In our case, we&rsquo;re using the <code>sync.pool</code> <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/sync/pool.go#L218">method</a> of cleaning up the pool:</p>
 
-        <pre><code>```go
+<pre><code>```go
 //go:linkname runtime_registerPoolCleanup sync.runtime_registerPoolCleanup
 func runtime_registerPoolCleanup(cleanup func())
 ```
 </code></pre>
 
-        <p>Here&rsquo;s what we need to do :</p>
+<p>Here&rsquo;s what we need to do :</p>
 
-        <ol>
-            <li>in our package, create a file named <code>empty.s</code>. As the name says, it&rsquo;s empty.</li>
-            <li>in the file where we&rsquo;re going to declare the linkname directive, we have to import &ldquo;unsafe&rdquo;
-                package. So, <code>import _ &quot;unsafe&quot;</code>.
-            </li>
+<ol>
+<li>in our package, create a file named <code>empty.s</code>. As the name says, it&rsquo;s empty.</li>
+<li>in the file where we&rsquo;re going to declare the linkname directive, we have to import &ldquo;unsafe&rdquo; package. So, <code>import _ &quot;unsafe&quot;</code>.</li>
 
-            <li><p>use the directive :</p>
+<li><p>use the directive :</p>
 
-                <pre><code class="language-go">//go:linkname registerCacheCleanupFn sync.runtime_registerPoolCleanup
+<pre><code class="language-go">//go:linkname registerCacheCleanupFn sync.runtime_registerPoolCleanup
 func registerCacheCleanupFn(f func())
-</code></pre>
-            </li>
+</code></pre></li>
 
-            <li><p>in the same file, declare the <code>init()</code> function and call
-                <code>registerCacheCleanupFn</code> with our cleaning function implementation as parameter.</p></li>
-        </ol>
+<li><p>in the same file, declare the <code>init()</code> function and call <code>registerCacheCleanupFn</code> with our cleaning function implementation as parameter.</p></li>
+</ol>
 
-        <p>That&rsquo;s it.</p>
+<p>That&rsquo;s it.</p>
 
-        <p>Advantages of using this technique are obvious. However, we have to keep in mind that our cleaning up
-            implementation should NOT allocate and should NOT call any runtime functions - unless you think you are
-            Mario (the plumber) and can deal with any kind of leak.</p>
+<p>Advantages of using this technique are obvious. However, we have to keep in mind that our cleaning up implementation should NOT allocate and should NOT call any runtime functions - unless you think you are Mario (the plumber) and can deal with any kind of leak.</p>
 
-        <h4 id="what-else-can-we-use">What else can we use?</h4>
+<h4 id="what-else-can-we-use">What else can we use?</h4>
 
-        <p>If we to avoid importing &ldquo;strings&rdquo; just like <a
-                href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/parse.go#L86">parse.go</a> inside
-            &ldquo;net&rdquo; package does, but still be able to call IndexByte, we need the following declaration :</p>
+<p>If we to avoid importing &ldquo;strings&rdquo; just like <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/parse.go#L86">parse.go</a> inside &ldquo;net&rdquo; package does, but still be able to call IndexByte, we need the following declaration :</p>
 
-        <pre><code class="language-go">//go:linkname ByteIndex strings.IndexByte
+<pre><code class="language-go">//go:linkname ByteIndex strings.IndexByte
 func ByteIndex(s string, c byte) int
 </code></pre>
 
-        <p>You might find these below useful as well.</p>
+<p>You might find these below useful as well.</p>
 
-        <p>Bytes :</p>
+<p>Bytes :</p>
 
-        <pre><code class="language-go">//go:linkname BytesEqual bytes.Equal
+<pre><code class="language-go">//go:linkname BytesEqual bytes.Equal
 func BytesEqual(x, y []byte) bool
 </code></pre>
 
-        <pre><code class="language-go">//go:linkname IndexByte bytes.IndexByte
+<pre><code class="language-go">//go:linkname IndexByte bytes.IndexByte
 func IndexByte(s []byte, c byte) int
 </code></pre>
 
-        <pre><code class="language-go">//go:linkname Compare bytes.Compare
+<pre><code class="language-go">//go:linkname Compare bytes.Compare
 func Compare(a, b []byte) int
 </code></pre>
 
-        <p>Time :</p>
+<p>Time :</p>
 
-        <pre><code class="language-go">//go:linkname TimeSleep time.Sleep
+<pre><code class="language-go">//go:linkname TimeSleep time.Sleep
 func TimeSleep(ns int64)
 </code></pre>
 
-        <pre><code class="language-go">//go:linkname StartTimer time.startTimer
+<pre><code class="language-go">//go:linkname StartTimer time.startTimer
 func StartTimer(t *timer)
 </code></pre>
 
-        <pre><code class="language-go">//go:linkname StopTimer time.stopTimer
+<pre><code class="language-go">//go:linkname StopTimer time.stopTimer
 func StopTimer(t *timer) bool
 </code></pre>
 
-        <pre><code class="language-go">//go:linkname PollNano internal/poll.runtimeNano
+<pre><code class="language-go">//go:linkname PollNano internal/poll.runtimeNano
 func PollNano() int64
 </code></pre>
 
-        <pre><code class="language-go">//go:linkname TimeNano time.runtimeNano
+<pre><code class="language-go">//go:linkname TimeNano time.runtimeNano
 func TimeNano() int64
 </code></pre>
 
-        <pre><code class="language-go">//go:linkname Now time.now
+<pre><code class="language-go">//go:linkname Now time.now
 func Now() (sec int64, nsec int32, mono int64) 
 </code></pre>
 
-        <h4 id="a-side-note">A Side Note</h4>
+<h4 id="a-side-note">A Side Note</h4>
 
-        <p>By the way : I&rsquo;ve noticed that strings.Index is sometimes unnecessary called when the second parameter
-            is just a byte (e.g. <code>strings.Index(url, &quot;?&quot;)</code> in <a
-                    href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2002">server.go</a>).
-            I know it is a micro optimization, but hey, let&rsquo;s use the right tool for the right job, shall we?</p>
+<p>By the way : I&rsquo;ve noticed that strings.Index is sometimes unnecessary called when the second parameter is just a byte (e.g. <code>strings.Index(url, &quot;?&quot;)</code> in <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2002">server.go</a>). I know it is a micro optimization, but hey, let&rsquo;s use the right tool for the right job, shall we?</p>
 
-        <p>Same observation goes for bytes.IndexByte too.</p>
+<p>Same observation goes for bytes.IndexByte too.</p>
 
-        <p>Another observation regards strings.TrimPrefix and strings.TrimSuffix - I&rsquo;ve notice that sometimes
-            developers checks if string has prefix or suffix before calling them, which is unnecessary because the check
-            is done inside those functions. Perhaps it would be better to change the signatures of those functions like
-            this :</p>
+<p>Another observation regards strings.TrimPrefix and strings.TrimSuffix - I&rsquo;ve notice that sometimes developers checks if string has prefix or suffix before calling them, which is unnecessary because the check is done inside those functions. Perhaps it would be better to change the signatures of those functions like this :</p>
 
-        <pre><code class="language-go">func TrimPrefix(s, prefix string) (bool, string) // returning true if string had that prefix and the trimmed string
+<pre><code class="language-go">func TrimPrefix(s, prefix string) (bool, string) // returning true if string had that prefix and the trimmed string
 </code></pre>
 
-        <h4 id="directive-wish">Directive Wish</h4>
+<h4 id="directive-wish">Directive Wish</h4>
 
-        <p>Would be really useful for testing to have a directive that instructs the compiler to include or exclude
-            portions of code, thus we can avoid including testing portions in the production.</p>
-    </div>
+<p>Would be really useful for testing to have a directive that instructs the compiler to include or exclude portions of code, thus we can avoid including testing portions in the production.</p>
+</div>
+    
 
 
     <h4 class="page-header">Related</h4>
-    <div class="item">
+ <div class="item">
 
 
-        <h4><a href="/post/mirror-mirror/">Mirror Mirror on ...</a></h4>
-        <h5>Of Mice (Unsafe) and Men (Reflect)</h5>
-        <h5>March 10, 2018</h5>
-        <kbd class="item-tag">Golang</kbd> <kbd class="item-tag">Advanced</kbd> <kbd class="item-tag">Reflect</kbd> <kbd
-            class="item-tag">Unsafe</kbd>
-        <p>About 12 minutes of reading.</p>
-    </div>
-    <div class="item">
+
+  
+    <h4><a href="/post/mirror-mirror/">Mirror Mirror on ...</a></h4>
+    <h5>Of Mice (Unsafe) and Men (Reflect)</h5>
+    <h5>March 10, 2018</h5>
+ <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Advanced</kbd>  <kbd class="item-tag">Reflect</kbd>  <kbd class="item-tag">Unsafe</kbd> 
+<p>About 12 minutes of reading.</p>
+</div>
+  <div class="item">
 
 
-        <h4><a href="/post/radix-story/">A Radix Story</a></h4>
-        <h5>About routing and searching using radix trees.</h5>
-        <h5>February 27, 2018</h5>
-        <kbd class="item-tag">Golang</kbd> <kbd class="item-tag">Radix</kbd> <kbd class="item-tag">Tree</kbd> <kbd
-            class="item-tag">Router</kbd> <kbd class="item-tag">Search</kbd>
-        <p>About 10 minutes of reading.</p>
-    </div>
-    <div class="item">
+
+  
+    <h4><a href="/post/radix-story/">A Radix Story</a></h4>
+    <h5>About routing and searching using radix trees.</h5>
+    <h5>February 27, 2018</h5>
+ <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Radix</kbd>  <kbd class="item-tag">Tree</kbd>  <kbd class="item-tag">Router</kbd>  <kbd class="item-tag">Search</kbd> 
+<p>About 10 minutes of reading.</p>
+</div>
+  <div class="item">
 
 
-        <h4><a href="/post/net-http-week2/">My Thoughts On Net/Http Package - Week 2</a></h4>
-        <h5>A deep dive into it net/http package.</h5>
-        <h5>February 24, 2018</h5>
-        <kbd class="item-tag">Golang</kbd> <kbd class="item-tag">Net</kbd> <kbd class="item-tag">Http</kbd> <kbd
-            class="item-tag">Analysis</kbd>
-        <p>About 5 minutes of reading.</p>
-    </div>
+
+  
+    <h4><a href="/post/net-http-week2/">My Thoughts On Net/Http Package - Week 2</a></h4>
+    <h5>A deep dive into it net/http package.</h5>
+    <h5>February 24, 2018</h5>
+ <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Net</kbd>  <kbd class="item-tag">Http</kbd>  <kbd class="item-tag">Analysis</kbd> 
+<p>About 5 minutes of reading.</p>
+</div>
+ 
 
 
     <h4 class="page-header">Comments</h4>
-    <div id="disqus_thread"></div>
-    <script>
+<div id="disqus_thread"></div>
+<script>
     var disqus_config = function () {
     
     
@@ -424,11 +375,9 @@ func Now() (sec int64, nsec int32, mono int64)
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
-
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by
-        Disqus.</a></noscript>
-    <a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
 </main>
 <footer>
