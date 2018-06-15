@@ -6,10 +6,20 @@
     <description>Recent content on Recency Bias</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Thu, 22 Mar 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 15 Jun 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://badu.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>What you can&#39;t do with reflect</title>
+      <link>http://badu.github.io/post/what-you-cant-do/</link>
+      <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/post/what-you-cant-do/</guid>
+      <description>What&amp;rsquo;s the problem? A while ago, I was working on backend application in which we were trying to increase readability of the code, while defining a standard. In my morning explorations I&amp;rsquo;ve found a technique (sorry, can&amp;rsquo;t remember where : I&amp;rsquo;ll edit this article when I&amp;rsquo;ll remember) that allowed us to use reflection inside a before type handler, thus decoding JSON payloads would be agnostic to controllers.
+A typical controller signature looks like this :</description>
+    </item>
     
     <item>
       <title>Open Letter to You, My Recruiter</title>

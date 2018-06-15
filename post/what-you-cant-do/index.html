@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>What you can&#39;t do with reflect</title>
+
+    <meta name="description" content="So ... you can&#39;t do it with reflect? Actually, you can!">
+
+    <meta property="site_name" content="recency-bias">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://badu.github.io/post/what-you-cant-do/">
+    <meta property="og:title" content="What you can&#39;t do with reflect">
+    <meta property="og:image" content="">
+
+    <meta property="og:description" content="So ... you can&#39;t do it with reflect? Actually, you can!">
+
+    <meta name="twitter:url" content="http://badu.github.io/post/what-you-cant-do/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@recency-bias">
+    <meta name="twitter:creator" content="@recency-bias">
+    <meta name="twitter:title" content="What you can&#39;t do with reflect">
+    <meta name="twitter:img:src" content="">
+
+    <meta name="twitter:label1" content="Author">
+    <meta name="twitter:data1" content="Bogdan Dinu">
+    <meta name="twitter:label2" content="Published On">
+    <meta name="twitter:data2" content="June 15, 2018">
+
+
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="dns-prefetch" href="//stats.g.doubleclick.net">
+
+    <link rel="canonical" href="http://badu.github.io/post/what-you-cant-do/">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+    <link rel="shortcut icon" href="http://badu.github.io/favicon.ico">
+
+<style>
+
+    html body {
+        font-family: 'Roboto', sans-serif;
+        background-color: white;
+    }
+
+    :root {
+        --accent: #00bcd4;
+        --border-width:  5px ;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+
+
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script> 
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.38-DEV" />
+
+
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-687869-6"></script>
+    <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'UA-687869-6');
+          (function() {
+          function ready(cb) {
+              /in/.test(document.readyState) 
+                      ? setTimeout(ready.bind(null, cb), 9)
+                      : cb();
+          }
+          ready(function() {
+              
+              var indicator = document.querySelector('.scroll-progress');
+              if (indicator) {
+                  document.addEventListener('scroll', function (e) {
+                      var dh = document.body.scrollHeight;
+                      var wh = window.innerHeight;
+                      var pos = window.scrollY;
+                      var footerHeight = 50;
+                      var perc = pos / (dh - footerHeight - wh) * 100;
+                      indicator.style.setProperty('--scale', (perc / 100));
+                  })
+              }
+              
+              var links = document.links;
+              for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+                  if (links[i].hostname != window.location.hostname) {
+                      links[i].target = '_blank';
+                  }
+              }
+          });
+          }());
+    </script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand visible-xs" href="#">What you can&#39;t do with reflect</a>
+            <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse">
+        
+            <ul class="nav navbar-nav">
+            
+                <li><a href="/post/">Posts</a></li>
+            
+                <li><a href="/about/">About</a></li>
+            
+                <li><a href="/why-recency-bias/">Why Recency Bias?</a></li>
+            
+            </ul>
+        
+
+        
+            <ul class="nav navbar-nav navbar-right">
+            
+                <li class="navbar-icon"><a href="mailto:badu@badu.ro"><i class="fa fa-envelope-o"></i></a></li>
+            
+                <li class="navbar-icon"><a href="https://github.com/badu/"><i class="fa fa-github"></i></a></li>
+            
+                <li class="navbar-icon"><a href="https://twitter.com/baduro/"><i class="fa fa-twitter"></i></a></li>
+            
+                <li class="navbar-icon"><a href="https://www.linkedin.com/in/flexprogramming/"><i class="fa fa-linkedin"></i></a></li>
+            
+                <li>
+                    <script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
+                    <div id="SkypeButton_Call_badu.bogdan_1">
+                        <script type="text/javascript">
+                                         Skype.ui({
+                                         "name": "chat",
+                                         "element": "SkypeButton_Call_badu.bogdan_1",
+                                         "participants": ["badu.bogdan"]
+                                         });
+                        </script>
+                    </div>
+                </li>
+            </ul>
+        
+
+        </div>
+
+    </div>
+    
+    <div class="scroll-progress"></div>
+</nav>
+<main>
+<div class="item">
+
+
+
+  
+    <h4><a href="/post/what-you-cant-do/">What you can&#39;t do with reflect</a></h4>
+    <h5>So ... you can&#39;t do it with reflect? Actually, you can!</h5>
+    <h5>June 15, 2018</h5>
+ <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Reflect</kbd> 
+<p>About 9 minutes of reading.</p>
+</div>
+
+    <br>
+    <div class="text-justify">
+
+<h3 id="what-s-the-problem">What&rsquo;s the problem?</h3>
+
+<p>A while ago, I was working on backend application in which we were trying to increase readability of the code, while defining a standard. In my morning explorations I&rsquo;ve found a technique (sorry, can&rsquo;t remember where : I&rsquo;ll edit this article when I&rsquo;ll remember) that allowed us to use reflection inside a <code>before</code> type handler, thus decoding JSON payloads would be agnostic to controllers.</p>
+
+<p>A typical controller signature looks like this :</p>
+
+<pre><code class="language-go">func PostAddress(c *context.Context, entity *Address) error 
+</code></pre>
+
+<p>Basically, the <code>before</code> handler would both construct the context (in which, for instance, to deposit the currently logged in user) and also decode the JSON payload and provide it as parameter when everything fine. Of course, in the above declaration, a convention was already made : the first parameter would always be context, the second one always a pointer to the desired decoded payload and the function will always have to return an error.</p>
+
+<p>Now, the problem increase in complexity once you would like to receive as URL path parameters, route parameters or HTTP headers. Taking the above example (context aside), a desired controller signature should look like this:</p>
+
+<pre><code class="language-go">func GetAddressesForUser(HeaderUserAgent string, URLParamUserId, URLVarPage, URLVarPerPage int) (entity []*Address,error)
+</code></pre>
+
+<p>The first parameter would come from HTTP headers, the second one from the route parsing and Page, PerPage should be taken from URL parameters. Nothing special, once you could make a convention that the parameter names would provide the name of what you require, in our example (yes, you&rsquo;ve guessed it), it&rsquo;s the start of the parameter name : Header - I need this from headers, URLParam - take this from route and URLVar to be taken from the URL after the question mark.</p>
+
+<p>Well, Go does not provide access to parameter names, even via reflection. Looking for the reason why, I&rsquo;ve found this <a href="https://github.com/golang/go/issues/12384#issuecomment-137321421">argument</a> of Russ Cox: &ldquo;Reflect provides information about types. Function parameter names are not part of the func type. In contrast, struct field names are. [&hellip;] I think it would likely be a mistake to expand the scope of package reflect beyond the clearly defined line of &ldquo;types&rdquo;. It&rsquo;s not obvious to me where else to draw a line between func parameter names and the entire source files.&ldquo;.</p>
+
+<p>Despite the fact that I don&rsquo;t agree with him, I can&rsquo;t argue that this won&rsquo;t be extremly complicated. Now, how about finding a workaround?</p>
+
+<h3 id="solution">Solution</h3>
+
+<p>The closest you can get to what you want is passing a struct. Create a struct type that wraps your current parameters, and change your function to accept a value of that struct (or a pointer to it). Combining all the required parameters in a struct, for each controller function would imply - even for a small project - a lot of struct declarations. To avoid such I wish that Go would support local struct declarations (that is just syntactic sugar) like this:</p>
+
+<pre><code class="language-go">func (r *State) MethodA(args struct { Arg1 int; Arg2 string }) error {
+   // use args.Arg1, args.Arg2, etc.
+}
+</code></pre>
+
+<p>But it doesn&rsquo;t. By this time, I know you are eager to see the code. I will asume that you know your way around with <a href="https://github.com/gorilla/mux">Gorilla muxer</a>, so here is the commented code:</p>
+
+<pre><code class="language-go">package routers
+
+import (
+    &quot;github.com/gorilla/mux&quot;
+    &quot;fmt&quot;
+    &quot;net/http&quot;
+    &quot;reflect&quot;
+    &quot;encoding/json&quot;
+    &quot;io/ioutil&quot;
+    &quot;context&quot;
+    &quot;runtime&quot;
+    &quot;strings&quot;
+    &quot;strconv&quot;
+)
+
+type IValidator interface {
+    Validate() error
+}
+
+type ParamAndIndex struct {
+    tag   string
+    index int
+    isVar bool
+}
+
+func collectRequirements(fnValue reflect.Value) (reflect.Type, reflect.Type, reflect.Type, []ParamAndIndex, []string) {
+
+    // checking if we're registering a function, not something else
+    functionType := fnValue.Type()
+    if functionType.Kind() != reflect.Func {
+        panic(&quot;Can only register functions.&quot;)
+    }
+    
+    // getting the function name (for debugging purposes)
+    fnCallerName := runtime.FuncForPC(fnValue.Pointer()).Name()
+    parts := strings.Split(fnCallerName, &quot;/&quot;)
+    callerName := parts[len(parts)-1]
+
+    // collecting injected parameters
+    var payloadType reflect.Type
+    var paramType reflect.Type
+    var headersType reflect.Type
+    var paramFields []ParamAndIndex
+    var headerFields []string
+
+    if functionType.NumIn() == 0 {
+        panic(&quot;Handler must have at least one argument : context.Context&quot;)
+    }
+    // convention : first param is always context.Context
+    contextParam := functionType.In(0)
+    if &quot;context.Context&quot; != contextParam.String() {
+        panic(&quot;bad handler func : first param should be context.Context&quot;)
+    }
+
+    for p := 1; p &lt; functionType.NumIn(); p++ {
+        param := functionType.In(p)
+        paramName := param.Name()
+        // param types should have the name starting with &quot;Param&quot; (e.g. &quot;ParamPageAndSomethingElse&quot;)
+        if strings.HasPrefix(paramName, &quot;Param&quot;) {
+            paramType = param
+            for j := 0; j &lt; param.NumField(); j++ {
+                field := param.Field(j)
+                // if a field is read from muxer vars, it should have a tag set to the name of the required parameter
+                varTag := field.Tag.Get(&quot;var&quot;)
+                // if a field is read from muxer form, it should have a tag set to the name of the required parameter
+                formTag := field.Tag.Get(&quot;form&quot;)
+                if len(varTag) &gt; 0 {
+                    paramFields = append(paramFields, ParamAndIndex{tag: varTag, index: j, isVar: true})
+                }
+
+                if len(formTag) &gt; 0 {
+                    paramFields = append(paramFields, ParamAndIndex{tag: formTag, index: j})
+                }
+            }
+            // convention : Headers mark headers struct (e.g. &quot;HeadersForMe&quot;)
+        } else if strings.HasPrefix(paramName, &quot;Headers&quot;) {
+            headersType = param
+            // forced add of the &quot;User-Agent&quot; - more can be added here, of course...
+            headerFields = append(headerFields, &quot;User-Agent&quot;)
+            for j := 0; j &lt; param.NumField(); j++ {
+                field := param.Field(j)
+                // all headers should have hdr tag
+                hdrTag := field.Tag.Get(&quot;hdr&quot;)
+                if len(hdrTag) &gt; 0 {
+                    headerFields = append(headerFields, hdrTag)
+                }
+            }
+        } else {
+            if payloadType != nil {
+                panic(&quot;Seems you are expecting two payloads on &quot; + callerName + &quot;. You should take only one.&quot;)
+            }
+            // convention : second param is always the json payload (which gets automatically decoded)
+            switch functionType.In(p).Kind() {
+            case reflect.Ptr, reflect.Map, reflect.Slice:
+                payloadType = functionType.In(p)
+            default:
+                fmt.Printf(&quot;Second argument must be an *object, map, or slice and it's %q on %s [will be ignored].\n&quot;, functionType.In(p).String(), callerName)
+            }
+        }
+    }
+
+    // the function must always return 2 params
+    if functionType.NumOut() != 2 {
+        panic(&quot;Handler has &quot; + strconv.Itoa(functionType.NumOut()) + &quot; returns. Must have two : pointer to something and error. (while registering &quot; + callerName + &quot;)&quot;)
+    }
+
+    // last param returned must be error
+    errorParam := functionType.Out(1)
+    if &quot;error&quot; != errorParam.String() {
+        panic(&quot;bad handler func : last parameter is supposed to be error&quot;)
+    }
+
+    return payloadType, paramType, headersType, paramFields, headerFields
+}
+
+func HandleFunc(router *mux.Router, route string, fn interface{}) *mux.Route {
+    // reflect on the provided handler (controller with signature above)
+    fnValue := reflect.ValueOf(fn)
+
+    // get payload, parameters and headers that will be injected
+    payloadType, paramType, headersType, paramFields, headerFields := collectRequirements(fnValue)
+
+    // sometimes controller expects the request itself - we're providing it
+    isRequestInjected := false
+    if payloadType != nil &amp;&amp; payloadType.Kind() == reflect.Ptr &amp;&amp; payloadType.Elem().Name() == &quot;Request&quot; {
+        isRequestInjected = true
+    }
+    // the actual before handler, which collects and build all the informations expected
+    return router.HandleFunc(route, func(w http.ResponseWriter, r *http.Request) {
+        
+        // checking if client has sent us content type
+        if len(r.Header[&quot;Content-Type&quot;]) == 0{
+            w.WriteHeader(http.StatusBadRequest)
+            w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;missing Content-Type\&quot;}&quot;))
+            return
+        }
+        
+        // content type &quot;negociation&quot; - in our case we're dealing with json, but you can extend the functionality after your needs (being crazy like GOB over HTTP :))
+        if r.Header[&quot;Content-Type&quot;][0] != &quot;application/json&quot; {
+            w.WriteHeader(http.StatusBadRequest)
+            w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;unknown Content-Type\&quot;}&quot;))
+            return
+        }
+        
+        var err error
+        var reqBody []byte
+        // only if the controller is not expecting Request itself, we're reading the body
+        if !isRequestInjected {
+            // now we read the request body
+            reqBody, err = ioutil.ReadAll(r.Body)
+            if err != nil {
+                w.WriteHeader(http.StatusInternalServerError)
+                w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;&quot; + err.Error()+ &quot;\&quot;}&quot;))
+                return
+            }
+            // always defering close
+            defer r.Body.Close()
+        }
+        
+        // starting to build the arguments of calling our handler. First one, the context
+        in := []reflect.Value{ reflect.ValueOf(context.Background())}
+        
+        if payloadType != nil {
+            // Building the deserialize value
+            var deserializeTo reflect.Value
+            switch payloadType.Kind() {
+            case reflect.Slice, reflect.Map:
+                deserializeTo = reflect.New(payloadType)
+                in = append(in, deserializeTo.Elem())
+            case reflect.Ptr:
+                if !isRequestInjected {
+                    // the most common scenario - expecting a struct
+                    deserializeTo = reflect.New(payloadType.Elem())
+                    in = append(in, deserializeTo)
+                    }
+            }
+            if !isRequestInjected {
+                // json decode the payload
+                if err = json.Unmarshal(reqBody, deserializeTo.Interface()); err != nil {
+                    w.WriteHeader(http.StatusBadRequest)
+                    w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;&quot;+fmt.Sprintf(&quot;Unmarshal error: %v. Received from client : `%s`&quot;, err, string(reqBody))+&quot;\&quot;}&quot;))
+                    return
+                }
+                // checking if value is implementing Validate() error
+                iVal, isValidator := deserializeTo.Interface().(IValidator)
+                if isValidator {
+                    // it does - we call validate
+                    err = iVal.Validate()
+                    if err != nil {                     
+                        w.WriteHeader(http.StatusBadRequest)
+                        w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;&quot;+fmt.Sprintf(&quot;Validation error : %v&quot;, err)+&quot;\&quot;}&quot;))
+                        return
+                    }
+                }
+            } else {
+                    // append request as it is, since body is going to be read in controller.
+                    in = append(in, reflect.ValueOf(r))
+            }
+        }
+        
+        // we have parameters that need to be injected
+        if paramType != nil {
+            vars := mux.Vars(r)
+            p := reflect.New(paramType).Elem()
+            for _, pf := range paramFields {
+                // if the parameter is in muxer vars
+                if pf.isVar {
+                    p.Field(pf.index).Set(reflect.ValueOf(vars[pf.tag]))
+                } else {
+                    // otherwise it must come from muxer form
+                    fv := r.FormValue(pf.tag)
+                    p.Field(pf.index).Set(reflect.ValueOf(fv))
+                }
+            }
+            // adding the injected
+            in = append(in, p)
+        }
+        
+        // we have headers that need to be injected
+        if headersType != nil {
+            h := reflect.New(headersType).Elem()
+            for idx, hf := range headerFields {
+                switch hf {
+                case &quot;User-Agent&quot;:
+                    h.Field(idx).Set(reflect.ValueOf(r.UserAgent()))
+                default:
+                    h.Field(idx).Set(reflect.ValueOf(r.Header.Get(hf)))
+                }
+            }
+            in = append(in, h)
+        }
+        
+        // finally, we're calling the handler with all the params
+        out := fnValue.Call(in)
+        
+        // processing return of the handler (should be payload, error)
+        isError := out[0].IsNil()
+        // preparing the json encoder
+        enc := json.NewEncoder(w)
+        // we have error
+        if isError {
+            // header
+            w.Header().Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+            problem, ok := out[1].Interface().(error)
+            if !ok {
+                // should never happen, since the check is done in the collect function. But better safe than sorry.
+                w.WriteHeader(http.StatusInternalServerError)
+                w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;not error - second param should be error.\&quot;}&quot;))
+                return
+            }
+            w.WriteHeader(http.StatusInternalServerError)
+            w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;&quot;+problem.Error()+&quot;\&quot;}&quot;))
+            return
+        } else {
+            
+            // bytes are delivered as they are (since they help you for downloads)
+            if byts, ok := out[0].Interface().([]byte); ok {
+                w.Write(byts)
+                return
+            }
+            // only now we're seting header, so download can work correctly
+            w.Header().Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+                        
+            // no error has occured - serializing payload
+            err := enc.Encode(out[0].Interface())
+            if err != nil {
+                w.WriteHeader(http.StatusInternalServerError)
+                w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;encoding payload error : &quot;+err.Error()+&quot;\&quot;}&quot;))
+                return
+            }
+        }
+    }
+}
+</code></pre>
+
+<p>First question you might ask, is where the controller would require the Request itself. Well, this is the case for uploading files, in which the controller itself would have the responsability of reading the request <code>Body</code>. Last thing : example of Headers and Params structs:</p>
+
+<pre><code class="language-go">    type Headers struct {
+        UserAgent      string // this doesn't require tag to be `hdr:&quot;User-Agent&quot;`
+        AcceptLanguage string `hdr:&quot;Accept-Language&quot;`
+    }
+    
+    type ParamKeyAndDevice struct {
+        Key        string `var:&quot;key&quot;` // taken form url e.g. /api/v1/contents/123, where 123 will be the key
+        DeviceID   string `form:&quot;id&quot;` // taken from path vars e.g. ?id=something 
+        DeviceName string `form:&quot;name&quot;`
+        End        string `form:&quot;end&quot;`
+    }
+</code></pre>
+
+<h3 id="end-note">End note</h3>
+
+<p>Another big limitation on reflection is that while you can use reflection to create new functions (take a look at this <a href="https://github.com/golang/go/blob/master/src/net/http/httptrace/trace.go#L197">beautiful usage example</a> of <code>MakeFunc</code>), there’s no way to create new methods at runtime.</p>
+
+<p>Unfortunatelly, this means you cannot use reflection to implement an interface at runtime - believe me, I&rsquo;ve tried. In Java, this functionality is called a dynamic proxy.</p>
+
+<p>There is an workaround for this too, a bit ugly if you ask me, but it can be done. I&rsquo;ll write about it in a later post.</p>
+</div>
+    
+
+
+    <h4 class="page-header">Related</h4>
+ <div class="item">
+
+
+
+  
+    <h4><a href="/post/mirror-mirror/">Mirror Mirror on ...</a></h4>
+    <h5>Of Mice (Unsafe) and Men (Reflect)</h5>
+    <h5>March 10, 2018</h5>
+ <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Advanced</kbd>  <kbd class="item-tag">Reflect</kbd>  <kbd class="item-tag">Unsafe</kbd> 
+<p>About 12 minutes of reading.</p>
+</div>
+  <div class="item">
+
+
+
+  
+    <h4><a href="/post/known-world-stops/">Knowing when the world stops</a></h4>
+    <h5>I quote &#34;This function is called with the world stopped, at the beginning of a garbage collection.&#34;</h5>
+    <h5>March 5, 2018</h5>
+ <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Advanced</kbd>  <kbd class="item-tag">Compiler</kbd>  <kbd class="item-tag">Directives</kbd> 
+<p>About 3 minutes of reading.</p>
+</div>
+  <div class="item">
+
+
+
+  
+    <h4><a href="/post/radix-story/">A Radix Story</a></h4>
+    <h5>About routing and searching using radix trees.</h5>
+    <h5>February 27, 2018</h5>
+ <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Radix</kbd>  <kbd class="item-tag">Tree</kbd>  <kbd class="item-tag">Router</kbd>  <kbd class="item-tag">Search</kbd> 
+<p>About 10 minutes of reading.</p>
+</div>
+ 
+
+
+    <h4 class="page-header">Comments</h4>
+<div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "recency-bias" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</main>
+<footer>
+    <p class="copyright text-muted"> Recency Bias &copy; 2017
+        - Powered by <a href="https://gohugo.io">Hugo</a>.</p>
+</footer>
+</body>
+</html>
+
