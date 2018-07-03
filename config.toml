@@ -164,6 +164,6 @@ disqusShortname = "recency-bias"
     weight = 3
 
 [[menu.icon]]
-    url = "https://www.linkedin.com/in/flexprogramming/"
+    url = "https://www.linkedin.com/in/golangdeveloper/"
     name = "linkedin"
     weight = 4
