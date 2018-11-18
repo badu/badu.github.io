@@ -37,7 +37,6 @@
     <link rel="shortcut icon" href="http://badu.github.io/favicon.ico">
 
 <style>
-
     html body {
         font-family: 'Roboto', sans-serif;
         background-color: white;
@@ -47,18 +46,6 @@
         --accent: #00bcd4;
         --border-width:  5px ;
     }
-
-
-
-
-
-
-
-
-
-
-
-
 </style>
 
 
@@ -98,7 +85,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.38-DEV" />
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.51-DEV" />
 
 
 
@@ -207,7 +194,9 @@
   
     <h4><a href="/post/mirror-mirror/">Mirror Mirror on ...</a></h4>
     <h5>Of Mice (Unsafe) and Men (Reflect)</h5>
-    <h5>March 10, 2018</h5>
+    
+      <h5>Published on March 10, 2018</h5>
+    
  <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Advanced</kbd>  <kbd class="item-tag">Reflect</kbd>  <kbd class="item-tag">Unsafe</kbd> 
 <p>About 12 minutes of reading.</p>
 </div>
@@ -234,94 +223,94 @@
 <p>Let&rsquo;s code:</p>
 
 <pre><code class="language-go">func TestIsJohnIvan(t *testing.T) {
-    type John struct {
-        Name   string
-        Age    uint
-        Powers uint
-    }
+	type John struct {
+		Name   string
+		Age    uint
+		Powers uint
+	}
 
-    type Ivan struct {
-        givenName  string // yes, you can use private fields
-        _          uint
-        ThirdField uint
-    }
-    
-    john := John{Name: &quot;John&quot;, Age: 40, Powers: 3}
+	type Ivan struct {
+		givenName  string // yes, you can use private fields
+		_          uint
+		ThirdField uint
+	}
+	
+	john := John{Name: &quot;John&quot;, Age: 40, Powers: 3}
 
-    ivan := *(*Ivan)(unsafe.Pointer(&amp;john))
-    t.Logf(&quot;John as Ivan : GivenName %v ThirdField %d&quot;, ivan.givenName, ivan.ThirdField)
+	ivan := *(*Ivan)(unsafe.Pointer(&amp;john))
+	t.Logf(&quot;John as Ivan : GivenName %v ThirdField %d&quot;, ivan.givenName, ivan.ThirdField)
 }
 </code></pre>
 
 <p>First observation is that you can violate access to private fields using this conversion. Secondly, as long as you respect the same number of fields and their types, you can omit properties. You can violate the second rule and get unexpected results, as below:</p>
 
-<pre><code class="language-go">    type ShortIvan struct {
-        Age uint
-    }
-    smallIvan := *(*ShortIvan)(unsafe.Pointer(&amp;john))
-    t.Logf(&quot;Small Ivan (just powers) : %v&quot;, smallIvan.Age)
+<pre><code class="language-go">	type ShortIvan struct {
+		Age uint
+	}
+	smallIvan := *(*ShortIvan)(unsafe.Pointer(&amp;john))
+	t.Logf(&quot;Small Ivan (just powers) : %v&quot;, smallIvan.Age)
 </code></pre>
 
 <p>You would expect that age to be 40, but it&rsquo;s not : it&rsquo;s 5717318. Why? Because an uint is built by taking the required value from the Name property of John. The correct way to get a smaller Ivan is to omit the name property (observe that the third property is omitted too):</p>
 
-<pre><code class="language-go">    type ShortIvan struct {
-        _ string
-        Age uint
-    }
+<pre><code class="language-go">	type ShortIvan struct {
+		_ string
+		Age uint
+	}
 </code></pre>
 
 <p>What if you violate the first rule, which states that types have to have an equal amount of properties:</p>
 
-<pre><code class="language-go">    type UpgradedIvan struct {
-        //_ string // adding this at the beginning crashes
-        Name    string
-        Age     uint
-        Powers  uint
-        Address string // will get filled with the Name 
-        Guns    uint   // will get filled with Age 
-        //Say     string // adding yet another one will crash : &quot;bad pointer in frame&quot;
-        //Data []byte // same adding this or more
-        AFloat float32 // adding a different type seems safe
-    }
-    chuckNorris := *(*UpgradedIvan)(unsafe.Pointer(&amp;john))
-    t.Logf(&quot;Chuck Ivan : %v&quot;, chuckNorris)
+<pre><code class="language-go">	type UpgradedIvan struct {
+		//_ string // adding this at the beginning crashes
+		Name    string
+		Age     uint
+		Powers  uint
+		Address string // will get filled with the Name 
+		Guns    uint   // will get filled with Age 
+		//Say     string // adding yet another one will crash : &quot;bad pointer in frame&quot;
+		//Data []byte // same adding this or more
+		AFloat float32 // adding a different type seems safe
+	}
+	chuckNorris := *(*UpgradedIvan)(unsafe.Pointer(&amp;john))
+	t.Logf(&quot;Chuck Ivan : %v&quot;, chuckNorris)
 </code></pre>
 
 <p>Well, it works, but with side effects : Address gets filled with same value as Name, Guns with Age and AFloat get a value of 4e-45. So, this the non-safety point that a developer should never touch. As long as we&rsquo;re respecting the rules, it&rsquo;s safe to play unsafe.</p>
 
 <p>Also, <code>upgrading</code> John seems better (simpler) by using embedding:</p>
 
-<pre><code class="language-go">    type EmbeddedJohn struct {
-        John
-        Address string // will get filled with the Name ??? Weird huh
-        Guns    uint   // will get filled with Age ???
-    }
-    // convert John to EmbeddedJohn
-    upgradedIvan := EmbeddedJohn{John: john}
-    t.Logf(&quot;Upgraded Ivan : %v&quot;, upgradedIvan)
+<pre><code class="language-go">	type EmbeddedJohn struct {
+		John
+		Address string // will get filled with the Name ??? Weird huh
+		Guns    uint   // will get filled with Age ???
+	}
+	// convert John to EmbeddedJohn
+	upgradedIvan := EmbeddedJohn{John: john}
+	t.Logf(&quot;Upgraded Ivan : %v&quot;, upgradedIvan)
 </code></pre>
 
 <p>Surely, the bellow code is dangerous if it is misused. The code speaks for itself:</p>
 
 <pre><code class="language-go">func TestAlteredPeople(t *testing.T) {
-    type John struct {
-        Name    string
-        Age     int
-        Altered bool
-    }
+	type John struct {
+		Name    string
+		Age     int
+		Altered bool
+	}
 
-    john := John{Name: &quot;John&quot;, Age: 30, Altered: false}
+	john := John{Name: &quot;John&quot;, Age: 30, Altered: false}
 
-    ptrToJohn := unsafe.Pointer(&amp;john)
-    ptrToName := (*string)(unsafe.Pointer(uintptr(ptrToJohn) + unsafe.Offsetof(john.Name)))
-    ptrToAge := (*int)(unsafe.Pointer(uintptr(ptrToJohn) + unsafe.Offsetof(john.Age)))
-    ptrToAltered := (*bool)(unsafe.Pointer(uintptr(ptrToJohn) + unsafe.Offsetof(john.Altered)))
+	ptrToJohn := unsafe.Pointer(&amp;john)
+	ptrToName := (*string)(unsafe.Pointer(uintptr(ptrToJohn) + unsafe.Offsetof(john.Name)))
+	ptrToAge := (*int)(unsafe.Pointer(uintptr(ptrToJohn) + unsafe.Offsetof(john.Age)))
+	ptrToAltered := (*bool)(unsafe.Pointer(uintptr(ptrToJohn) + unsafe.Offsetof(john.Altered)))
 
-    *ptrToName = &quot;Chuck&quot;
-    *ptrToAge = 100000
-    *ptrToAltered = true
+	*ptrToName = &quot;Chuck&quot;
+	*ptrToAge = 100000
+	*ptrToAltered = true
 
-    t.Logf(&quot;Now John is %v&quot;, john)
+	t.Logf(&quot;Now John is %v&quot;, john)
 }
 </code></pre>
 
@@ -332,21 +321,21 @@
 <p>I would never use the above method of conversion, but investigation was needed because of what&rsquo;s about to be described regarding reflect.</p>
 
 <pre><code class="language-go">type Point struct {
-    x, y int
+	x, y int
 }
 
 func Extract(ptr unsafe.Pointer, size uintptr) []byte {
-    out := make([]byte, size)
-    for i := range out {
-        out[i] = *((*byte)(unsafe.Pointer(uintptr(ptr) + uintptr(i))))
-    }
-    return out
+	out := make([]byte, size)
+	for i := range out {
+		out[i] = *((*byte)(unsafe.Pointer(uintptr(ptr) + uintptr(i))))
+	}
+	return out
 }
 
 func TestExtract(t *testing.T) {
-    p := Point{3, 4}
-    mem := Extract(unsafe.Pointer(&amp;p), unsafe.Sizeof(p))
-    t.Logf(&quot;What's the Point? %v&quot;, mem)
+	p := Point{3, 4}
+	mem := Extract(unsafe.Pointer(&amp;p), unsafe.Sizeof(p))
+	t.Logf(&quot;What's the Point? %v&quot;, mem)
 }
 </code></pre>
 
@@ -357,28 +346,28 @@ func TestExtract(t *testing.T) {
 <p>If you kept in mind that <code>unsafe</code> is about the compiler and not the runtime, here is the proof:</p>
 
 <pre><code class="language-go">func TestInTheBeginning(t *testing.T) {
-    type r struct {
-        sz  uintptr
-        dt  uintptr
-        _   uint32
-        f   uint8
-        _   uint8
-        _   uint8
-        knd uint8
-        _   *struct{}
-        c   *byte
-        str int32
-        w   int32
-    }
-    type e struct {
-        abracadabra *r
-    }
-    t := func(p interface{}) *r {
-        return (*(*e)(unsafe.Pointer(&amp;p))).abracadabra
-    }
-    p := Point{3, 4}
-    v := t(&amp;p)
-    t.Logf(&quot;After looking in the mirror : %v %v %v %v %v %v&quot;, v.sz, v.dt, v.f, v.knd, v.str, v.w)
+	type r struct {
+		sz  uintptr
+		dt  uintptr
+		_   uint32
+		f   uint8
+		_   uint8
+		_   uint8
+		knd uint8
+		_   *struct{}
+		c   *byte
+		str int32
+		w   int32
+	}
+	type e struct {
+		abracadabra *r
+	}
+	t := func(p interface{}) *r {
+		return (*(*e)(unsafe.Pointer(&amp;p))).abracadabra
+	}
+	p := Point{3, 4}
+	v := t(&amp;p)
+	t.Logf(&quot;After looking in the mirror : %v %v %v %v %v %v&quot;, v.sz, v.dt, v.f, v.knd, v.str, v.w)
 }
 </code></pre>
 
@@ -397,316 +386,316 @@ We didn&rsquo;t import <code>reflect</code> package. Also, the code is unreadabl
 
 <pre><code class="language-go">
 import (
-    &quot;testing&quot;
-    &quot;unsafe&quot; // also for linkname
+	&quot;testing&quot;
+	&quot;unsafe&quot; // also for linkname
 )
 
 const (
-    Invalid       Kind = iota
-    Bool
-    Int
-    Int8
-    Int16
-    Int32
-    Int64
-    Uint
-    Uint8
-    Uint16
-    Uint32
-    Uint64
-    Uintptr
-    Float32
-    Float64
-    Complex64
-    Complex128
-    Array
-    Chan
-    Func
-    Interface
-    Map
-    Ptr
-    Slice
-    String
-    Struct
-    UnsafePointer
+	Invalid       Kind = iota
+	Bool
+	Int
+	Int8
+	Int16
+	Int32
+	Int64
+	Uint
+	Uint8
+	Uint16
+	Uint32
+	Uint64
+	Uintptr
+	Float32
+	Float64
+	Complex64
+	Complex128
+	Array
+	Chan
+	Func
+	Interface
+	Map
+	Ptr
+	Slice
+	String
+	Struct
+	UnsafePointer
 )
 
 const (
-    tflagUncommon  tflag = 1 &lt;&lt; 0
-    tflagExtraStar tflag = 1 &lt;&lt; 1
+	tflagUncommon  tflag = 1 &lt;&lt; 0
+	tflagExtraStar tflag = 1 &lt;&lt; 1
 )
 
 const (
-    kindMask = (1 &lt;&lt; 5) - 1
+	kindMask = (1 &lt;&lt; 5) - 1
 )
 
 type (
-    Kind uint
-    nameOff int32
-    typeOff int32
-    textOff int32
-    tflag uint8
-    name struct {
-        bytes *byte
-    }
-    uncommonType struct {
-        pkgPath nameOff
-        mcount  uint16
-        _       uint16
-        moff    uint32
-        _       uint32
-    }
-    rtype struct {
-        size       uintptr
-        ptrdata    uintptr
-        hash       uint32
-        tflag      tflag
-        align      uint8
-        fieldAlign uint8
-        kind       uint8
-        alg        *typeAlg
-        gcdata     *byte
-        str        nameOff
-        ptrToThis  typeOff
-    }
-    typeAlg struct {
-        hash  func(unsafe.Pointer, uintptr) uintptr
-        equal func(unsafe.Pointer, unsafe.Pointer) bool
-    }
-    method struct {
-        name nameOff
-        mtyp typeOff
-        ifn  textOff
-        tfn  textOff
-    }
-    structField struct {
-        name       name
-        typ        *rtype
-        offsetAnon uintptr
-    }
-    structType struct {
-        rtype `reflect:&quot;struct&quot;`
-        pkgPath name
-        fields  []structField
-    }
-    emptyInterface struct {
-        typ  *rtype
-        word unsafe.Pointer
-    }
-    stringHeader struct {
-        Data unsafe.Pointer
-        Len  int
-    }
-    ptrType struct {
-        rtype `reflect:&quot;ptr&quot;`
-        elem *rtype // pointer element (pointed at) type
-    }
+	Kind uint
+	nameOff int32
+	typeOff int32
+	textOff int32
+	tflag uint8
+	name struct {
+		bytes *byte
+	}
+	uncommonType struct {
+		pkgPath nameOff
+		mcount  uint16
+		_       uint16
+		moff    uint32
+		_       uint32
+	}
+	rtype struct {
+		size       uintptr
+		ptrdata    uintptr
+		hash       uint32
+		tflag      tflag
+		align      uint8
+		fieldAlign uint8
+		kind       uint8
+		alg        *typeAlg
+		gcdata     *byte
+		str        nameOff
+		ptrToThis  typeOff
+	}
+	typeAlg struct {
+		hash  func(unsafe.Pointer, uintptr) uintptr
+		equal func(unsafe.Pointer, unsafe.Pointer) bool
+	}
+	method struct {
+		name nameOff
+		mtyp typeOff
+		ifn  textOff
+		tfn  textOff
+	}
+	structField struct {
+		name       name
+		typ        *rtype
+		offsetAnon uintptr
+	}
+	structType struct {
+		rtype `reflect:&quot;struct&quot;`
+		pkgPath name
+		fields  []structField
+	}
+	emptyInterface struct {
+		typ  *rtype
+		word unsafe.Pointer
+	}
+	stringHeader struct {
+		Data unsafe.Pointer
+		Len  int
+	}
+	ptrType struct {
+		rtype `reflect:&quot;ptr&quot;`
+		elem *rtype // pointer element (pointed at) type
+	}
 )
 
 func resolveReflectName(n name) nameOff {
-    return nameOff(addReflectOff(unsafe.Pointer(n.bytes)))
+	return nameOff(addReflectOff(unsafe.Pointer(n.bytes)))
 }
 
 func add(p unsafe.Pointer, x uintptr) unsafe.Pointer {
-    return unsafe.Pointer(uintptr(p) + x)
+	return unsafe.Pointer(uintptr(p) + x)
 }
 
 func fnv1(x uint32, list ...byte) uint32 {
-    for _, b := range list {
-        x = x*16777619 ^ uint32(b)
-    }
-    return x
+	for _, b := range list {
+		x = x*16777619 ^ uint32(b)
+	}
+	return x
 }
 
 func rtypeOff(section unsafe.Pointer, off int32) *rtype {
-    return (*rtype)(add(section, uintptr(off)))
+	return (*rtype)(add(section, uintptr(off)))
 }
 
 func typesByString(s string) []*rtype {
-    sections, offset := typelinks()
-    var ret []*rtype
+	sections, offset := typelinks()
+	var ret []*rtype
 
-    for offsI, offs := range offset {
-        section := sections[offsI]
-        i, j := 0, len(offs)
-        for i &lt; j {
-            h := i + (j-i)/2
-            if !(rtypeOff(section, offs[h]).String() &gt;= s) {
-                i = h + 1
-            } else {
-                j = h
-            }
-        }
-        for j := i; j &lt; len(offs); j++ {
-            typ := rtypeOff(section, offs[j])
-            if typ.String() != s {
-                break
-            }
-            ret = append(ret, typ)
-        }
-    }
-    return ret
+	for offsI, offs := range offset {
+		section := sections[offsI]
+		i, j := 0, len(offs)
+		for i &lt; j {
+			h := i + (j-i)/2
+			if !(rtypeOff(section, offs[h]).String() &gt;= s) {
+				i = h + 1
+			} else {
+				j = h
+			}
+		}
+		for j := i; j &lt; len(offs); j++ {
+			typ := rtypeOff(section, offs[j])
+			if typ.String() != s {
+				break
+			}
+			ret = append(ret, typ)
+		}
+	}
+	return ret
 }
 
 func newName(n, tag string, exported bool) name {
-    if len(n) &gt; 1&lt;&lt;16-1 {
-        panic(&quot;reflect.nameFrom: name too long: &quot; + n)
-    }
-    if len(tag) &gt; 1&lt;&lt;16-1 {
-        panic(&quot;reflect.nameFrom: tag too long: &quot; + tag)
-    }
+	if len(n) &gt; 1&lt;&lt;16-1 {
+		panic(&quot;reflect.nameFrom: name too long: &quot; + n)
+	}
+	if len(tag) &gt; 1&lt;&lt;16-1 {
+		panic(&quot;reflect.nameFrom: tag too long: &quot; + tag)
+	}
 
-    var bits byte
-    l := 1 + 2 + len(n)
-    if exported {
-        bits |= 1 &lt;&lt; 0
-    }
-    if len(tag) &gt; 0 {
-        l += 2 + len(tag)
-        bits |= 1 &lt;&lt; 1
-    }
+	var bits byte
+	l := 1 + 2 + len(n)
+	if exported {
+		bits |= 1 &lt;&lt; 0
+	}
+	if len(tag) &gt; 0 {
+		l += 2 + len(tag)
+		bits |= 1 &lt;&lt; 1
+	}
 
-    b := make([]byte, l)
-    b[0] = bits
-    b[1] = uint8(len(n) &gt;&gt; 8)
-    b[2] = uint8(len(n))
-    copy(b[3:], n)
-    if len(tag) &gt; 0 {
-        tb := b[3+len(n):]
-        tb[0] = uint8(len(tag) &gt;&gt; 8)
-        tb[1] = uint8(len(tag))
-        copy(tb[2:], tag)
-    }
+	b := make([]byte, l)
+	b[0] = bits
+	b[1] = uint8(len(n) &gt;&gt; 8)
+	b[2] = uint8(len(n))
+	copy(b[3:], n)
+	if len(tag) &gt; 0 {
+		tb := b[3+len(n):]
+		tb[0] = uint8(len(tag) &gt;&gt; 8)
+		tb[1] = uint8(len(tag))
+		copy(tb[2:], tag)
+	}
 
-    return name{bytes: &amp;b[0]}
+	return name{bytes: &amp;b[0]}
 }
 
 func (n name) isExported() bool {
-    return (*n.bytes)&amp;(1&lt;&lt;0) != 0
+	return (*n.bytes)&amp;(1&lt;&lt;0) != 0
 }
 
 func (n name) name() (s string) {
-    if n.bytes == nil {
-        panic(&quot;no name&quot;)
-    }
-    b := (*[4]byte)(unsafe.Pointer(n.bytes))
+	if n.bytes == nil {
+		panic(&quot;no name&quot;)
+	}
+	b := (*[4]byte)(unsafe.Pointer(n.bytes))
 
-    hdr := (*stringHeader)(unsafe.Pointer(&amp;s))
-    hdr.Data = unsafe.Pointer(&amp;b[3])
-    hdr.Len = int(b[1])&lt;&lt;8 | int(b[2])
-    return s
+	hdr := (*stringHeader)(unsafe.Pointer(&amp;s))
+	hdr.Data = unsafe.Pointer(&amp;b[3])
+	hdr.Len = int(b[1])&lt;&lt;8 | int(b[2])
+	return s
 }
 
 func (t *rtype) nameOff(off nameOff) name {
-    return name{(*byte)(resolveNameOff(unsafe.Pointer(t), int32(off)))}
+	return name{(*byte)(resolveNameOff(unsafe.Pointer(t), int32(off)))}
 }
 
 func (t *rtype) typeOff(off typeOff) *rtype {
-    return (*rtype)(resolveTypeOff(unsafe.Pointer(t), int32(off)))
+	return (*rtype)(resolveTypeOff(unsafe.Pointer(t), int32(off)))
 }
 
 func (t *rtype) Kind() Kind { return Kind(t.kind &amp; kindMask) }
 
 func (t *rtype) String() string {
-    s := t.nameOff(t.str).name()
-    if t.tflag&amp;tflagExtraStar != 0 {
-        return s[1:]
-    }
-    return s
+	s := t.nameOff(t.str).name()
+	if t.tflag&amp;tflagExtraStar != 0 {
+		return s[1:]
+	}
+	return s
 }
 
 func (t *uncommonType) methods() []method {
-    if t.mcount == 0 {
-        panic(&quot;zero methods&quot;)
-    }
-    return (*[1 &lt;&lt; 16]method)(add(unsafe.Pointer(t), uintptr(t.moff)))[:t.mcount:t.mcount]
+	if t.mcount == 0 {
+		panic(&quot;zero methods&quot;)
+	}
+	return (*[1 &lt;&lt; 16]method)(add(unsafe.Pointer(t), uintptr(t.moff)))[:t.mcount:t.mcount]
 }
 
 func (t *rtype) uncommon() *uncommonType {
-    if t.tflag&amp;tflagUncommon == 0 {
-        return nil
-    }
-    if t.Kind() != Struct &amp;&amp; t.Kind() != Ptr {
-        panic(&quot;not struct or pointer&quot;)
-    }
-    ptrToT := unsafe.Pointer(t)
+	if t.tflag&amp;tflagUncommon == 0 {
+		return nil
+	}
+	if t.Kind() != Struct &amp;&amp; t.Kind() != Ptr {
+		panic(&quot;not struct or pointer&quot;)
+	}
+	ptrToT := unsafe.Pointer(t)
 
-    switch t.Kind() {
-    case Struct:
-        type u struct {
-            structType
-            u uncommonType
-        }
-        return &amp;(*u)(ptrToT).u
-    case Ptr:
-        type u struct {
-            ptrType
-            u uncommonType
-        }
-        return &amp;(*u)(ptrToT).u
-    default:
-        type u struct {
-            rtype
-            u uncommonType
-        }
-        return &amp;(*u)(ptrToT).u
-    }
+	switch t.Kind() {
+	case Struct:
+		type u struct {
+			structType
+			u uncommonType
+		}
+		return &amp;(*u)(ptrToT).u
+	case Ptr:
+		type u struct {
+			ptrType
+			u uncommonType
+		}
+		return &amp;(*u)(ptrToT).u
+	default:
+		type u struct {
+			rtype
+			u uncommonType
+		}
+		return &amp;(*u)(ptrToT).u
+	}
 }
 
 func (t *rtype) exportedMethods() []method {
-    ut := t.uncommon()
-    if ut == nil {
-        return nil
-    }
-    allMethods := ut.methods()
-    allExported := true
-    for _, method := range allMethods {
-        name := t.nameOff(method.name)
-        if !name.isExported() {
-            allExported = false
-            break
-        }
-    }
-    var methods []method
-    if allExported {
-        methods = allMethods
-    } else {
-        methods = make([]method, 0, len(allMethods))
-        for _, m := range allMethods {
-            name := t.nameOff(m.name)
-            if name.isExported() {
-                methods = append(methods, m)
-            }
-        }
-        methods = methods[:len(methods):len(methods)]
-    }
-    return methods
+	ut := t.uncommon()
+	if ut == nil {
+		return nil
+	}
+	allMethods := ut.methods()
+	allExported := true
+	for _, method := range allMethods {
+		name := t.nameOff(method.name)
+		if !name.isExported() {
+			allExported = false
+			break
+		}
+	}
+	var methods []method
+	if allExported {
+		methods = allMethods
+	} else {
+		methods = make([]method, 0, len(allMethods))
+		for _, m := range allMethods {
+			name := t.nameOff(m.name)
+			if name.isExported() {
+				methods = append(methods, m)
+			}
+		}
+		methods = methods[:len(methods):len(methods)]
+	}
+	return methods
 }
 
 func (t *rtype) ptrTo() *rtype {
-    if t.ptrToThis != 0 {
-        return t.typeOff(t.ptrToThis)
-    }
-    s := &quot;*&quot; + t.String()
-    for _, tt := range typesByString(s) {
-        p := (*ptrType)(unsafe.Pointer(tt))
-        if p.elem != t {
-            continue
-        }
-        return &amp;p.rtype
-    }
-    var iptr interface{} = (*unsafe.Pointer)(nil)
-    prototype := *(**ptrType)(unsafe.Pointer(&amp;iptr))
-    pp := *prototype
-    pp.str = resolveReflectName(newName(s, &quot;&quot;, false))
-    pp.ptrToThis = 0
-    pp.hash = fnv1(t.hash, '*')
-    pp.elem = t
-    return &amp;pp.rtype
+	if t.ptrToThis != 0 {
+		return t.typeOff(t.ptrToThis)
+	}
+	s := &quot;*&quot; + t.String()
+	for _, tt := range typesByString(s) {
+		p := (*ptrType)(unsafe.Pointer(tt))
+		if p.elem != t {
+			continue
+		}
+		return &amp;p.rtype
+	}
+	var iptr interface{} = (*unsafe.Pointer)(nil)
+	prototype := *(**ptrType)(unsafe.Pointer(&amp;iptr))
+	pp := *prototype
+	pp.str = resolveReflectName(newName(s, &quot;&quot;, false))
+	pp.ptrToThis = 0
+	pp.hash = fnv1(t.hash, '*')
+	pp.elem = t
+	return &amp;pp.rtype
 }
 
 func TypeOf(i interface{}) *rtype {
-    return (*(*emptyInterface)(unsafe.Pointer(&amp;i))).typ.ptrTo()
+	return (*(*emptyInterface)(unsafe.Pointer(&amp;i))).typ.ptrTo()
 }
 </code></pre>
 
@@ -730,25 +719,25 @@ func addReflectOff(ptr unsafe.Pointer) int32
 <p>On the <code>Point</code> struct declared above, we&rsquo;re adding the followings:</p>
 
 <pre><code class="language-go">func (p Point) AnotherMethod(scale int) int {
-    return -1
+	return -1
 }
 func (p Point) Dist(scale int) int {
-    return p.x*p.x*scale + p.y*p.y*scale
+	return p.x*p.x*scale + p.y*p.y*scale
 }
 func (p Point) NoArgs() {
-    println(&quot;NoArgs called.&quot;)
+	println(&quot;NoArgs called.&quot;)
 }
 func (p Point) TotalDist(points ...Point) int {
-    tot := 0
-    for _, q := range points {
-        dx := q.x - p.x
-        dy := q.y - p.y
-        tot += dx*dx + dy*dy
-    }
-    return tot
+	tot := 0
+	for _, q := range points {
+		dx := q.x - p.x
+		dy := q.y - p.y
+		tot += dx*dx + dy*dy
+	}
+	return tot
 }
 func (p Point) NoArgsButReturn() string {
-    return &quot;something&quot;
+	return &quot;something&quot;
 }
 </code></pre>
 
@@ -756,15 +745,15 @@ func (p Point) NoArgsButReturn() string {
 
 <pre><code class="language-go">
 func TestMethod(t *testing.T) {
-    p := Point{3, 4}
-    pType := TypeOf(p)
-    t.Logf(&quot;%v&quot;, pType)
-    methods := pType.exportedMethods()
-    for idx, method := range methods {
-        name := pType.nameOff(method.name)
-        typ := pType.typeOff(method.mtyp)
-        t.Logf(&quot;%d : Method %q %v %v %v\n&quot;, idx, name.name(), typ, method.tfn, method.ifn)
-    }
+	p := Point{3, 4}
+	pType := TypeOf(p)
+	t.Logf(&quot;%v&quot;, pType)
+	methods := pType.exportedMethods()
+	for idx, method := range methods {
+		name := pType.nameOff(method.name)
+		typ := pType.typeOff(method.mtyp)
+		t.Logf(&quot;%d : Method %q %v %v %v\n&quot;, idx, name.name(), typ, method.tfn, method.ifn)
+	}
 }
 </code></pre>
 
@@ -774,9 +763,9 @@ func TestMethod(t *testing.T) {
 
 <p>Adding the following code, fixes the test (the signatures are correct).</p>
 
-<pre><code class="language-go">    type dummy struct{}
-    func (d dummy) A() {}
-    var _ = reflect.TypeOf(dummy{}).Method(0)
+<pre><code class="language-go">	type dummy struct{}
+	func (d dummy) A() {}
+	var _ = reflect.TypeOf(dummy{}).Method(0)
 </code></pre>
 
 <p>Seems the function <code>func addReflectOff(ptr unsafe.Pointer) int32</code> which is implemented in the runtime package gets called from <code>reflect</code> package which creates <a href="https://github.com/golang/go/blob/34db5f0c4d80b8fe3fb4b5be90efd9ee92bd1d4d/src/runtime/type.go#L147">reflectOffs structs</a> for later lookups. We need to force the compiler to allow us to use the same functions as reflect does. Since we&rsquo;re not using reflect anywhere, dead code removal does not allow us to initialize properly - so we need to force it.</p>
@@ -804,7 +793,9 @@ func TestMethod(t *testing.T) {
   
     <h4><a href="/post/what-you-cant-do/">What you can&#39;t do with reflect</a></h4>
     <h5>So ... you can&#39;t do it with reflect? Actually, you can!</h5>
-    <h5>June 15, 2018</h5>
+    
+      <h5>Published on June 15, 2018</h5>
+    
  <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Reflect</kbd> 
 <p>About 9 minutes of reading.</p>
 </div>
@@ -815,7 +806,9 @@ func TestMethod(t *testing.T) {
   
     <h4><a href="/post/known-world-stops/">Knowing when the world stops</a></h4>
     <h5>I quote &#34;This function is called with the world stopped, at the beginning of a garbage collection.&#34;</h5>
-    <h5>March 5, 2018</h5>
+    
+      <h5>Published on March 5, 2018</h5>
+    
  <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Advanced</kbd>  <kbd class="item-tag">Compiler</kbd>  <kbd class="item-tag">Directives</kbd> 
 <p>About 3 minutes of reading.</p>
 </div>
@@ -826,7 +819,9 @@ func TestMethod(t *testing.T) {
   
     <h4><a href="/post/radix-story/">A Radix Story</a></h4>
     <h5>About routing and searching using radix trees.</h5>
-    <h5>February 27, 2018</h5>
+    
+      <h5>Published on February 27, 2018</h5>
+    
  <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Radix</kbd>  <kbd class="item-tag">Tree</kbd>  <kbd class="item-tag">Router</kbd>  <kbd class="item-tag">Search</kbd> 
 <p>About 10 minutes of reading.</p>
 </div>
@@ -835,7 +830,7 @@ func TestMethod(t *testing.T) {
 
     <h4 class="page-header">Comments</h4>
 <div id="disqus_thread"></div>
-<script>
+<script type="application/javascript">
     var disqus_config = function () {
     
     
@@ -857,7 +852,7 @@ func TestMethod(t *testing.T) {
 
 </main>
 <footer>
-    <p class="copyright text-muted"> Recency Bias &copy; 2017
+    <p class="copyright text-muted"> Recency Bias &copy; 2018
         - Powered by <a href="https://gohugo.io">Hugo</a>.</p>
 </footer>
 </body>

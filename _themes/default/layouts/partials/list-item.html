@@ -14,7 +14,11 @@
 {{ with .Description }} {{ $.Scratch.Set "subtitle" . }} {{ end }}
     <h4><a href="{{ .Scratch.Get "link" }}">{{ .Title }}</a></h4>
     <h5>{{ $.Scratch.Get "subtitle" }}</h5>
-    <h5>{{ .Date.Format (.Site.Params.dateFormat | default "January 2, 2006") }}</h5>
+    {{ if ne .Lastmod .Date }}
+      <h5>Last modified on {{ .Lastmod.Format (.Site.Params.dateFormat | default "January 2, 2006") }}</h5>
+    {{ else }}
+      <h5>Published on {{ .Date.Format (.Site.Params.dateFormat | default "January 2, 2006") }}</h5>
+    {{ end }}
 {{ range .Params.tags }} <kbd class="item-tag">{{ . }}</kbd> {{ end }}
 {{ $rt := .ReadingTime }}<p>About {{ $rt }} minute{{if gt $rt 1}}s{{end}} of reading.</p>
 </div>

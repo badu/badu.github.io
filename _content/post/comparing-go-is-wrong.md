@@ -17,21 +17,21 @@ I'm not talking here about ranking languages. Comparing languages - that's this 
 
 In my morning routine, I'm reading a lot of articles on various subjects, mostly related with Go and Java : once a week, I get across an article that compares Go to Scala, Java, you name it.
 
-Comparing programming languages is like going to kindergarten all over again. Kids start arguing over the language features without having a clue what led the authors of that programming language to make an option over another option. Complaining that Go has no generics is from that mindset, where a young mind doesn't understand that Go is not object oriented, therefor there is no need for generics.
+Comparing programming languages is like going to kindergarten all over again. Kids start arguing over the language features without having a clue what led the authors of that programming language to make an option over another option. Complaining that Go has no generics is from that mindset, where a young mind doesn't understand that Go is not object oriented, therefore there is no need for generics.
 
 Go was an explicitly engineered language intended to solve problems with existing languages and tools while natively taking advantage of modern hardware architectures. It has been designed not only with teams of developers in mind, but also long-term maintainability. Comparing it to Java (which I know well) is wrong for the simple reason that they are designed in different ages of computing with different problems, hardware capabilities and needs.
 
 ## The right tool for the right job
 
-For me, understanding a programming language, framework or stack implies love and fun. You you are not having fun and you don't love it, it might because you don't understand it well enough, or you're using it in a wrong way.
+For me, understanding a programming language, framework or stack implies love and fun. If you are not having fun and you don't love it, it might because you don't understand it well enough, or you're using it in a wrong way.
 
 If they choose a screwdriver handler to hammer some nails, fine by me.
 
-Convincing someone to jump from Java or Ruby to Go is not going to be achieved by comparing them. The influence by example, diplomacy and the spread of your worldview would do a better job.
+Convincing someone to jump from Java or Ruby to Go is not going to be achieved by comparing them. The influence by an example, diplomacy and the spread of your worldview would do a better job.
 
-To give you an example, I have a good friend which is coding Rust these days. We came to agreement that Go and Rust are not competitors and found [Dave](https://dave.cheney.net/2015/07/02/why-go-and-rust-are-not-competitors)  Cheney's opinnion in the process. Last week I was presenting my friend with a few of Go advantages and he was impressed. Maybe he will give it a Go, maybe he wouldn't. That doesn't put us in disagreement, nor forcing me or him to choose sides.
+To give you an example, I have a good friend who is coding Rust these days. We came to agreement that Go and Rust are not competitors and found [Dave](https://dave.cheney.net/2015/07/02/why-go-and-rust-are-not-competitors) Cheney's opinion in the process. Last week I was presenting my friend with a few of Go advantages and he was impressed. Maybe he will give it a Go, maybe he wouldn't. That doesn't put us in disagreement, nor forcing him or me to choose sides.
 
-Over the time, some of my colleagues asked me what I think about some framework or language. I remember the discussion about TypeScript, that I had with one of them. My answer was simple : why should I learn a new language, when Javascript is enough for my needs? It's not about anything else, other than needs.
+Over the time, some of my colleagues asked me what I thought about some framework or language. I remember the discussion about TypeScript, that I had with one of them. My answer was simple : why should I learn a new language, when Javascript is enough for my needs? It's not about anything else, other than needs.
 
 ## Examples from History
 
@@ -55,6 +55,6 @@ Over the time, some of my colleagues asked me what I think about some framework 
 
 If you feel like you need your own language or you want to have some fun, you can create it using a language that you know well and [PEG](https://en.wikipedia.org/wiki/Parsing_expression_grammar) or [ANTLR](https://en.wikipedia.org/wiki/ANTLR).
 
-On the subject of "This has always bugged me and I can do better!", I've spent some time playing with [ANTLR4](https://github.com/antlr/antlr4) and created a grammar for a language called Greuceanu (in the Romanian mythology, Greuceanu is a young brave man who finds that the Sun and the Moon have been stolen by entities called zmei. After a long fight with the three zmei and their wives (zmeoaice), Greuceanu sets the Sun and the Moon free so the people on Earth have light again).
+On the subject of "This has always bugged me and I can do better!", I've spent some time playing with [ANTLR4](https://github.com/antlr/antlr4) and created a grammar for a language called Greuceanu (in the Romanian mythology, Greuceanu is a young brave man who finds that the Sun and the Moon have been stolen by entities called `zmei`. After a long fight with the three `zmei` and their wives (`zmeoaice`), Greuceanu sets the Sun and the Moon free so the people on Earth have light again).
 
 Indeed, writing the grammar for a new language takes time, but there is help for that too : [Visual Studio](https://marketplace.visualstudio.com/items?itemName=SamHarwell.ANTLRLanguageSupport), [Eclipse](https://marketplace.eclipse.org/content/antlr-4-ide) and [Intellij](https://plugins.jetbrains.com/plugin/7358-antlr-v4-grammar-plugin)

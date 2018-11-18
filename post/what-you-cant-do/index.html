@@ -37,7 +37,6 @@
     <link rel="shortcut icon" href="http://badu.github.io/favicon.ico">
 
 <style>
-
     html body {
         font-family: 'Roboto', sans-serif;
         background-color: white;
@@ -47,18 +46,6 @@
         --accent: #00bcd4;
         --border-width:  5px ;
     }
-
-
-
-
-
-
-
-
-
-
-
-
 </style>
 
 
@@ -98,7 +85,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.38-DEV" />
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.51-DEV" />
 
 
 
@@ -207,7 +194,9 @@
   
     <h4><a href="/post/what-you-cant-do/">What you can&#39;t do with reflect</a></h4>
     <h5>So ... you can&#39;t do it with reflect? Actually, you can!</h5>
-    <h5>June 15, 2018</h5>
+    
+      <h5>Published on June 15, 2018</h5>
+    
  <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Reflect</kbd> 
 <p>About 9 minutes of reading.</p>
 </div>
@@ -264,7 +253,7 @@ import (
 )
 
 type IValidator interface {
-    Validate() error
+	Validate() error
 }
 
 type ParamAndIndex struct {
@@ -275,209 +264,209 @@ type ParamAndIndex struct {
 
 func collectRequirements(fnValue reflect.Value) (reflect.Type, reflect.Type, reflect.Type, []ParamAndIndex, []string) {
 
-    // checking if we're registering a function, not something else
-    functionType := fnValue.Type()
-    if functionType.Kind() != reflect.Func {
-        panic(&quot;Can only register functions.&quot;)
-    }
-    
-    // getting the function name (for debugging purposes)
-    fnCallerName := runtime.FuncForPC(fnValue.Pointer()).Name()
-    parts := strings.Split(fnCallerName, &quot;/&quot;)
-    callerName := parts[len(parts)-1]
+	// checking if we're registering a function, not something else
+	functionType := fnValue.Type()
+	if functionType.Kind() != reflect.Func {
+		panic(&quot;Can only register functions.&quot;)
+	}
+	
+	// getting the function name (for debugging purposes)
+	fnCallerName := runtime.FuncForPC(fnValue.Pointer()).Name()
+	parts := strings.Split(fnCallerName, &quot;/&quot;)
+	callerName := parts[len(parts)-1]
 
-    // collecting injected parameters
-    var payloadType reflect.Type
-    var paramType reflect.Type
-    var headersType reflect.Type
-    var paramFields []ParamAndIndex
-    var headerFields []string
+	// collecting injected parameters
+	var payloadType reflect.Type
+	var paramType reflect.Type
+	var headersType reflect.Type
+	var paramFields []ParamAndIndex
+	var headerFields []string
 
-    if functionType.NumIn() == 0 {
-        panic(&quot;Handler must have at least one argument : context.Context&quot;)
-    }
-    // convention : first param is always context.Context
-    contextParam := functionType.In(0)
-    if &quot;context.Context&quot; != contextParam.String() {
-        panic(&quot;bad handler func : first param should be context.Context&quot;)
-    }
+	if functionType.NumIn() == 0 {
+		panic(&quot;Handler must have at least one argument : context.Context&quot;)
+	}
+	// convention : first param is always context.Context
+	contextParam := functionType.In(0)
+	if &quot;context.Context&quot; != contextParam.String() {
+		panic(&quot;bad handler func : first param should be context.Context&quot;)
+	}
 
-    for p := 1; p &lt; functionType.NumIn(); p++ {
-        param := functionType.In(p)
-        paramName := param.Name()
-        // param types should have the name starting with &quot;Param&quot; (e.g. &quot;ParamPageAndSomethingElse&quot;)
-        if strings.HasPrefix(paramName, &quot;Param&quot;) {
-            paramType = param
-            for j := 0; j &lt; param.NumField(); j++ {
-                field := param.Field(j)
-                // if a field is read from muxer vars, it should have a tag set to the name of the required parameter
-                varTag := field.Tag.Get(&quot;var&quot;)
-                // if a field is read from muxer form, it should have a tag set to the name of the required parameter
-                formTag := field.Tag.Get(&quot;form&quot;)
-                if len(varTag) &gt; 0 {
-                    paramFields = append(paramFields, ParamAndIndex{tag: varTag, index: j, isVar: true})
-                }
+	for p := 1; p &lt; functionType.NumIn(); p++ {
+		param := functionType.In(p)
+		paramName := param.Name()
+		// param types should have the name starting with &quot;Param&quot; (e.g. &quot;ParamPageAndSomethingElse&quot;)
+		if strings.HasPrefix(paramName, &quot;Param&quot;) {
+			paramType = param
+			for j := 0; j &lt; param.NumField(); j++ {
+				field := param.Field(j)
+				// if a field is read from muxer vars, it should have a tag set to the name of the required parameter
+				varTag := field.Tag.Get(&quot;var&quot;)
+				// if a field is read from muxer form, it should have a tag set to the name of the required parameter
+				formTag := field.Tag.Get(&quot;form&quot;)
+				if len(varTag) &gt; 0 {
+					paramFields = append(paramFields, ParamAndIndex{tag: varTag, index: j, isVar: true})
+				}
 
-                if len(formTag) &gt; 0 {
-                    paramFields = append(paramFields, ParamAndIndex{tag: formTag, index: j})
-                }
-            }
-            // convention : Headers mark headers struct (e.g. &quot;HeadersForMe&quot;)
-        } else if strings.HasPrefix(paramName, &quot;Headers&quot;) {
-            headersType = param
-            // forced add of the &quot;User-Agent&quot; - more can be added here, of course...
-            headerFields = append(headerFields, &quot;User-Agent&quot;)
-            for j := 0; j &lt; param.NumField(); j++ {
-                field := param.Field(j)
-                // all headers should have hdr tag
-                hdrTag := field.Tag.Get(&quot;hdr&quot;)
-                if len(hdrTag) &gt; 0 {
-                    headerFields = append(headerFields, hdrTag)
-                }
-            }
-        } else {
-            if payloadType != nil {
-                panic(&quot;Seems you are expecting two payloads on &quot; + callerName + &quot;. You should take only one.&quot;)
-            }
-            // convention : second param is always the json payload (which gets automatically decoded)
-            switch functionType.In(p).Kind() {
-            case reflect.Ptr, reflect.Map, reflect.Slice:
-                payloadType = functionType.In(p)
-            default:
-                fmt.Printf(&quot;Second argument must be an *object, map, or slice and it's %q on %s [will be ignored].\n&quot;, functionType.In(p).String(), callerName)
-            }
-        }
-    }
+				if len(formTag) &gt; 0 {
+					paramFields = append(paramFields, ParamAndIndex{tag: formTag, index: j})
+				}
+			}
+			// convention : Headers mark headers struct (e.g. &quot;HeadersForMe&quot;)
+		} else if strings.HasPrefix(paramName, &quot;Headers&quot;) {
+			headersType = param
+			// forced add of the &quot;User-Agent&quot; - more can be added here, of course...
+			headerFields = append(headerFields, &quot;User-Agent&quot;)
+			for j := 0; j &lt; param.NumField(); j++ {
+				field := param.Field(j)
+				// all headers should have hdr tag
+				hdrTag := field.Tag.Get(&quot;hdr&quot;)
+				if len(hdrTag) &gt; 0 {
+					headerFields = append(headerFields, hdrTag)
+				}
+			}
+		} else {
+			if payloadType != nil {
+				panic(&quot;Seems you are expecting two payloads on &quot; + callerName + &quot;. You should take only one.&quot;)
+			}
+			// convention : second param is always the json payload (which gets automatically decoded)
+			switch functionType.In(p).Kind() {
+			case reflect.Ptr, reflect.Map, reflect.Slice:
+				payloadType = functionType.In(p)
+			default:
+				fmt.Printf(&quot;Second argument must be an *object, map, or slice and it's %q on %s [will be ignored].\n&quot;, functionType.In(p).String(), callerName)
+			}
+		}
+	}
 
-    // the function must always return 2 params
-    if functionType.NumOut() != 2 {
-        panic(&quot;Handler has &quot; + strconv.Itoa(functionType.NumOut()) + &quot; returns. Must have two : pointer to something and error. (while registering &quot; + callerName + &quot;)&quot;)
-    }
+	// the function must always return 2 params
+	if functionType.NumOut() != 2 {
+		panic(&quot;Handler has &quot; + strconv.Itoa(functionType.NumOut()) + &quot; returns. Must have two : pointer to something and error. (while registering &quot; + callerName + &quot;)&quot;)
+	}
 
-    // last param returned must be error
-    errorParam := functionType.Out(1)
-    if &quot;error&quot; != errorParam.String() {
-        panic(&quot;bad handler func : last parameter is supposed to be error&quot;)
-    }
+	// last param returned must be error
+	errorParam := functionType.Out(1)
+	if &quot;error&quot; != errorParam.String() {
+		panic(&quot;bad handler func : last parameter is supposed to be error&quot;)
+	}
 
-    return payloadType, paramType, headersType, paramFields, headerFields
+	return payloadType, paramType, headersType, paramFields, headerFields
 }
 
 func HandleFunc(router *mux.Router, route string, fn interface{}) *mux.Route {
-    // reflect on the provided handler (controller with signature above)
-    fnValue := reflect.ValueOf(fn)
+	// reflect on the provided handler (controller with signature above)
+	fnValue := reflect.ValueOf(fn)
 
-    // get payload, parameters and headers that will be injected
-    payloadType, paramType, headersType, paramFields, headerFields := collectRequirements(fnValue)
+	// get payload, parameters and headers that will be injected
+	payloadType, paramType, headersType, paramFields, headerFields := collectRequirements(fnValue)
 
-    // sometimes controller expects the request itself - we're providing it
-    isRequestInjected := false
-    if payloadType != nil &amp;&amp; payloadType.Kind() == reflect.Ptr &amp;&amp; payloadType.Elem().Name() == &quot;Request&quot; {
-        isRequestInjected = true
-    }
-    // the actual before handler, which collects and build all the informations expected
-    return router.HandleFunc(route, func(w http.ResponseWriter, r *http.Request) {
-        
-        // checking if client has sent us content type
-        if len(r.Header[&quot;Content-Type&quot;]) == 0{
-            w.WriteHeader(http.StatusBadRequest)
-            w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;missing Content-Type\&quot;}&quot;))
+	// sometimes controller expects the request itself - we're providing it
+	isRequestInjected := false
+	if payloadType != nil &amp;&amp; payloadType.Kind() == reflect.Ptr &amp;&amp; payloadType.Elem().Name() == &quot;Request&quot; {
+		isRequestInjected = true
+	}
+	// the actual before handler, which collects and build all the informations expected
+	return router.HandleFunc(route, func(w http.ResponseWriter, r *http.Request) {
+		
+		// checking if client has sent us content type
+		if len(r.Header[&quot;Content-Type&quot;]) == 0{
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;missing Content-Type\&quot;}&quot;))
             return
-        }
-        
-        // content type &quot;negociation&quot; - in our case we're dealing with json, but you can extend the functionality after your needs (being crazy like GOB over HTTP :))
-        if r.Header[&quot;Content-Type&quot;][0] != &quot;application/json&quot; {
-            w.WriteHeader(http.StatusBadRequest)
-            w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;unknown Content-Type\&quot;}&quot;))
-            return
-        }
-        
-        var err error
+		}
+		
+		// content type &quot;negociation&quot; - in our case we're dealing with json, but you can extend the functionality after your needs (being crazy like GOB over HTTP :))
+		if r.Header[&quot;Content-Type&quot;][0] != &quot;application/json&quot; {
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;unknown Content-Type\&quot;}&quot;))
+			return
+		}
+		
+		var err error
         var reqBody []byte
         // only if the controller is not expecting Request itself, we're reading the body
         if !isRequestInjected {
-            // now we read the request body
-            reqBody, err = ioutil.ReadAll(r.Body)
-            if err != nil {
-                w.WriteHeader(http.StatusInternalServerError)
-                w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;&quot; + err.Error()+ &quot;\&quot;}&quot;))
-                return
-            }
-            // always defering close
-            defer r.Body.Close()
+        	// now we read the request body
+        	reqBody, err = ioutil.ReadAll(r.Body)
+        	if err != nil {
+        		w.WriteHeader(http.StatusInternalServerError)
+        		w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;&quot; + err.Error()+ &quot;\&quot;}&quot;))
+        		return
+        	}
+        	// always defering close
+        	defer r.Body.Close()
         }
         
         // starting to build the arguments of calling our handler. First one, the context
         in := []reflect.Value{ reflect.ValueOf(context.Background())}
         
         if payloadType != nil {
-            // Building the deserialize value
-            var deserializeTo reflect.Value
-            switch payloadType.Kind() {
-            case reflect.Slice, reflect.Map:
-                deserializeTo = reflect.New(payloadType)
-                in = append(in, deserializeTo.Elem())
-            case reflect.Ptr:
-                if !isRequestInjected {
-                    // the most common scenario - expecting a struct
-                    deserializeTo = reflect.New(payloadType.Elem())
-                    in = append(in, deserializeTo)
-                    }
+        	// Building the deserialize value
+        	var deserializeTo reflect.Value
+        	switch payloadType.Kind() {
+        	case reflect.Slice, reflect.Map:
+        		deserializeTo = reflect.New(payloadType)
+        		in = append(in, deserializeTo.Elem())
+        	case reflect.Ptr:
+        		if !isRequestInjected {
+        			// the most common scenario - expecting a struct
+        			deserializeTo = reflect.New(payloadType.Elem())
+        			in = append(in, deserializeTo)
+        		    }
             }
             if !isRequestInjected {
-                // json decode the payload
-                if err = json.Unmarshal(reqBody, deserializeTo.Interface()); err != nil {
-                    w.WriteHeader(http.StatusBadRequest)
-                    w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;&quot;+fmt.Sprintf(&quot;Unmarshal error: %v. Received from client : `%s`&quot;, err, string(reqBody))+&quot;\&quot;}&quot;))
+        		// json decode the payload
+        		if err = json.Unmarshal(reqBody, deserializeTo.Interface()); err != nil {
+        			w.WriteHeader(http.StatusBadRequest)
+        			w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;&quot;+fmt.Sprintf(&quot;Unmarshal error: %v. Received from client : `%s`&quot;, err, string(reqBody))+&quot;\&quot;}&quot;))
                     return
-                }
-                // checking if value is implementing Validate() error
-                iVal, isValidator := deserializeTo.Interface().(IValidator)
-                if isValidator {
-                    // it does - we call validate
-                    err = iVal.Validate()
-                    if err != nil {                     
-                        w.WriteHeader(http.StatusBadRequest)
-                        w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;&quot;+fmt.Sprintf(&quot;Validation error : %v&quot;, err)+&quot;\&quot;}&quot;))
+        		}
+        		// checking if value is implementing Validate() error
+        		iVal, isValidator := deserializeTo.Interface().(IValidator)
+        		if isValidator {
+        			// it does - we call validate
+        			err = iVal.Validate()
+        			if err != nil {        				
+        				w.WriteHeader(http.StatusBadRequest)
+        				w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;&quot;+fmt.Sprintf(&quot;Validation error : %v&quot;, err)+&quot;\&quot;}&quot;))
                         return
-                    }
-                }
-            } else {
-                    // append request as it is, since body is going to be read in controller.
-                    in = append(in, reflect.ValueOf(r))
-            }
+        			}
+        		}
+        	} else {
+        			// append request as it is, since body is going to be read in controller.
+        			in = append(in, reflect.ValueOf(r))
+        	}
         }
         
         // we have parameters that need to be injected
         if paramType != nil {
-            vars := mux.Vars(r)
-            p := reflect.New(paramType).Elem()
-            for _, pf := range paramFields {
-                // if the parameter is in muxer vars
-                if pf.isVar {
-                    p.Field(pf.index).Set(reflect.ValueOf(vars[pf.tag]))
-                } else {
-                    // otherwise it must come from muxer form
-                    fv := r.FormValue(pf.tag)
-                    p.Field(pf.index).Set(reflect.ValueOf(fv))
-                }
-            }
-            // adding the injected
-            in = append(in, p)
+        	vars := mux.Vars(r)
+        	p := reflect.New(paramType).Elem()
+        	for _, pf := range paramFields {
+        		// if the parameter is in muxer vars
+        		if pf.isVar {
+        			p.Field(pf.index).Set(reflect.ValueOf(vars[pf.tag]))
+        		} else {
+        			// otherwise it must come from muxer form
+        			fv := r.FormValue(pf.tag)
+        			p.Field(pf.index).Set(reflect.ValueOf(fv))
+        		}
+        	}
+        	// adding the injected
+        	in = append(in, p)
         }
         
         // we have headers that need to be injected
         if headersType != nil {
-            h := reflect.New(headersType).Elem()
-            for idx, hf := range headerFields {
-                switch hf {
-                case &quot;User-Agent&quot;:
-                    h.Field(idx).Set(reflect.ValueOf(r.UserAgent()))
-                default:
-                    h.Field(idx).Set(reflect.ValueOf(r.Header.Get(hf)))
-                }
-            }
-            in = append(in, h)
+        	h := reflect.New(headersType).Elem()
+        	for idx, hf := range headerFields {
+        		switch hf {
+        		case &quot;User-Agent&quot;:
+        			h.Field(idx).Set(reflect.ValueOf(r.UserAgent()))
+        		default:
+        			h.Field(idx).Set(reflect.ValueOf(r.Header.Get(hf)))
+        		}
+        	}
+        	in = append(in, h)
         }
         
         // finally, we're calling the handler with all the params
@@ -489,48 +478,48 @@ func HandleFunc(router *mux.Router, route string, fn interface{}) *mux.Route {
         enc := json.NewEncoder(w)
         // we have error
         if isError {
-            // header
-            w.Header().Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+        	// header
+        	w.Header().Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
             problem, ok := out[1].Interface().(error)
-            if !ok {
-                // should never happen, since the check is done in the collect function. But better safe than sorry.
-                w.WriteHeader(http.StatusInternalServerError)
-                w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;not error - second param should be error.\&quot;}&quot;))
+        	if !ok {
+        		// should never happen, since the check is done in the collect function. But better safe than sorry.
+        		w.WriteHeader(http.StatusInternalServerError)
+        		w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;not error - second param should be error.\&quot;}&quot;))
                 return
-            }
-            w.WriteHeader(http.StatusInternalServerError)
-            w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;&quot;+problem.Error()+&quot;\&quot;}&quot;))
+        	}
+        	w.WriteHeader(http.StatusInternalServerError)
+        	w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;&quot;+problem.Error()+&quot;\&quot;}&quot;))
             return
         } else {
-            
-            // bytes are delivered as they are (since they help you for downloads)
-            if byts, ok := out[0].Interface().([]byte); ok {
-                w.Write(byts)
-                return
-            }
-            // only now we're seting header, so download can work correctly
-            w.Header().Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+        	
+        	// bytes are delivered as they are (since they help you for downloads)
+        	if byts, ok := out[0].Interface().([]byte); ok {
+        		w.Write(byts)
+        		return
+        	}
+        	// only now we're seting header, so download can work correctly
+        	w.Header().Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
                         
-            // no error has occured - serializing payload
-            err := enc.Encode(out[0].Interface())
-            if err != nil {
-                w.WriteHeader(http.StatusInternalServerError)
-                w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;encoding payload error : &quot;+err.Error()+&quot;\&quot;}&quot;))
-                return
-            }
+        	// no error has occured - serializing payload
+        	err := enc.Encode(out[0].Interface())
+        	if err != nil {
+        		w.WriteHeader(http.StatusInternalServerError)
+        		w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;encoding payload error : &quot;+err.Error()+&quot;\&quot;}&quot;))
+        		return
+        	}
         }
-    }
+	}
 }
 </code></pre>
 
 <p>First question you might ask, is where the controller would require the Request itself. Well, this is the case for uploading files, in which the controller itself would have the responsability of reading the request <code>Body</code>. Last thing : example of Headers and Params structs:</p>
 
 <pre><code class="language-go">    type Headers struct {
-        UserAgent      string // this doesn't require tag to be `hdr:&quot;User-Agent&quot;`
-        AcceptLanguage string `hdr:&quot;Accept-Language&quot;`
-    }
-    
-    type ParamKeyAndDevice struct {
+		UserAgent      string // this doesn't require tag to be `hdr:&quot;User-Agent&quot;`
+		AcceptLanguage string `hdr:&quot;Accept-Language&quot;`
+	}
+	
+	type ParamKeyAndDevice struct {
         Key        string `var:&quot;key&quot;` // taken form url e.g. /api/v1/contents/123, where 123 will be the key
         DeviceID   string `form:&quot;id&quot;` // taken from path vars e.g. ?id=something 
         DeviceName string `form:&quot;name&quot;`
@@ -557,7 +546,9 @@ func HandleFunc(router *mux.Router, route string, fn interface{}) *mux.Route {
   
     <h4><a href="/post/mirror-mirror/">Mirror Mirror on ...</a></h4>
     <h5>Of Mice (Unsafe) and Men (Reflect)</h5>
-    <h5>March 10, 2018</h5>
+    
+      <h5>Published on March 10, 2018</h5>
+    
  <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Advanced</kbd>  <kbd class="item-tag">Reflect</kbd>  <kbd class="item-tag">Unsafe</kbd> 
 <p>About 12 minutes of reading.</p>
 </div>
@@ -568,7 +559,9 @@ func HandleFunc(router *mux.Router, route string, fn interface{}) *mux.Route {
   
     <h4><a href="/post/known-world-stops/">Knowing when the world stops</a></h4>
     <h5>I quote &#34;This function is called with the world stopped, at the beginning of a garbage collection.&#34;</h5>
-    <h5>March 5, 2018</h5>
+    
+      <h5>Published on March 5, 2018</h5>
+    
  <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Advanced</kbd>  <kbd class="item-tag">Compiler</kbd>  <kbd class="item-tag">Directives</kbd> 
 <p>About 3 minutes of reading.</p>
 </div>
@@ -579,7 +572,9 @@ func HandleFunc(router *mux.Router, route string, fn interface{}) *mux.Route {
   
     <h4><a href="/post/radix-story/">A Radix Story</a></h4>
     <h5>About routing and searching using radix trees.</h5>
-    <h5>February 27, 2018</h5>
+    
+      <h5>Published on February 27, 2018</h5>
+    
  <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Radix</kbd>  <kbd class="item-tag">Tree</kbd>  <kbd class="item-tag">Router</kbd>  <kbd class="item-tag">Search</kbd> 
 <p>About 10 minutes of reading.</p>
 </div>
@@ -588,7 +583,7 @@ func HandleFunc(router *mux.Router, route string, fn interface{}) *mux.Route {
 
     <h4 class="page-header">Comments</h4>
 <div id="disqus_thread"></div>
-<script>
+<script type="application/javascript">
     var disqus_config = function () {
     
     
@@ -610,7 +605,7 @@ func HandleFunc(router *mux.Router, route string, fn interface{}) *mux.Route {
 
 </main>
 <footer>
-    <p class="copyright text-muted"> Recency Bias &copy; 2017
+    <p class="copyright text-muted"> Recency Bias &copy; 2018
         - Powered by <a href="https://gohugo.io">Hugo</a>.</p>
 </footer>
 </body>

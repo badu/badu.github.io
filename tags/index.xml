@@ -84,11 +84,29 @@
     </item>
     
     <item>
+      <title>Developer</title>
+      <link>http://badu.github.io/tags/developer/</link>
+      <pubDate>Sun, 18 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/tags/developer/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Directives</title>
       <link>http://badu.github.io/tags/directives/</link>
       <pubDate>Mon, 05 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/tags/directives/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Go</title>
+      <link>http://badu.github.io/tags/go/</link>
+      <pubDate>Sun, 18 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/tags/go/</guid>
       <description></description>
     </item>
     
@@ -111,38 +129,20 @@
     </item>
     
     <item>
+      <title>Interview</title>
+      <link>http://badu.github.io/tags/interview/</link>
+      <pubDate>Sun, 18 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/tags/interview/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Languages</title>
       <link>http://badu.github.io/tags/languages/</link>
       <pubDate>Wed, 15 Nov 2017 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/tags/languages/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Management</title>
-      <link>http://badu.github.io/tags/management/</link>
-      <pubDate>Tue, 14 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/management/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Net</title>
-      <link>http://badu.github.io/tags/net/</link>
-      <pubDate>Sat, 24 Feb 2018 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/net/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>People</title>
-      <link>http://badu.github.io/tags/people/</link>
-      <pubDate>Tue, 14 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/people/</guid>
       <description></description>
     </item>
     

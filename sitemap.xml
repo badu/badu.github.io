@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://badu.github.io/post/interviewing-go-developer-part-1/</loc>
+    <lastmod>2018-11-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://badu.github.io/post/what-you-cant-do/</loc>
     <lastmod>2018-06-15T00:00:00+00:00</lastmod>
   </url>
@@ -49,7 +54,7 @@
   
   <url>
     <loc>http://badu.github.io/about/</loc>
-    <lastmod>2017-11-10T00:00:00+00:00</lastmod>
+    <lastmod>2018-11-18T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -83,7 +88,7 @@
   
   <url>
     <loc>http://badu.github.io/tags/bogdan-dinu/</loc>
-    <lastmod>2017-11-10T00:00:00+00:00</lastmod>
+    <lastmod>2018-11-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -106,13 +111,25 @@
   
   <url>
     <loc>http://badu.github.io/tags/curriculum-vitae/</loc>
-    <lastmod>2017-11-10T00:00:00+00:00</lastmod>
+    <lastmod>2018-11-18T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://badu.github.io/tags/developer/</loc>
+    <lastmod>2018-11-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/directives/</loc>
     <lastmod>2018-03-05T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://badu.github.io/tags/go/</loc>
+    <lastmod>2018-11-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -125,6 +142,12 @@
   <url>
     <loc>http://badu.github.io/tags/http/</loc>
     <lastmod>2018-02-24T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://badu.github.io/tags/interview/</loc>
+    <lastmod>2018-11-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -154,7 +177,7 @@
   
   <url>
     <loc>http://badu.github.io/post/</loc>
-    <lastmod>2018-06-15T00:00:00+00:00</lastmod>
+    <lastmod>2018-11-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -184,7 +207,7 @@
   
   <url>
     <loc>http://badu.github.io/</loc>
-    <lastmod>2018-06-15T00:00:00+00:00</lastmod>
+    <lastmod>2018-11-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -202,7 +225,7 @@
   
   <url>
     <loc>http://badu.github.io/tags/resume/</loc>
-    <lastmod>2017-11-10T00:00:00+00:00</lastmod>
+    <lastmod>2018-11-18T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
