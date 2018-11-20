@@ -357,4 +357,4 @@ Be warned that this method has disadvantages as well - from the top of my head, 
 
 However, I prefer readability and the advantage of being able to explain in simple terms what's going on : what's the encapsulation and what's the abstraction.  
 
-Code before and after can be found [here]([folder](https://github.com/badu/badu.github.io/blob/master/code/3).
+Code before and after can be found [here](https://github.com/badu/badu.github.io/blob/master/code/3).
