@@ -1,13 +1,13 @@
 ---
 title: Knowing when the world stops
-tags: ["Golang", "Advanced", "Compiler", "Directives"]
+tags: ["Go", "Advanced", "Compiler", "Directives"]
 date: 2018-03-05
 description : I quote "This function is called with the world stopped, at the beginning of a garbage collection."
 ---
 
 Last week, I took the time searching for patterns inside the main packages. Besides a bunch of `aha moments`, I've realized that some neat tricks can be used to achieve some goals otherwise achievable by applying different techniques.
 
-For instance, let's say you have a pool or a cache. How do you call your cleanup function? 
+For instance, let's say you have a pool or a cache. How do you call your cleanup function?
 
 Decisions regarding where to place that call can be made by testing and benchmarking. But what if there is another neat way to do so : just before the garbage collection runs, you can mount yourself a function and receive a call on it.
 
@@ -27,20 +27,20 @@ Here's what we need to do :
  1. in our package, create a file named `empty.s`. As the name says, it's empty.
  2. in the file where we're going to declare the linkname directive, we have to import "unsafe" package. So, `import _ "unsafe"`.
  3. use the directive :
- 
+
 	```go
 	//go:linkname registerCacheCleanupFn sync.runtime_registerPoolCleanup
 	func registerCacheCleanupFn(f func())
 	```
  4. in the same file, declare the `init()` function and call `registerCacheCleanupFn` with our cleaning function implementation as parameter.
- 
+
 That's it.
 
 Advantages of using this technique are obvious. However, we have to keep in mind that our cleaning up implementation should NOT allocate and should NOT call any runtime functions - unless you think you are Mario (the plumber) and can deal with any kind of leak.
 
 #### What else can we use?
 
-If we to avoid importing "strings" just like [parse.go](https://github.com/golang/go/blob/release-branch.go1.9/src/net/parse.go#L86) inside "net" package does, but still be able to call IndexByte, we need the following declaration : 
+If we to avoid importing "strings" just like [parse.go](https://github.com/golang/go/blob/release-branch.go1.9/src/net/parse.go#L86) inside "net" package does, but still be able to call IndexByte, we need the following declaration :
 
 ```go
 //go:linkname ByteIndex strings.IndexByte
@@ -88,7 +88,7 @@ func TimeNano() int64
 ```
 ```go
 //go:linkname Now time.now
-func Now() (sec int64, nsec int32, mono int64) 
+func Now() (sec int64, nsec int32, mono int64)
 ```
 
 #### A Side Note

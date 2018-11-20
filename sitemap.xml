@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://badu.github.io/post/changing-perspective/</loc>
+    <lastmod>2018-11-20T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://badu.github.io/post/interviewing-go-developer-part-1/</loc>
     <lastmod>2018-11-18T00:00:00+00:00</lastmod>
   </url>
@@ -98,6 +103,12 @@
   </url>
   
   <url>
+    <loc>http://badu.github.io/tags/channels/</loc>
+    <lastmod>2018-11-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://badu.github.io/tags/cognitive/</loc>
     <lastmod>2017-11-09T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -129,13 +140,13 @@
   
   <url>
     <loc>http://badu.github.io/tags/go/</loc>
-    <lastmod>2018-11-18T00:00:00+00:00</lastmod>
+    <lastmod>2018-11-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://badu.github.io/tags/golang/</loc>
-    <lastmod>2018-06-15T00:00:00+00:00</lastmod>
+    <loc>http://badu.github.io/tags/grouping-methods/</loc>
+    <lastmod>2018-11-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -177,7 +188,7 @@
   
   <url>
     <loc>http://badu.github.io/post/</loc>
-    <lastmod>2018-11-18T00:00:00+00:00</lastmod>
+    <lastmod>2018-11-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -207,7 +218,7 @@
   
   <url>
     <loc>http://badu.github.io/</loc>
-    <lastmod>2018-11-18T00:00:00+00:00</lastmod>
+    <lastmod>2018-11-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -244,6 +255,12 @@
   <url>
     <loc>http://badu.github.io/tags/skills/</loc>
     <lastmod>2018-03-22T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://badu.github.io/tags/standard-package/</loc>
+    <lastmod>2018-06-15T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   

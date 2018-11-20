@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Channels on Recency Bias</title>
+    <link>http://badu.github.io/tags/channels/</link>
+    <description>Recent content in Channels on Recency Bias</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 20 Nov 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://badu.github.io/tags/channels/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Changing Perspective</title>
+      <link>http://badu.github.io/post/changing-perspective/</link>
+      <pubDate>Tue, 20 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/post/changing-perspective/</guid>
+      <description>Changing perspective Using abstractions is more about what your code can do. Encapsulation is about how we achieve that functionality.
+Foreword &amp;ldquo;I was introduced to complex concepts almost immediately&amp;hellip; with examples I&amp;rsquo;d never use in real life. It confused me, I didn&amp;rsquo;t understand it, and eventually quit trying to learn Go because I thought I&amp;rsquo;d never get it&amp;rdquo; - quote from a beginner captured by Mat Ryer
+The present writing is about concurrency and use of channels in Go.</description>
+    </item>
+    
+  </channel>
+</rss>

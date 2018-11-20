@@ -1,6 +1,6 @@
 ---
 title: What you can't do with reflect
-tags: ["Golang", "Reflect"]
+tags: ["Go", "Reflect", "Standard package"]
 date: 2018-06-15
 description : So ... you can't do it with reflect? Actually, you can!
 ---
@@ -11,7 +11,7 @@ A while ago, I was working on backend application in which we were trying to inc
 
 A typical controller signature looks like this :
 ```go
-func PostAddress(c *context.Context, entity *Address) error 
+func PostAddress(c *context.Context, entity *Address) error
 ```
 
 Basically, the `before` handler would both construct the context (in which, for instance, to deposit the currently logged in user) and also decode the JSON payload and provide it as parameter when everything fine. Of course, in the above declaration, a convention was already made : the first parameter would always be context, the second one always a pointer to the desired decoded payload and the function will always have to return an error.
@@ -70,7 +70,7 @@ func collectRequirements(fnValue reflect.Value) (reflect.Type, reflect.Type, ref
 	if functionType.Kind() != reflect.Func {
 		panic("Can only register functions.")
 	}
-	
+
 	// getting the function name (for debugging purposes)
 	fnCallerName := runtime.FuncForPC(fnValue.Pointer()).Name()
 	parts := strings.Split(fnCallerName, "/")
@@ -167,21 +167,21 @@ func HandleFunc(router *mux.Router, route string, fn interface{}) *mux.Route {
 	}
 	// the actual before handler, which collects and build all the informations expected
 	return router.HandleFunc(route, func(w http.ResponseWriter, r *http.Request) {
-		
+
 		// checking if client has sent us content type
 		if len(r.Header["Content-Type"]) == 0{
 			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte("{\"error\":\"missing Content-Type\"}"))
             return
 		}
-		
+
 		// content type "negociation" - in our case we're dealing with json, but you can extend the functionality after your needs (being crazy like GOB over HTTP :))
 		if r.Header["Content-Type"][0] != "application/json" {
 			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte("{\"error\":\"unknown Content-Type\"}"))
 			return
 		}
-		
+
 		var err error
         var reqBody []byte
         // only if the controller is not expecting Request itself, we're reading the body
@@ -196,10 +196,10 @@ func HandleFunc(router *mux.Router, route string, fn interface{}) *mux.Route {
         	// always defering close
         	defer r.Body.Close()
         }
-        
+
         // starting to build the arguments of calling our handler. First one, the context
         in := []reflect.Value{ reflect.ValueOf(context.Background())}
-        
+
         if payloadType != nil {
         	// Building the deserialize value
         	var deserializeTo reflect.Value
@@ -237,7 +237,7 @@ func HandleFunc(router *mux.Router, route string, fn interface{}) *mux.Route {
         			in = append(in, reflect.ValueOf(r))
         	}
         }
-        
+
         // we have parameters that need to be injected
         if paramType != nil {
         	vars := mux.Vars(r)
@@ -255,7 +255,7 @@ func HandleFunc(router *mux.Router, route string, fn interface{}) *mux.Route {
         	// adding the injected
         	in = append(in, p)
         }
-        
+
         // we have headers that need to be injected
         if headersType != nil {
         	h := reflect.New(headersType).Elem()
@@ -269,10 +269,10 @@ func HandleFunc(router *mux.Router, route string, fn interface{}) *mux.Route {
         	}
         	in = append(in, h)
         }
-        
+
         // finally, we're calling the handler with all the params
         out := fnValue.Call(in)
-        
+
         // processing return of the handler (should be payload, error)
         isError := out[0].IsNil()
         // preparing the json encoder
@@ -292,7 +292,7 @@ func HandleFunc(router *mux.Router, route string, fn interface{}) *mux.Route {
         	w.Write([]byte("{\"error\":\""+problem.Error()+"\"}"))
             return
         } else {
-        	
+
         	// bytes are delivered as they are (since they help you for downloads)
         	if byts, ok := out[0].Interface().([]byte); ok {
         		w.Write(byts)
@@ -300,7 +300,7 @@ func HandleFunc(router *mux.Router, route string, fn interface{}) *mux.Route {
         	}
         	// only now we're seting header, so download can work correctly
         	w.Header().Set("Content-Type", "application/json")
-                        
+
         	// no error has occured - serializing payload
         	err := enc.Encode(out[0].Interface())
         	if err != nil {
@@ -320,10 +320,10 @@ First question you might ask, is where the controller would require the Request 
 		UserAgent      string // this doesn't require tag to be `hdr:"User-Agent"`
 		AcceptLanguage string `hdr:"Accept-Language"`
 	}
-	
+
 	type ParamKeyAndDevice struct {
         Key        string `var:"key"` // taken form url e.g. /api/v1/contents/123, where 123 will be the key
-        DeviceID   string `form:"id"` // taken from path vars e.g. ?id=something 
+        DeviceID   string `form:"id"` // taken from path vars e.g. ?id=something
         DeviceName string `form:"name"`
         End        string `form:"end"`
     }
@@ -331,8 +331,8 @@ First question you might ask, is where the controller would require the Request 
 
 ### End note
 
-Another big limitation on reflection is that while you can use reflection to create new functions (take a look at this [beautiful usage example](https://github.com/golang/go/blob/master/src/net/http/httptrace/trace.go#L197) of `MakeFunc`), there’s no way to create new methods at runtime. 
+Another big limitation on reflection is that while you can use reflection to create new functions (take a look at this [beautiful usage example](https://github.com/golang/go/blob/master/src/net/http/httptrace/trace.go#L197) of `MakeFunc`), there’s no way to create new methods at runtime.
 
-Unfortunatelly, this means you cannot use reflection to implement an interface at runtime - believe me, I've tried. In Java, this functionality is called a dynamic proxy. 
+Unfortunatelly, this means you cannot use reflection to implement an interface at runtime - believe me, I've tried. In Java, this functionality is called a dynamic proxy.
 
-There is an workaround for this too, a bit ugly if you ask me, but it can be done. I'll write about it in a later post. 
+There is an workaround for this too, a bit ugly if you ask me, but it can be done. I'll write about it in a later post.

@@ -1,6 +1,6 @@
 ---
-title: A Radix Story 
-tags: ["Golang", "Radix", "Tree", "Router", "Search"]
+title: A Radix Story
+tags: ["Go", "Radix", "Tree", "Router", "Search"]
 date: 2018-02-27
 description : About routing and searching using radix trees.
 ---
@@ -27,7 +27,7 @@ The problem is really simple : let's separate the concerns in such manner that w
 
 In the case of a router, http.Request gives us access to the requested path. So, if we are able to process that path in a way that we need, we might not need a router at all. In the end we should be able to write a well anchored set of business logic rules without making the effort to adapt our mental model to a set of rules and conventions imposed by the authors of a package.
 
-To give you a simple example, most routers won't allow you to have a `otherwise` route : match this route with this handler - and so on, but otherwise, put all other requests on this handler. This comes handy when you need to cover a dynamic defined route, like serving a request based on the slug of a title or the slug of category (title slug being the `otherwise` handler). 
+To give you a simple example, most routers won't allow you to have a `otherwise` route : match this route with this handler - and so on, but otherwise, put all other requests on this handler. This comes handy when you need to cover a dynamic defined route, like serving a request based on the slug of a title or the slug of category (title slug being the `otherwise` handler).
 
 Let's try to forget about what a route really  is, by splitting it into three main properties : a http method (GET/POST/PUT/etc.), a path string and a function which needs to be called if that path string looks like something particular.
 
@@ -47,7 +47,7 @@ Let's get coding:
 			parent *Node
 			child  *Node
 		}
-		
+
 		Edges []Edge
 
 		leafNode struct {
@@ -60,7 +60,7 @@ Let's get coding:
 			edges Edges
 		}
 	)
-		
+
 	func (n *Node) isLeaf() bool {
 		return n.leaf != nil && len(n.edges) == 0
 	}
@@ -111,15 +111,15 @@ Let's get coding:
 			}
 		}
 		return nil
-	}	
-	
-	// it's recursive	
+	}
+
+	// it's recursive
 	func (t *Tree) insert(target *Node, edgeKey string, leafKey string, value interface{}) {
-		// we've reached leaf 
+		// we've reached leaf
 		if target.isLeaf() {
 			if leafKey == target.leaf.key {
 				// the same leaf key, update value
-				// if overwriting values is by convention forbidden, should panic 
+				// if overwriting values is by convention forbidden, should panic
 				target.leaf.value = value
 			} else {
 				// insert leaf key value as new child node of target
@@ -161,7 +161,7 @@ Let's get coding:
 		//leaf key and edge key are the same
 		t.insert(&t.root, what, what, value)
 	}
-	
+
 	func (t *Tree) search(where *Node, what string) (interface{}, bool) {
 		if where.isLeaf() {
 			return where.leaf.value, true
@@ -178,7 +178,7 @@ Let's get coding:
 	func (t *Tree) Search(what string) (interface{}, bool) {
 		return t.search(&t.root, what)
 	}
-	
+
 	func longestPrefix(s1, s2 string) (string, bool) {
 		found := false
 		for i := 0; i < len(s1) && i < len(s2); i++ {
@@ -204,11 +204,11 @@ The code is pretty straight forward, however I've placed some comments here and 
 
 As you can see inside the [test](https://github.com/badu/badu.github.io/blob/master/code/2/radix_test.go), I've tested the search against some HTTP headers, just in case someone might find it useful to discard any unwanted headers inside a middleware. Later on, I'll probably benchmark the classical method of collecting HTTP headers against this method. However, this is not the point here.
 
-Usually, we, developers need to match URLs like `/posts/{tag}/{id:[0-9]+}` in the HTTP path and while we're at it also extract those meaningful arguments. Things seem even more complicated when the string contains query values, like `/posts/{tag}?filter=date&author=3`. 
+Usually, we, developers need to match URLs like `/posts/{tag}/{id:[0-9]+}` in the HTTP path and while we're at it also extract those meaningful arguments. Things seem even more complicated when the string contains query values, like `/posts/{tag}?filter=date&author=3`.
 
 #### The Star Lookup
 
-Let's make the following convention : we don't care (at the moment) how an argument look like. For us, everything that is an argument is a star (`*`), leaving the decision of converting and validation to the next business logic level (which might be as well the handler itself). 
+Let's make the following convention : we don't care (at the moment) how an argument look like. For us, everything that is an argument is a star (`*`), leaving the decision of converting and validation to the next business logic level (which might be as well the handler itself).
 
 Given the above convention, the path `/posts/{tag}/{id:[0-9]+}` would translate to `/posts/*/*`, ok?
 
@@ -288,7 +288,7 @@ Here's the code :
 Remember, you have to adapt this to your specific needs and for this reason I haven't imposed a way of capturing path parts that match star (`*`). I've left comments where you can do that.
 
 In the above starSearch function there is a catch : if the edges slice is not sorted, so the last sibling is the star (`*`), the search will not work. To sort those slices, we need the following:
-```go 
+```go
 	func (e Edges) Len() int {
 		return len(e)
 	}

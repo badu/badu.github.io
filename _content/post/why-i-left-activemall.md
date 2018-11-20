@@ -1,5 +1,5 @@
 ---
-title: Why I left Activemall
+title: Why I Left Activemall
 tags: ["Agile", "Management", "People"]
 date: 2017-11-14
 description : About a team leader without followers

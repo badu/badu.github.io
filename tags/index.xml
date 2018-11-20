@@ -57,6 +57,15 @@
     </item>
     
     <item>
+      <title>Channels</title>
+      <link>http://badu.github.io/tags/channels/</link>
+      <pubDate>Tue, 20 Nov 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/tags/channels/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Cognitive</title>
       <link>http://badu.github.io/tags/cognitive/</link>
       <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
@@ -104,18 +113,18 @@
     <item>
       <title>Go</title>
       <link>http://badu.github.io/tags/go/</link>
-      <pubDate>Sun, 18 Nov 2018 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 20 Nov 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/tags/go/</guid>
       <description></description>
     </item>
     
     <item>
-      <title>Golang</title>
-      <link>http://badu.github.io/tags/golang/</link>
-      <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
+      <title>Grouping Methods</title>
+      <link>http://badu.github.io/tags/grouping-methods/</link>
+      <pubDate>Tue, 20 Nov 2018 00:00:00 +0000</pubDate>
       
-      <guid>http://badu.github.io/tags/golang/</guid>
+      <guid>http://badu.github.io/tags/grouping-methods/</guid>
       <description></description>
     </item>
     
@@ -134,15 +143,6 @@
       <pubDate>Sun, 18 Nov 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/tags/interview/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Languages</title>
-      <link>http://badu.github.io/tags/languages/</link>
-      <pubDate>Wed, 15 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/languages/</guid>
       <description></description>
     </item>
     

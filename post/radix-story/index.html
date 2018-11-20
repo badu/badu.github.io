@@ -197,7 +197,7 @@
     
       <h5>Published on February 27, 2018</h5>
     
- <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Radix</kbd>  <kbd class="item-tag">Tree</kbd>  <kbd class="item-tag">Router</kbd>  <kbd class="item-tag">Search</kbd> 
+ <kbd class="item-tag">Go</kbd>  <kbd class="item-tag">Radix</kbd>  <kbd class="item-tag">Tree</kbd>  <kbd class="item-tag">Router</kbd>  <kbd class="item-tag">Search</kbd> 
 <p>About 10 minutes of reading.</p>
 </div>
 
@@ -246,7 +246,7 @@
 			parent *Node
 			child  *Node
 		}
-		
+
 		Edges []Edge
 
 		leafNode struct {
@@ -259,7 +259,7 @@
 			edges Edges
 		}
 	)
-		
+
 	func (n *Node) isLeaf() bool {
 		return n.leaf != nil &amp;&amp; len(n.edges) == 0
 	}
@@ -310,15 +310,15 @@
 			}
 		}
 		return nil
-	}	
-	
-	// it's recursive	
+	}
+
+	// it's recursive
 	func (t *Tree) insert(target *Node, edgeKey string, leafKey string, value interface{}) {
-		// we've reached leaf 
+		// we've reached leaf
 		if target.isLeaf() {
 			if leafKey == target.leaf.key {
 				// the same leaf key, update value
-				// if overwriting values is by convention forbidden, should panic 
+				// if overwriting values is by convention forbidden, should panic
 				target.leaf.value = value
 			} else {
 				// insert leaf key value as new child node of target
@@ -360,7 +360,7 @@
 		//leaf key and edge key are the same
 		t.insert(&amp;t.root, what, what, value)
 	}
-	
+
 	func (t *Tree) search(where *Node, what string) (interface{}, bool) {
 		if where.isLeaf() {
 			return where.leaf.value, true
@@ -377,7 +377,7 @@
 	func (t *Tree) Search(what string) (interface{}, bool) {
 		return t.search(&amp;t.root, what)
 	}
-	
+
 	func longestPrefix(s1, s2 string) (string, bool) {
 		found := false
 		for i := 0; i &lt; len(s1) &amp;&amp; i &lt; len(s2); i++ {
@@ -546,39 +546,39 @@
 
 
   
+    <h4><a href="/post/changing-perspective/">Changing Perspective</a></h4>
+    <h5>Changing Perspective Might Help You Understand</h5>
+    
+      <h5>Published on November 20, 2018</h5>
+    
+ <kbd class="item-tag">Go</kbd>  <kbd class="item-tag">Channels</kbd>  <kbd class="item-tag">Grouping Methods</kbd> 
+<p>About 7 minutes of reading.</p>
+</div>
+  <div class="item">
+
+
+
+  
+    <h4><a href="/post/interviewing-go-developer-part-1/">Interview Questions for Go Developer Position</a></h4>
+    <h5>Measuring And Classifying Go Developer Knowledge</h5>
+    
+      <h5>Published on November 18, 2018</h5>
+    
+ <kbd class="item-tag">Go</kbd>  <kbd class="item-tag">Developer</kbd>  <kbd class="item-tag">Interview</kbd> 
+<p>About 7 minutes of reading.</p>
+</div>
+  <div class="item">
+
+
+
+  
     <h4><a href="/post/what-you-cant-do/">What you can&#39;t do with reflect</a></h4>
     <h5>So ... you can&#39;t do it with reflect? Actually, you can!</h5>
     
       <h5>Published on June 15, 2018</h5>
     
- <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Reflect</kbd> 
+ <kbd class="item-tag">Go</kbd>  <kbd class="item-tag">Reflect</kbd>  <kbd class="item-tag">Standard package</kbd> 
 <p>About 9 minutes of reading.</p>
-</div>
-  <div class="item">
-
-
-
-  
-    <h4><a href="/post/mirror-mirror/">Mirror Mirror on ...</a></h4>
-    <h5>Of Mice (Unsafe) and Men (Reflect)</h5>
-    
-      <h5>Published on March 10, 2018</h5>
-    
- <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Advanced</kbd>  <kbd class="item-tag">Reflect</kbd>  <kbd class="item-tag">Unsafe</kbd> 
-<p>About 12 minutes of reading.</p>
-</div>
-  <div class="item">
-
-
-
-  
-    <h4><a href="/post/known-world-stops/">Knowing when the world stops</a></h4>
-    <h5>I quote &#34;This function is called with the world stopped, at the beginning of a garbage collection.&#34;</h5>
-    
-      <h5>Published on March 5, 2018</h5>
-    
- <kbd class="item-tag">Golang</kbd>  <kbd class="item-tag">Advanced</kbd>  <kbd class="item-tag">Compiler</kbd>  <kbd class="item-tag">Directives</kbd> 
-<p>About 3 minutes of reading.</p>
 </div>
  
 

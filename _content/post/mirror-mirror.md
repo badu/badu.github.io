@@ -1,6 +1,6 @@
 ---
 title: Mirror Mirror on ...
-tags: ["Golang", "Advanced", "Reflect", "Unsafe"]
+tags: ["Go", "Advanced", "Reflect", "Unsafe"]
 date: 2018-03-10
 description : Of Mice (Unsafe) and Men (Reflect)
 ---
@@ -36,13 +36,13 @@ func TestIsJohnIvan(t *testing.T) {
 		_          uint
 		ThirdField uint
 	}
-	
+
 	john := John{Name: "John", Age: 40, Powers: 3}
 
 	ivan := *(*Ivan)(unsafe.Pointer(&john))
 	t.Logf("John as Ivan : GivenName %v ThirdField %d", ivan.givenName, ivan.ThirdField)
 }
-``` 
+```
 
 First observation is that you can violate access to private fields using this conversion. Secondly, as long as you respect the same number of fields and their types, you can omit properties. You can violate the second rule and get unexpected results, as below:
 
@@ -71,8 +71,8 @@ What if you violate the first rule, which states that types have to have an equa
 		Name    string
 		Age     uint
 		Powers  uint
-		Address string // will get filled with the Name 
-		Guns    uint   // will get filled with Age 
+		Address string // will get filled with the Name
+		Guns    uint   // will get filled with Age
 		//Say     string // adding yet another one will crash : "bad pointer in frame"
 		//Data []byte // same adding this or more
 		AFloat float32 // adding a different type seems safe
@@ -125,7 +125,7 @@ func TestAlteredPeople(t *testing.T) {
 
 The unsafe package is serving for Go compiler instead of Go runtime, because it has facilities for low-level programming including operations that violate the type system.
 
-I would never use the above method of conversion, but investigation was needed because of what's about to be described regarding reflect. 
+I would never use the above method of conversion, but investigation was needed because of what's about to be described regarding reflect.
 
 ```go
 type Point struct {
@@ -180,8 +180,8 @@ func TestInTheBeginning(t *testing.T) {
 }
 ```
 
-Once you run the above test, you will get the properties filled in with some values which seem pure magic. But there must be an explanation. 
-We didn't import `reflect` package. Also, the code is unreadable thus proving there is no magic convention like structs named in certain way or properties have some particular names. 
+Once you run the above test, you will get the properties filled in with some values which seem pure magic. But there must be an explanation.
+We didn't import `reflect` package. Also, the code is unreadable thus proving there is no magic convention like structs named in certain way or properties have some particular names.
 
 So, what happen? Well, these data structures (`e` and `r` types) are [known](https://github.com/golang/go/blob/master/src/cmd/compile/internal/gc/reflect.go) to the compiler which does it's job and at the runtime we're getting those results. To reinforce that truth, if we're replacing that `t` function with it's body `v :=(*(*e)(unsafe.Pointer(&p))).abracadabra`, it won't work anymore. And even more, if we're changing the parameter type of the `t` function from `interface{}` to `*Point` it will not work as expected.
 
@@ -568,13 +568,13 @@ func TestMethod(t *testing.T) {
 }
 ```
 
-When we run this test, we're going to see that the methods signature are reported differently than what we've declared. This means we are not doing something that `reflect` package does. 
+When we run this test, we're going to see that the methods signature are reported differently than what we've declared. This means we are not doing something that `reflect` package does.
 
 Our version of TypeOf function doesn't return an interface and also, that interface is built by calling toPtr() method of the rType. However, with that code added, the problem still doesn't get fixed.
 
 Adding the following code, fixes the test (the signatures are correct).
 
-```go	
+```go
 	type dummy struct{}
 	func (d dummy) A() {}
 	var _ = reflect.TypeOf(dummy{}).Method(0)
@@ -593,4 +593,3 @@ It took me four days to learn the internals and modify the reflect package for m
 Probably the lack of documentation made things harder to understand and follow. Probably some things are never meant to be - that - public, due to some sort of programming language politics. Who knows but mostly who cares?
 
 I encourage you to take my advice and break things so you can learn how they work, how other developers solved problems that you cannot think about while just reading the code.
-

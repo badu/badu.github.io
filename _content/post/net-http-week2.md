@@ -1,6 +1,6 @@
 ---
 title: My Thoughts On Net/Http Package - Week 2
-tags: ["Golang", "Net", "Http", "Analysis"]
+tags: ["Go", "Net", "Http", "Analysis", "Standard package"]
 date: 2018-02-24
 description : A deep dive into it net/http package.
 ---
@@ -104,13 +104,13 @@ For some reason [testHookServerServe](https://github.com/golang/go/blob/release-
 I've decided to replace them with the following technique:
 ```go
     type(
-        ServerEventType int 
-        
+        ServerEventType int
+
         srvEvDispatcher struct {
             lsns map[ServerEventType][]srvEvListner
             mu   sync.RWMutex
         }
-    
+
         srvEvListner struct {
             ch chan ServerEventType
         }
@@ -123,7 +123,7 @@ I've decided to replace them with the following technique:
             willRemount bool                 // internal, so we can continuosly listen
         }
     )
-    
+
     const(
         killListeners               ServerEventType = 0
         ServerServe                 ServerEventType = 1
@@ -134,16 +134,16 @@ I've decided to replace them with the following technique:
         WaitResLoopEvent            ServerEventType = 6
         ReadLoopBeforeNextReadEvent ServerEventType = 7
     )
-        
+
     func (r *srvEvDispatcher) dispatch(event ServerEventType) {
-    	if len(r.lsns[event]) == 0{ 
-    	     return 
+    	if len(r.lsns[event]) == 0{
+    	     return
         }
         r.mu.Lock()
         defer r.mu.Unlock()
         // for each listener of that event type
         for i := 0; i < len(r.lsns[event]); i++ {
-            lisn := r.lsns[event][i] 
+            lisn := r.lsns[event][i]
             select {
             case lisn.ch <- event: // we're writting into the channel
             default:

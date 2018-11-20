@@ -1,6 +1,6 @@
 ---
 title: Comparing Go with Other Languages is Wrong
-tags: ["Golang", "Programming", "Languages"]
+tags: ["Go", "Programming", "Languages"]
 date: 2017-11-15
 description: Java is to Javascript like Car is to Carpet
 ---

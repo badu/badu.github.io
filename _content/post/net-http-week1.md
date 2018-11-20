@@ -1,6 +1,6 @@
 ---
 title: My Thoughts On Net/Http Package - Week 1
-tags: ["Golang", "Net", "Http", "Analysis"]
+tags: ["Go", "Net", "Http", "Analysis", "Standard package"]
 date: 2018-02-18
 description : A deep dive into it net/http package. First glance.
 ---
@@ -10,16 +10,16 @@ description : A deep dive into it net/http package. First glance.
 This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I'm inviting you to learn aside me.
 
 You are allowed to judge the code. You are not allowed to judge the people.
- 
+
 ## First Glance
 
-I have a confession to make : despite the fact that ["Keep types close" rule](https://rakyll.org/style-packages/) is fair enough, the architect in me needs to reorganize the code in such a manner that a 10000 feet view to be possible. Creating a "types.go" file and storing there the structures, variables and constant declarations, allows me to see better the relationships between data (let's say models). 
+I have a confession to make : despite the fact that ["Keep types close" rule](https://rakyll.org/style-packages/) is fair enough, the architect in me needs to reorganize the code in such a manner that a 10000 feet view to be possible. Creating a "types.go" file and storing there the structures, variables and constant declarations, allows me to see better the relationships between data (let's say models).
 
 I'm that kind of dude that prefers the "bottom up" approach about software development, so I can decide when a package grew too large or the separation of concerns is violated. One might say that creating "types.go" would violate the "no plurals" rule, but hey, "type" is a keyword in Go, isn't it?
 
 My first action in this deep dive action was to break everything up inside the net/http package so I can have that distant look on it. One of the above mentioned rules states that "we organize code by their functional responsibilities". Using common sense with this rule and putting it besides the "types.go" would imply that all structs receiver would sit in their own file, wouldn't it? Yes, one might say that we'll have a huge collection of files, but rest assured : you will not have to navigate inside a 12000 lines of code file just to check a function's body. Also, another file that holds the "functional responsibilities" would be "utils.go", which hosts all the non receiver functions that compiler would inline or the package exposes publicly.
 
-If a package has a large number of files and we need to keep some sort of track on who's who, we can apply even more splitting : let's say we have "types.go" which comes from both "server.go" and "client.go", but we don't want to mix those together. Seems to me a good idea to have "types_server.go" and "types_client.go" - easy to find, easy to read. Same applies to "utils.go". 
+If a package has a large number of files and we need to keep some sort of track on who's who, we can apply even more splitting : let's say we have "types.go" which comes from both "server.go" and "client.go", but we don't want to mix those together. Seems to me a good idea to have "types_server.go" and "types_client.go" - easy to find, easy to read. Same applies to "utils.go".
 
 One could even create a "public.go" file which will host every function that his package exposes to the outside
 
@@ -51,7 +51,7 @@ Because the above mentioned tests fail, I've totally removed them.
 
 #### Cookies
 
-For some reason - which might be syntactic sugar or just laziness of the users - even if both Response and Request structs have a Header field [Header map[string][]string](https://github.com/golang/go/blob/master/src/net/http/header.go#L19), they also expose Cookie struct by having these methods : Request [Cookie(name string) (*Cookie, error)](https://github.com/golang/go/blob/master/src/net/http/request.go#L373), 
+For some reason - which might be syntactic sugar or just laziness of the users - even if both Response and Request structs have a Header field [Header map[string][]string](https://github.com/golang/go/blob/master/src/net/http/header.go#L19), they also expose Cookie struct by having these methods : Request [Cookie(name string) (*Cookie, error)](https://github.com/golang/go/blob/master/src/net/http/request.go#L373),
 [AddCookie(c *Cookie)](https://github.com/golang/go/blob/master/src/net/http/request.go#L384), [Cookies() []*Cookie](https://github.com/golang/go/blob/master/src/net/http/request.go#L362) and Response [Cookies() []*Cookie](https://github.com/golang/go/blob/master/src/net/http/response.go#L119).
 
 Because I've decided to move all the client related code in it's own package (to be easier to read), I had to dump these methods and create functions with the same functionality (but not the same name, because Cookies() []*Cookie collision for both Response and Request).

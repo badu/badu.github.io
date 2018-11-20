@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Changing Perspective</title>
+
+    <meta name="description" content="Changing Perspective Might Help You Understand">
+
+    <meta property="site_name" content="recency-bias">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://badu.github.io/post/changing-perspective/">
+    <meta property="og:title" content="Changing Perspective">
+    <meta property="og:image" content="">
+
+    <meta property="og:description" content="Changing Perspective Might Help You Understand">
+
+    <meta name="twitter:url" content="http://badu.github.io/post/changing-perspective/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@recency-bias">
+    <meta name="twitter:creator" content="@recency-bias">
+    <meta name="twitter:title" content="Changing Perspective">
+    <meta name="twitter:img:src" content="">
+
+    <meta name="twitter:label1" content="Author">
+    <meta name="twitter:data1" content="Bogdan Dinu">
+    <meta name="twitter:label2" content="Published On">
+    <meta name="twitter:data2" content="November 20, 2018">
+
+
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="dns-prefetch" href="//stats.g.doubleclick.net">
+
+    <link rel="canonical" href="http://badu.github.io/post/changing-perspective/">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+    <link rel="shortcut icon" href="http://badu.github.io/favicon.ico">
+
+<style>
+    html body {
+        font-family: 'Roboto', sans-serif;
+        background-color: white;
+    }
+
+    :root {
+        --accent: #00bcd4;
+        --border-width:  5px ;
+    }
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+
+
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script> 
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.51-DEV" />
+
+
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-687869-6"></script>
+    <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'UA-687869-6');
+          (function() {
+          function ready(cb) {
+              /in/.test(document.readyState) 
+                      ? setTimeout(ready.bind(null, cb), 9)
+                      : cb();
+          }
+          ready(function() {
+              
+              var indicator = document.querySelector('.scroll-progress');
+              if (indicator) {
+                  document.addEventListener('scroll', function (e) {
+                      var dh = document.body.scrollHeight;
+                      var wh = window.innerHeight;
+                      var pos = window.scrollY;
+                      var footerHeight = 50;
+                      var perc = pos / (dh - footerHeight - wh) * 100;
+                      indicator.style.setProperty('--scale', (perc / 100));
+                  })
+              }
+              
+              var links = document.links;
+              for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+                  if (links[i].hostname != window.location.hostname) {
+                      links[i].target = '_blank';
+                  }
+              }
+          });
+          }());
+    </script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand visible-xs" href="#">Changing Perspective</a>
+            <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse">
+        
+            <ul class="nav navbar-nav">
+            
+                <li><a href="/post/">Posts</a></li>
+            
+                <li><a href="/about/">About</a></li>
+            
+                <li><a href="/why-recency-bias/">Why Recency Bias?</a></li>
+            
+            </ul>
+        
+
+        
+            <ul class="nav navbar-nav navbar-right">
+            
+                <li class="navbar-icon"><a href="mailto:badu@badu.ro"><i class="fa fa-envelope-o"></i></a></li>
+            
+                <li class="navbar-icon"><a href="https://github.com/badu/"><i class="fa fa-github"></i></a></li>
+            
+                <li class="navbar-icon"><a href="https://twitter.com/baduro/"><i class="fa fa-twitter"></i></a></li>
+            
+                <li class="navbar-icon"><a href="https://www.linkedin.com/in/golangdeveloper/"><i class="fa fa-linkedin"></i></a></li>
+            
+                <li>
+                    <script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
+                    <div id="SkypeButton_Call_badu.bogdan_1">
+                        <script type="text/javascript">
+                                         Skype.ui({
+                                         "name": "chat",
+                                         "element": "SkypeButton_Call_badu.bogdan_1",
+                                         "participants": ["badu.bogdan"]
+                                         });
+                        </script>
+                    </div>
+                </li>
+            </ul>
+        
+
+        </div>
+
+    </div>
+    
+    <div class="scroll-progress"></div>
+</nav>
+<main>
+<div class="item">
+
+
+
+  
+    <h4><a href="/post/changing-perspective/">Changing Perspective</a></h4>
+    <h5>Changing Perspective Might Help You Understand</h5>
+    
+      <h5>Published on November 20, 2018</h5>
+    
+ <kbd class="item-tag">Go</kbd>  <kbd class="item-tag">Channels</kbd>  <kbd class="item-tag">Grouping Methods</kbd> 
+<p>About 7 minutes of reading.</p>
+</div>
+
+    <br>
+    <div class="text-justify">
+
+<h2 id="changing-perspective">Changing perspective</h2>
+
+<p>Using abstractions is more about <code>what</code> your code can do. Encapsulation is about <code>how</code> we achieve that functionality.</p>
+
+<h4 id="foreword">Foreword</h4>
+
+<p>&ldquo;I was introduced to complex concepts almost immediately&hellip; with examples I&rsquo;d never use in real life. It confused me, I didn&rsquo;t understand it, and eventually quit trying to learn Go because I thought I&rsquo;d never get it&rdquo; - quote from a beginner captured by <a href="https://matryer.com/">Mat Ryer</a></p>
+
+<p>The present writing is about concurrency and use of channels in Go.</p>
+
+<h4 id="original-code">Original Code</h4>
+
+<p>I&rsquo;m assuming that you know what pipelining is. One of the interesting properties of pipelines is the ability they give you to operate on the stream of data using a combination of separate, often reorderable stages. It allows you to reuse stages of the pipeline multiple times.</p>
+
+<p>There is a pattern called <code>fan-out fan-in</code> which reuses a single stage of a pipeline on multiple goroutines in an attempt to parallelize pulls from an upstream stage - which, in the end, results in improving performance of the pipeline.</p>
+
+<p>Let&rsquo;s look at a piece of code, that is generating a stream of random numbers which are converted into an integer stream and then it&rsquo;s passed to a <code>heavy duty doing</code> function. In this case, is about finding prime numbers.</p>
+
+<p>The code is taken from the <a href="https://github.com/kat-co/concurrency-in-go-src">github</a> code of the book <a href="https://katherine.cox-buday.com/concurrency-in-go/">Concurrency In Go</a> by <a href="https://katherine.cox-buday.com/blog/">Katherine Cox-Buday</a>.</p>
+
+<pre><code class="language-go">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;math/rand&quot;
+	&quot;runtime&quot;
+	&quot;sync&quot;
+	&quot;time&quot;
+)
+
+func main() {
+	repeatFn := func(
+		done &lt;-chan interface{},
+		fn func() interface{},
+	) &lt;-chan interface{} {
+		valueStream := make(chan interface{})
+		go func() {
+			defer close(valueStream)
+			for {
+				select {
+				case &lt;-done:
+					return
+				case valueStream &lt;- fn():
+				}
+			}
+		}()
+		return valueStream
+	}
+	take := func(
+		done &lt;-chan interface{},
+		valueStream &lt;-chan interface{},
+		num int,
+	) &lt;-chan interface{} {
+		takeStream := make(chan interface{})
+		go func() {
+			defer close(takeStream)
+			for i := 0; i &lt; num; i++ {
+				select {
+				case &lt;-done:
+					return
+				case takeStream &lt;- &lt;-valueStream:
+				}
+			}
+		}()
+		return takeStream
+	}
+	toInt := func(done &lt;-chan interface{}, valueStream &lt;-chan interface{}) &lt;-chan int {
+		intStream := make(chan int)
+		go func() {
+			defer close(intStream)
+			for v := range valueStream {
+				select {
+				case &lt;-done:
+					return
+				case intStream &lt;- v.(int):
+				}
+			}
+		}()
+		return intStream
+	}
+	primeFinder := func(done &lt;-chan interface{}, intStream &lt;-chan int) &lt;-chan interface{} {
+		primeStream := make(chan interface{})
+		go func() {
+			defer close(primeStream)
+			for integer := range intStream {
+				integer -= 1
+				prime := true
+				for divisor := integer - 1; divisor &gt; 1; divisor-- {
+					if integer%divisor == 0 {
+						prime = false
+						break
+					}
+				}
+
+				if prime {
+					select {
+					case &lt;-done:
+						return
+					case primeStream &lt;- integer:
+					}
+				}
+			}
+		}()
+		return primeStream
+	}
+	fanIn := func(
+		done &lt;-chan interface{},
+		channels ...&lt;-chan interface{},
+	) &lt;-chan interface{} { // &lt;1&gt;
+		var wg sync.WaitGroup // &lt;2&gt;
+		multiplexedStream := make(chan interface{})
+
+		multiplex := func(c &lt;-chan interface{}) { // &lt;3&gt;
+			defer wg.Done()
+			for i := range c {
+				select {
+				case &lt;-done:
+					return
+				case multiplexedStream &lt;- i:
+				}
+			}
+		}
+
+		// Select from all the channels
+		wg.Add(len(channels)) // &lt;4&gt;
+		for _, c := range channels {
+			go multiplex(c)
+		}
+
+		// Wait for all the reads to complete
+		go func() { // &lt;5&gt;
+			wg.Wait()
+			close(multiplexedStream)
+		}()
+
+		return multiplexedStream
+	}
+
+	done := make(chan interface{})
+	defer close(done)
+
+	start := time.Now()
+
+	rand := func() interface{} { return rand.Intn(50000000) }
+
+	randIntStream := toInt(done, repeatFn(done, rand))
+
+	numFinders := runtime.NumCPU()
+	fmt.Printf(&quot;Using %d Cores.\n&quot;, numFinders)
+	finders := make([]&lt;-chan interface{}, numFinders)
+	fmt.Println(&quot;Found Primes:&quot;)
+	for i := 0; i &lt; numFinders; i++ {
+		finders[i] = primeFinder(done, randIntStream)
+	}
+	num := 0
+	for prime := range take(done, fanIn(done, finders...), 10) {
+		num++
+		fmt.Printf(&quot;\t%d - %d\n&quot;, num, prime)
+	}
+
+	fmt.Printf(&quot;Whole work took: %v&quot;, time.Since(start))
+}
+</code></pre>
+
+<p>Can you read it ? Of course, you can - it&rsquo;s just Go!</p>
+
+<p>Now, let&rsquo;s consider that you&rsquo;ll have to explain it to a beginner. First thing that you can say about the code is that it is very hard to follow despite the fact that functions and variables are named, so you can work your way towards understanding what it does.</p>
+
+<p>In summary, you could say &ldquo;we now have a number() equal to the number of CPUs) of goroutines pulling from the random number generator and attempting to determine whether the number is prime&rdquo; and let the poor beginner read (or break) the code until it gets it.</p>
+
+<p>Let&rsquo;s change the code, by using a technique called grouping of methods. This method has both advantages and disadvantages. Main advantage is that for an &ldquo;OOP brain&rdquo;, it shows the blue prints of the separation of concerns in that code.</p>
+
+<p>First thing on my list of rearranging the above code is inventory of the model parts:</p>
+
+<ol>
+<li>we have a main channel, passed around to <code>toInt</code>, <code>repeatFn</code>, <code>primeFinder</code>, <code>take</code>, <code>fanIn</code> functions allowing them to know when the mission is accomplished.</li>
+<li>we have a bunch of channels called <code>finders</code> in the above code, that allows multiplexing of the work</li>
+<li>we have a channel for fanning in (<code>multiplexedStream</code>) the work</li>
+<li>we have a wait group (<code>wg</code>) that is being used for fanning in the work</li>
+</ol>
+
+<p>Having that in mind, let&rsquo;s do the following declaration:</p>
+
+<pre><code class="language-go">type ChanInt chan int
+
+type PrimeFinder struct {
+	intSource         func() int
+	main              ChanInt
+	multiplexedStream ChanInt
+	runners           []ChanInt
+	fanWG             sync.WaitGroup
+}
+</code></pre>
+
+<p>Now, it&rsquo;s only a matter of creating methods from the above code. In the end, we&rsquo;re getting the completely rearranged code as following:</p>
+
+<h4 id="modified-code">Modified Code</h4>
+
+<pre><code class="language-go">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;math/rand&quot;
+	&quot;runtime&quot;
+	&quot;sync&quot;
+	&quot;time&quot;
+)
+
+type ChanInt chan int
+
+type PrimeFinder struct {
+	intSource         func() int
+	main              ChanInt
+	multiplexedStream ChanInt
+	runners           []ChanInt
+	fanWG             sync.WaitGroup
+}
+
+func (pf PrimeFinder) stream() ChanInt {
+	valueStream := make(ChanInt)
+	go func() {
+		defer close(valueStream)
+		for {
+			select {
+			case &lt;-pf.main:
+				return
+			case valueStream &lt;- pf.intSource():
+			}
+		}
+	}()
+	return valueStream
+}
+
+func (pf PrimeFinder) take(capacity int) ChanInt {
+	takeStream := make(ChanInt)
+	go func() {
+		defer close(takeStream)
+		for i := 0; i &lt; capacity; i++ {
+			select {
+			case &lt;-pf.main:
+				return
+			case takeStream &lt;- &lt;-pf.fanIn():
+			}
+		}
+	}()
+	return takeStream
+}
+
+func (pf PrimeFinder) checkPrime(intStream ChanInt) ChanInt {
+	primeStream := make(ChanInt)
+	go func() {
+		defer close(primeStream)
+		for integer := range intStream {
+			integer -= 1
+			prime := true
+			for divisor := integer - 1; divisor &gt; 1; divisor-- {
+				if integer%divisor == 0 {
+					prime = false
+					break
+				}
+			}
+
+			if prime {
+				select {
+				case &lt;-pf.main:
+					return
+				case primeStream &lt;- integer:
+				}
+			}
+		}
+	}()
+	return primeStream
+}
+
+func (pf PrimeFinder) multiplex(workerChannel ChanInt) {
+	defer pf.fanWG.Done()
+	for i := range workerChannel {
+		select {
+		case &lt;-pf.main:
+			return
+		case pf.multiplexedStream &lt;- i:
+		}
+	}
+}
+
+func (pf PrimeFinder) fanIn() ChanInt {
+	// Select from all the channels
+	for _, ch := range pf.runners {
+		go pf.multiplex(ch)
+	}
+
+	// Wait for all the reads to complete
+	go func() {
+		pf.fanWG.Wait()
+		close(pf.multiplexedStream)
+		close(pf.main)
+	}()
+
+	return pf.multiplexedStream
+}
+
+func newPrimeFinder(sourceFn func() int, capacity int) PrimeFinder {
+	// prepare channels and slice of runners
+	result := PrimeFinder{
+		main:              make(ChanInt),
+		runners:           make([]ChanInt, capacity),
+		multiplexedStream: make(ChanInt),
+		intSource:         sourceFn,
+	}
+	// prepare stream
+	randIntStream := result.stream()
+
+	// prepare runners
+	for i := 0; i &lt; capacity; i++ {
+		result.runners[i] = result.checkPrime(randIntStream)
+	}
+	// add runners len to waitgroup
+	result.fanWG.Add(capacity)
+	// return processor
+	return result
+}
+
+func main() {
+	start := time.Now()
+
+	source := func() int { return rand.Intn(50000000) }
+
+	numFinders := runtime.NumCPU()
+	fmt.Printf(&quot;Spinning up %d prime finders.\n&quot;, numFinders)
+
+	processor := newPrimeFinder(source, numFinders)
+
+	fmt.Println(&quot;Primes:&quot;)
+	for prime := range processor.take(10) {
+		fmt.Printf(&quot;\t%d\n&quot;, prime)
+	}
+
+	fmt.Printf(&quot;Search took: %v&quot;, time.Since(start))
+}
+</code></pre>
+
+<h4 id="instead-of-conclusion">Instead of Conclusion</h4>
+
+<p>Can you read it? Do you find it better, easier to understand, follow and modify?</p>
+
+<p>One can argue that I gave up on the syntactic sugar that shows you the direction of the channel, thus making it more confusing. I can say that it is not true, because the actual operations happen inside the <code>select</code> statements - where the developer should look to follow the code. Also, by grouping the functions as methods, it&rsquo;s hiding those kind of details for the developer - you only need to replace the worker function, resting assured that the workflow won&rsquo;t change.</p>
+
+<p>Be warned that this method has disadvantages as well - from the top of my head, I can mention the compiler inlining of the functions, which might affect your speed.</p>
+
+<p>However, I prefer readability and the advantage of being able to explain in simple terms what&rsquo;s going on : what&rsquo;s the encapsulation and what&rsquo;s the abstraction.</p>
+
+<p>Code before and after can be found [here](<a href="https://github.com/badu/badu.github.io/blob/master/code/3">folder</a>.</p>
+</div>
+    
+
+
+    <h4 class="page-header">Related</h4>
+ <div class="item">
+
+
+
+  
+    <h4><a href="/post/interviewing-go-developer-part-1/">Interview Questions for Go Developer Position</a></h4>
+    <h5>Measuring And Classifying Go Developer Knowledge</h5>
+    
+      <h5>Published on November 18, 2018</h5>
+    
+ <kbd class="item-tag">Go</kbd>  <kbd class="item-tag">Developer</kbd>  <kbd class="item-tag">Interview</kbd> 
+<p>About 7 minutes of reading.</p>
+</div>
+  <div class="item">
+
+
+
+  
+    <h4><a href="/post/what-you-cant-do/">What you can&#39;t do with reflect</a></h4>
+    <h5>So ... you can&#39;t do it with reflect? Actually, you can!</h5>
+    
+      <h5>Published on June 15, 2018</h5>
+    
+ <kbd class="item-tag">Go</kbd>  <kbd class="item-tag">Reflect</kbd>  <kbd class="item-tag">Standard package</kbd> 
+<p>About 9 minutes of reading.</p>
+</div>
+  <div class="item">
+
+
+
+  
+    <h4><a href="/post/mirror-mirror/">Mirror Mirror on ...</a></h4>
+    <h5>Of Mice (Unsafe) and Men (Reflect)</h5>
+    
+      <h5>Published on March 10, 2018</h5>
+    
+ <kbd class="item-tag">Go</kbd>  <kbd class="item-tag">Advanced</kbd>  <kbd class="item-tag">Reflect</kbd>  <kbd class="item-tag">Unsafe</kbd> 
+<p>About 12 minutes of reading.</p>
+</div>
+ 
+
+
+    <h4 class="page-header">Comments</h4>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "recency-bias" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</main>
+<footer>
+    <p class="copyright text-muted"> Recency Bias &copy; 2018
+        - Powered by <a href="https://gohugo.io">Hugo</a>.</p>
+</footer>
+</body>
+</html>
+
