@@ -6,10 +6,22 @@
     <description>Recent content in Posts on Recency Bias</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Tue, 20 Nov 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 07 Dec 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://badu.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Interview Questions for Go Developer Position - Part II</title>
+      <link>http://badu.github.io/post/interviewing-go-developer-part-2/</link>
+      <pubDate>Fri, 07 Dec 2018 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/post/interviewing-go-developer-part-2/</guid>
+      <description>Foreword See part 1.
+Q: What will return the following code?
+func returnNormal() int { i := 1 defer func() { i++ }() return i } func returnNamed() (i int) { i = 1 defer func() { i++ }() return i } func main() { fmt.Printf(&amp;quot;returnNormal() = %d\n&amp;quot;, returnNormal()) fmt.Printf(&amp;quot;returnNamed() = %d\n&amp;quot;, returnNamed()) }  A: returnNormal() = 1 and returnNamed() = 2 3 points
+Q: What will print the following code?</description>
+    </item>
     
     <item>
       <title>Changing Perspective</title>

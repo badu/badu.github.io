@@ -4,23 +4,23 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Go</title>
+    <title>Interview Questions for Go Developer Position - Part II</title>
 
-    <meta name="description" content="">
+    <meta name="description" content="Measuring And Classifying Go Developer Knowledge">
 
     <meta property="site_name" content="recency-bias">
     <meta property="og:type" content="article">
-    <meta property="og:url" content="http://badu.github.io/tags/go/">
-    <meta property="og:title" content="Go">
+    <meta property="og:url" content="http://badu.github.io/post/interviewing-go-developer-part-2/">
+    <meta property="og:title" content="Interview Questions for Go Developer Position - Part II">
     <meta property="og:image" content="">
 
-    <meta property="og:description" content="">
+    <meta property="og:description" content="Measuring And Classifying Go Developer Knowledge">
 
-    <meta name="twitter:url" content="http://badu.github.io/tags/go/">
+    <meta name="twitter:url" content="http://badu.github.io/post/interviewing-go-developer-part-2/">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@recency-bias">
     <meta name="twitter:creator" content="@recency-bias">
-    <meta name="twitter:title" content="Go">
+    <meta name="twitter:title" content="Interview Questions for Go Developer Position - Part II">
     <meta name="twitter:img:src" content="">
 
     <meta name="twitter:label1" content="Author">
@@ -32,7 +32,7 @@
     <link rel="dns-prefetch" href="//www.google-analytics.com">
     <link rel="dns-prefetch" href="//stats.g.doubleclick.net">
 
-    <link rel="canonical" href="http://badu.github.io/tags/go/">
+    <link rel="canonical" href="http://badu.github.io/post/interviewing-go-developer-part-2/">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
     <link rel="shortcut icon" href="http://badu.github.io/favicon.ico">
 
@@ -87,9 +87,6 @@
 
 <script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.53-DEV" />
 
-    <link href="http://badu.github.io/tags/go/index.xml" rel="alternate" type="application/rss+xml" title="Recency Bias"/>
-    <link href="http://badu.github.io/tags/go/index.xml" rel="feed" type="application/rss+xml" title="Recency Bias"/>
-
 
 
     
@@ -137,7 +134,7 @@
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand visible-xs" href="#">Go</a>
+            <a class="navbar-brand visible-xs" href="#">Interview Questions for Go Developer Position - Part II</a>
             <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -190,8 +187,7 @@
     <div class="scroll-progress"></div>
 </nav>
 <main>
-    <h2>Go</h2>
- <div class="item">
+<div class="item">
 
 
 
@@ -204,7 +200,258 @@
  <kbd class="item-tag">Go</kbd>  <kbd class="item-tag">Developer</kbd>  <kbd class="item-tag">Interview</kbd> 
 <p>About 3 minutes of reading.</p>
 </div>
-  <div class="item">
+
+    <br>
+    <div class="text-justify">
+
+<h4 id="foreword">Foreword</h4>
+
+<p>See <a href="/post/interviewing-go-developer-part-1/">part 1</a>.</p>
+
+<p>Q: What will return the following code?</p>
+
+<pre><code class="language-go">func returnNormal() int {
+	i := 1
+	defer func() { i++ }()
+	return i
+}
+
+func returnNamed() (i int) {
+	i = 1
+	defer func() { i++ }()
+	return i
+}
+
+func main() {
+	fmt.Printf(&quot;returnNormal() = %d\n&quot;, returnNormal())
+	fmt.Printf(&quot;returnNamed() = %d\n&quot;, returnNamed())
+}
+</code></pre>
+
+<p>A: <code>returnNormal() = 1</code> and <code>returnNamed() = 2</code> <a href="why : lazy evaluation">3 points</a></p>
+
+<hr />
+
+<p>Q: What will print the following code?</p>
+
+<pre><code class="language-go">type Inner struct {}
+
+type InnerAgain struct {}
+
+type A struct {
+    Inner
+    InnerAgain
+    FieldA string
+}
+
+func (i Inner) String() string {
+    return &quot;anything&quot;
+}
+
+func (i InnerAgain) String() string {
+    return &quot;nothing&quot;
+}
+
+func main() {
+    myA := A{FieldA: &quot;A&quot;}
+    fmt.Printf(&quot;%v&quot;, myA)
+}
+</code></pre>
+
+<p>A: <code>{anything nothing A}</code> <a href="why : ambiguous which String() to invoke">3 points</a></p>
+
+<hr />
+
+<p>Q: Can I convert a []T to an []interface{}?</p>
+
+<p>A: Code below:</p>
+
+<pre><code class="language-go">t := []int{1, 2, 3, 4}
+s := make([]interface{}, len(t))
+for i, v := range t {
+    s[i] = v
+}
+</code></pre>
+
+<hr />
+
+<p>Q: Can I convert []T1 to []T2 if T1 and T2 have the same underlying type?</p>
+
+<p>A: Code below:</p>
+
+<pre><code class="language-go">type T1 int
+type T2 int
+var t1 T1
+var x = T2(t1) // OK
+var st1 []T1
+</code></pre>
+
+<hr />
+
+<p>Q: What&rsquo;s wrong with the following code?</p>
+
+<pre><code class="language-go">type info struct{
+	data string
+}
+
+test := []info{{data:&quot;data 1&quot;}, {data:&quot;data 2&quot;}, {data:&quot;data 3&quot;}}
+list := make([]*string, 0)
+for _, k := range test{
+    list = append(list, &amp;k.data)
+}
+for _, s := range list {
+    fmt.Println(*s)
+}
+</code></pre>
+
+<p>A: Don&rsquo;t use pointers inside loops [1 point]
+A: Here. I&rsquo;ve fixed it [3 points]</p>
+
+<pre><code class="language-go">type info struct{
+	data string
+}
+
+test := []info{{data:&quot;data 1&quot;}, {data:&quot;data 2&quot;}, {data:&quot;data 3&quot;}}
+list := make([]*string, 0)
+for _, k := range test{
+	nk := k // the pointer
+    list = append(list, &amp;nk.data)
+}
+for _, s := range list {
+    fmt.Println(*s)
+}
+</code></pre>
+
+<hr />
+
+<p>Q: What will print the following code?</p>
+
+<pre><code class="language-go">type People struct{}
+
+func (p *People) ShowA() {
+	fmt.Println(&quot;showA&quot;)
+	p.ShowB()
+}
+
+func (p *People) ShowB() {
+	fmt.Println(&quot;showB&quot;)
+}
+
+type Teacher struct {
+	People
+}
+
+func (t *Teacher) ShowB() {
+	fmt.Println(&quot;teacher showB&quot;)
+}
+
+func main() {
+	t := Teacher{}
+	t.ShowA()
+}
+</code></pre>
+
+<p>A: <code>showA</code>
+<code>showB</code> [3 points]</p>
+
+<hr />
+
+<p>Q: Does this compile ?</p>
+
+<pre><code class="language-go">func main() {
+	i := GetValue()
+
+	switch i.(type) {
+	case int:
+		println(&quot;int&quot;)
+	case string:
+		println(&quot;string&quot;)
+	case interface{}:
+		println(&quot;interface&quot;)
+	default:
+		println(&quot;unknown&quot;)
+	}
+
+}
+
+func GetValue() int {
+	return 1
+}
+
+</code></pre>
+
+<p>A: No [1 point]
+A: No, because <code>i</code> is not an interface, so you cannot <code>type switch</code> on it [3 points]</p>
+
+<hr />
+
+<p>Q: What will produce the following code ?</p>
+
+<pre><code class="language-go">
+type Param map[string]interface{}
+
+type Show struct {
+	Param
+}
+
+func main() {
+	s := new(Show)
+	s.Param[&quot;AValue&quot;] = 10000
+}
+</code></pre>
+
+<p>A : panic: assignment to entry in nil map [1 point]</p>
+
+<hr />
+
+<p>Q: Does this compile ?</p>
+
+<pre><code class="language-go">type student struct {
+	Name string
+}
+
+func printName(v interface{}) {
+	switch msg := v.(type) {
+	case *student, student:
+		fmt.Println(msg.Name)
+	}
+}
+</code></pre>
+
+<p>A: No [1 point]
+A: No, error will be <code>type interface {} is interface with no methods</code> [3 points]</p>
+
+<hr />
+
+<p>Q: Is there a problem with the code below ?</p>
+
+<pre><code class="language-go">
+type People struct {
+	Name string
+}
+
+func (p *People) String() string {
+	return fmt.Sprintf(&quot;print: %v&quot;, p)
+}
+
+func main() {
+	p := &amp;People{}
+	p.String()
+}
+</code></pre>
+
+<p>A: Yes [1 point]
+A: Yes, will recurse infinitely [3 points]</p>
+
+<hr />
+
+<p>To be continued.</p>
+</div>
+    
+
+
+    <h4 class="page-header">Related</h4>
+ <div class="item">
 
 
 
@@ -243,87 +490,32 @@
  <kbd class="item-tag">Go</kbd>  <kbd class="item-tag">Reflect</kbd>  <kbd class="item-tag">Standard package</kbd> 
 <p>About 9 minutes of reading.</p>
 </div>
-  <div class="item">
-
-
-
-  
-    <h4><a href="/post/mirror-mirror/">Mirror Mirror on ...</a></h4>
-    <h5>Of Mice (Unsafe) and Men (Reflect)</h5>
-    
-      <h5>Published on March 10, 2018</h5>
-    
- <kbd class="item-tag">Go</kbd>  <kbd class="item-tag">Advanced</kbd>  <kbd class="item-tag">Reflect</kbd>  <kbd class="item-tag">Unsafe</kbd> 
-<p>About 12 minutes of reading.</p>
-</div>
-  <div class="item">
-
-
-
-  
-    <h4><a href="/post/known-world-stops/">Knowing when the world stops</a></h4>
-    <h5>I quote &#34;This function is called with the world stopped, at the beginning of a garbage collection.&#34;</h5>
-    
-      <h5>Published on March 5, 2018</h5>
-    
- <kbd class="item-tag">Go</kbd>  <kbd class="item-tag">Advanced</kbd>  <kbd class="item-tag">Compiler</kbd>  <kbd class="item-tag">Directives</kbd> 
-<p>About 3 minutes of reading.</p>
-</div>
-  <div class="item">
-
-
-
-  
-    <h4><a href="/post/radix-story/">A Radix Story</a></h4>
-    <h5>About routing and searching using radix trees.</h5>
-    
-      <h5>Published on February 27, 2018</h5>
-    
- <kbd class="item-tag">Go</kbd>  <kbd class="item-tag">Radix</kbd>  <kbd class="item-tag">Tree</kbd>  <kbd class="item-tag">Router</kbd>  <kbd class="item-tag">Search</kbd> 
-<p>About 10 minutes of reading.</p>
-</div>
-  <div class="item">
-
-
-
-  
-    <h4><a href="/post/net-http-week2/">My Thoughts On Net/Http Package - Week 2</a></h4>
-    <h5>A deep dive into it net/http package.</h5>
-    
-      <h5>Published on February 24, 2018</h5>
-    
- <kbd class="item-tag">Go</kbd>  <kbd class="item-tag">Net</kbd>  <kbd class="item-tag">Http</kbd>  <kbd class="item-tag">Analysis</kbd>  <kbd class="item-tag">Standard package</kbd> 
-<p>About 5 minutes of reading.</p>
-</div>
-  <div class="item">
-
-
-
-  
-    <h4><a href="/post/net-http-week1/">My Thoughts On Net/Http Package - Week 1</a></h4>
-    <h5>A deep dive into it net/http package. First glance.</h5>
-    
-      <h5>Published on February 18, 2018</h5>
-    
- <kbd class="item-tag">Go</kbd>  <kbd class="item-tag">Net</kbd>  <kbd class="item-tag">Http</kbd>  <kbd class="item-tag">Analysis</kbd>  <kbd class="item-tag">Standard package</kbd> 
-<p>About 5 minutes of reading.</p>
-</div>
-  <div class="item">
-
-
-
-  
-    <h4><a href="/post/comparing-go-is-wrong/">Comparing Go with Other Languages is Wrong</a></h4>
-    <h5>Java is to Javascript like Car is to Carpet</h5>
-    
-      <h5>Published on November 15, 2017</h5>
-    
- <kbd class="item-tag">Go</kbd>  <kbd class="item-tag">Programming</kbd>  <kbd class="item-tag">Languages</kbd> 
-<p>About 5 minutes of reading.</p>
-</div>
  
-</main>
 
+
+    <h4 class="page-header">Comments</h4>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "recency-bias" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</main>
 <footer>
     <p class="copyright text-muted"> Recency Bias &copy; 2018
         - Powered by <a href="https://gohugo.io">Hugo</a>.</p>

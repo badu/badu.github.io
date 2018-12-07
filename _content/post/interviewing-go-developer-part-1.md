@@ -260,6 +260,8 @@ OQ: Select is random or sequential ?
 
 A: When multiple cases in a select statement are ready, one of them will be [executed at random](https://play.golang.org/p/vJ6VhVl9YY). [3 points]
 
+Note : As Diana Looney pointed out, a more suitable example would be [this](https://play.golang.org/p/s6NqfHzYQa5)
+
 ---
 
 OQ: Go local variables are allocated on the stack or heap?
