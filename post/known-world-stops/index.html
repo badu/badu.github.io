@@ -85,7 +85,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.53-DEV" />
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.57.0-DEV" />
 
 
 
@@ -232,10 +232,9 @@ func runtime_registerPoolCleanup(cleanup func())
 
 <pre><code class="language-go">//go:linkname registerCacheCleanupFn sync.runtime_registerPoolCleanup
 func registerCacheCleanupFn(f func())
-</code></pre>
+</code></pre></li>
 
-<ol>
-<li>in the same file, declare the <code>init()</code> function and call <code>registerCacheCleanupFn</code> with our cleaning function implementation as parameter.</li>
+<li><p>in the same file, declare the <code>init()</code> function and call <code>registerCacheCleanupFn</code> with our cleaning function implementation as parameter.</p></li>
 </ol>
 
 <p>That&rsquo;s it.</p>
@@ -248,8 +247,7 @@ func registerCacheCleanupFn(f func())
 
 <pre><code class="language-go">//go:linkname ByteIndex strings.IndexByte
 func ByteIndex(s string, c byte) int
-</code></pre></li>
-</ol>
+</code></pre>
 
 <p>You might find these below useful as well.</p>
 

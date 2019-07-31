@@ -47,6 +47,13 @@ You can write me on badu[at]badu.ro, contact me on Skype as badu[dot]bogdan or u
 
 ## Experience
 
+
+#### Go Language Developer at [Cognizant-Softvision](https://www.cognizantsoftvision.com/)
+###### (December 2018 - today)
+* Driven architecture and development for our partner [Appetize](https://appetizeapp.com/)
+* Technical leadership for the same organization
+* Build micro-services using [GoKit](http://gokit.io) as a standard
+
 #### Freelance Go Language Developer
 ###### (November 2017 - November 2018)
 * Freelancing for various customers
@@ -56,7 +63,7 @@ You can write me on badu[at]badu.ro, contact me on Skype as badu[dot]bogdan or u
 * Reduce coupling on [reflect package](https://github.com/badu/reflect), so it can be used on low memory devices.
 * Fixed the standard [json package](https://github.com/badu/json) omit empty bug. Reduced the number of allocations and added a few enhancements.
 * Several [Codility](https://www.codility.com/) Golden awards, challenges solved in Go (links are available on my LinkedIn profile page).
-* Solved over 400 problems on HackerRank for fun.
+* Solved over 400 problems on HackerRank for fun - see my profile [here](https://www.hackerrank.com/badu_ro?hr_r=1)
 * Dug deep into [radix trees](https://github.com/badu/radix)
 
 #### Technical Lead at [Activemall](http://www.activemall.ro)
