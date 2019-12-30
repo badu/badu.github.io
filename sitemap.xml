@@ -3,6 +3,41 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://badu.github.io/tags/2019/</loc>
+    <lastmod>2019-12-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://badu.github.io/post/2019/</loc>
+    <lastmod>2019-12-30T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://badu.github.io/post/</loc>
+    <lastmod>2019-12-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://badu.github.io/</loc>
+    <lastmod>2019-12-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://badu.github.io/tags/review/</loc>
+    <lastmod>2019-12-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://badu.github.io/tags/</loc>
+    <lastmod>2019-12-30T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
     <loc>http://badu.github.io/tags/developer/</loc>
     <lastmod>2018-12-07T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -23,24 +58,6 @@
   <url>
     <loc>http://badu.github.io/post/interviewing-go-developer-part-2/</loc>
     <lastmod>2018-12-07T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://badu.github.io/post/</loc>
-    <lastmod>2018-12-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://badu.github.io/</loc>
-    <lastmod>2018-12-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
-    <loc>http://badu.github.io/tags/</loc>
-    <lastmod>2018-12-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
