@@ -85,7 +85,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.57.0-DEV" />
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.63.0-DEV" />
 
 
 
@@ -202,198 +202,165 @@
 </div>
 
     <br>
-    <div class="text-justify">
-
-<h2 id="tl-dr">TL;DR</h2>
-
-<p>This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I&rsquo;m inviting you to learn aside me.</p>
-
+    <div class="text-justify"><h2 id="tldr">TL;DR</h2>
+<p>This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I'm inviting you to learn aside me.</p>
 <p>You are allowed to judge the code. You are not allowed to judge the people.</p>
-
 <p><a href="/post/net-http-week1/">Part 1</a></p>
-
 <h2 id="listenandserve">ListenAndServe</h2>
-
 <p>As you might well know, using http package is easy :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 
-<pre><code class="language-go">package main
-
-import (
-    &quot;io&quot;
-	&quot;net/http&quot;
-	&quot;log&quot;
+<span style="color:#f92672">import</span> (
+    <span style="color:#e6db74">&#34;io&#34;</span>
+	<span style="color:#e6db74">&#34;net/http&#34;</span>
+	<span style="color:#e6db74">&#34;log&#34;</span>
 )
 
-func main() {
-    http.HandleFunc(&quot;/hello&quot;, func (w http.ResponseWriter, req *http.Request) {
-		io.WriteString(w, &quot;hello, world!\n&quot;)
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+    <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#e6db74">&#34;/hello&#34;</span>, <span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">req</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
+		<span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">WriteString</span>(<span style="color:#a6e22e">w</span>, <span style="color:#e6db74">&#34;hello, world!\n&#34;</span>)
 	})
-	log.Fatal(http.ListenAndServe(&quot;:12345&quot;, nil))
+	<span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ListenAndServe</span>(<span style="color:#e6db74">&#34;:12345&#34;</span>, <span style="color:#66d9ef">nil</span>))
 }
-</code></pre>
-
-<h4 id="chain-of-responsibility">Chain of Responsibility</h4>
-
+</code></pre></div><h4 id="chain-of-responsibility">Chain of Responsibility</h4>
 <p>The design pattern on which the Golang authors has decided to use is called Chain of Responsibility and it looks like <a href="https://github.com/badu/go_design_pattern/blob/master/chain_of_responsibility/chain_of_responsibility.go">this</a>.</p>
-
 <p>Because it can be simplified using closure functions there was no need to use the &ldquo;next&rdquo; property.</p>
-
 <h4 id="inside-listenandserve">Inside ListenAndServe</h4>
-
-<p>Calling ListenAndServe() will create a new pointer to a <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2343">Server</a> and call it&rsquo;s receiver method <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2627">ListenAndServe</a>. In order to listen on a port we need to use net.Listen(&ldquo;tcp&rdquo;, address) which will return an interface : <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/net.go#L361">net.Listener</a> having interface signature:</p>
-
-<pre><code class="language-go">    Accept() (Conn, error)
-    Close() error
-    Addr() Addr
-</code></pre>
-
-<p>As the comment above the interface says, multiple goroutines may invoke methods on a Listener simultaneously.</p>
-
-<p>Of course, the above net.Listener is <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/tcpsock.go#L224">net.TCPListener</a> implementation, since we&rsquo;ve mentioned &ldquo;tcp&rdquo; as a parameter of our call.</p>
-
-<p>Because we want to handle our own <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L3119">Accept()</a> this net.TCPListener implementation is type asserted to <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L3115">tcpKeepAliveListener</a> which is actually embedding a pointer to net.TCPListener, thus allowing us to &ldquo;override&rdquo; the Accept method. Once we&rsquo;ve prepared this, the receiver method <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2678">Serve()</a> is being called, having the above listener as parameter.</p>
-
+<p>Calling ListenAndServe() will create a new pointer to a <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2343">Server</a> and call it's receiver method <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2627">ListenAndServe</a>. In order to listen on a port we need to use net.Listen(&ldquo;tcp&rdquo;, address) which will return an interface : <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/net.go#L361">net.Listener</a> having interface signature:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    <span style="color:#a6e22e">Accept</span>() (<span style="color:#a6e22e">Conn</span>, <span style="color:#66d9ef">error</span>)
+    <span style="color:#a6e22e">Close</span>() <span style="color:#66d9ef">error</span>
+    <span style="color:#a6e22e">Addr</span>() <span style="color:#a6e22e">Addr</span>
+</code></pre></div><p>As the comment above the interface says, multiple goroutines may invoke methods on a Listener simultaneously.</p>
+<p>Of course, the above net.Listener is <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/tcpsock.go#L224">net.TCPListener</a> implementation, since we've mentioned &ldquo;tcp&rdquo; as a parameter of our call.</p>
+<p>Because we want to handle our own <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L3119">Accept()</a> this net.TCPListener implementation is type asserted to <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L3115">tcpKeepAliveListener</a> which is actually embedding a pointer to net.TCPListener, thus allowing us to &ldquo;override&rdquo; the Accept method. Once we've prepared this, the receiver method <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2678">Serve()</a> is being called, having the above listener as parameter.</p>
 <h4 id="serving">Serving</h4>
-
 <p>A naive approach to serving on our own would look like:</p>
-
-<pre><code class="language-go">    // ask net to create a tcp listener and return us the interface
-    lsn, err := net.Listen(&quot;tcp&quot;, &quot;:8080&quot;)
-    if err != nil {
-        // handle error
-    }
-    // ensure that we're releasing the listener
-    defer lsn.Close()
-    for {
-        type accepted struct {
-            conn net.Conn
-            err  error
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    <span style="color:#75715e">// ask net to create a tcp listener and return us the interface
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">lsn</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Listen</span>(<span style="color:#e6db74">&#34;tcp&#34;</span>, <span style="color:#e6db74">&#34;:8080&#34;</span>)
+    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        <span style="color:#75715e">// handle error
+</span><span style="color:#75715e"></span>    }
+    <span style="color:#75715e">// ensure that we&#39;re releasing the listener
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">lsn</span>.<span style="color:#a6e22e">Close</span>()
+    <span style="color:#66d9ef">for</span> {
+        <span style="color:#66d9ef">type</span> <span style="color:#a6e22e">accepted</span> <span style="color:#66d9ef">struct</span> {
+            <span style="color:#a6e22e">conn</span> <span style="color:#a6e22e">net</span>.<span style="color:#a6e22e">Conn</span>
+            <span style="color:#a6e22e">err</span>  <span style="color:#66d9ef">error</span>
         }
-        // create a channel to
-        c := make(chan accepted, 1)
-        go func() {
-            conn, err := lsn.Accept() // accept incoming connections
-            c &lt;- accepted{conn, err} // send the struct to the channel
-        }()
-        select {
-            case a := &lt;-c: // receive from the channel
-                // if the error of the struct is not nil
-                if a.err != nil {
-                    // handle error and continue, for the next struct to get here
-                    continue
+        <span style="color:#75715e">// create a channel to
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">accepted</span>, <span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+            <span style="color:#a6e22e">conn</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lsn</span>.<span style="color:#a6e22e">Accept</span>() <span style="color:#75715e">// accept incoming connections
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">c</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">accepted</span>{<span style="color:#a6e22e">conn</span>, <span style="color:#a6e22e">err</span>} <span style="color:#75715e">// send the struct to the channel
+</span><span style="color:#75715e"></span>        }()
+        <span style="color:#66d9ef">select</span> {
+            <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">c</span>: <span style="color:#75715e">// receive from the channel
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// if the error of the struct is not nil
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                    <span style="color:#75715e">// handle error and continue, for the next struct to get here
+</span><span style="color:#75715e"></span>                    <span style="color:#66d9ef">continue</span>
                 }
-                // no error has occurred, we handle the connection
-                go handleConnection(a.conn)
-            case e := &lt;-ev: // let's say we have a ev channel which transports shutdown requests
-                // handle shutdown event
-                return
+                <span style="color:#75715e">// no error has occurred, we handle the connection
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">handleConnection</span>(<span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">conn</span>)
+            <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ev</span>: <span style="color:#75715e">// let&#39;s say we have a ev channel which transports shutdown requests
+</span><span style="color:#75715e"></span>                <span style="color:#75715e">// handle shutdown event
+</span><span style="color:#75715e"></span>                <span style="color:#66d9ef">return</span>
         }
     }
-</code></pre>
-
-<p>In <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2678">Serve()</a> method, despite the fact that is seems extra complicated, basic idea is the same. After accepting an incoming connection a <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L229">conn</a> struct is being created and the accepted connection (which is a net.Conn interface) is being passed to it. Also, the reference to the Server is being passed, because later is used to access timeout values (read, write, idle), but probably the most noticeable thing is <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L1801">this</a> - read the comment above.</p>
-
+</code></pre></div><p>In <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2678">Serve()</a> method, despite the fact that is seems extra complicated, basic idea is the same. After accepting an incoming connection a <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L229">conn</a> struct is being created and the accepted connection (which is a net.Conn interface) is being passed to it. Also, the reference to the Server is being passed, because later is used to access timeout values (read, write, idle), but probably the most noticeable thing is <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L1801">this</a> - read the comment above.</p>
 <p>Worth noticing that inside the serve() function of the conn struct is the only place where server <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L1693">recovers from panic</a>. The effective reading of the tcp connection happens on functions of another struct, called <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L624">connReader</a> - which is an io.Reader wrapper.</p>
-
 <p>One should know that buffer readers and writers are kept in a sync.Pool.</p>
-
 <h4 id="a-word-about-tests">A word about tests</h4>
+<p>For some reason <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2680">testHookServerServe</a> - which is a function declared by the tests, was left to go in production. It's not a big deal, because it's used only in one test <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/serve_test.go#L1360">TestServeTLS</a>. However, there are many test <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/transport.go#L1877">&ldquo;hooks&rdquo;</a> left around inside the production code.</p>
+<p>I've decided to replace them with the following technique:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    <span style="color:#66d9ef">type</span>(
+        <span style="color:#a6e22e">ServerEventType</span> <span style="color:#66d9ef">int</span>
 
-<p>For some reason <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2680">testHookServerServe</a> - which is a function declared by the tests, was left to go in production. It&rsquo;s not a big deal, because it&rsquo;s used only in one test <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/serve_test.go#L1360">TestServeTLS</a>. However, there are many test <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/transport.go#L1877">&ldquo;hooks&rdquo;</a> left around inside the production code.</p>
-
-<p>I&rsquo;ve decided to replace them with the following technique:</p>
-
-<pre><code class="language-go">    type(
-        ServerEventType int
-
-        srvEvDispatcher struct {
-            lsns map[ServerEventType][]srvEvListner
-            mu   sync.RWMutex
+        <span style="color:#a6e22e">srvEvDispatcher</span> <span style="color:#66d9ef">struct</span> {
+            <span style="color:#a6e22e">lsns</span> <span style="color:#66d9ef">map</span>[<span style="color:#a6e22e">ServerEventType</span>][]<span style="color:#a6e22e">srvEvListner</span>
+            <span style="color:#a6e22e">mu</span>   <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">RWMutex</span>
         }
 
-        srvEvListner struct {
-            ch chan ServerEventType
+        <span style="color:#a6e22e">srvEvListner</span> <span style="color:#66d9ef">struct</span> {
+            <span style="color:#a6e22e">ch</span> <span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">ServerEventType</span>
         }
-        // a helper struct which embeds a waitgroup
-        ServerEventHandler struct {
-            sync.WaitGroup
-            ch          chan ServerEventType // channel for receiving events
-            handler     func()               // function which gets called if event is met
-            eventType   ServerEventType      // which kind of event we're listening to
-            willRemount bool                 // internal, so we can continuosly listen
-        }
+        <span style="color:#75715e">// a helper struct which embeds a waitgroup
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">ServerEventHandler</span> <span style="color:#66d9ef">struct</span> {
+            <span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">WaitGroup</span>
+            <span style="color:#a6e22e">ch</span>          <span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">ServerEventType</span> <span style="color:#75715e">// channel for receiving events
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">handler</span>     <span style="color:#66d9ef">func</span>()               <span style="color:#75715e">// function which gets called if event is met
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">eventType</span>   <span style="color:#a6e22e">ServerEventType</span>      <span style="color:#75715e">// which kind of event we&#39;re listening to
+</span><span style="color:#75715e"></span>            <span style="color:#a6e22e">willRemount</span> <span style="color:#66d9ef">bool</span>                 <span style="color:#75715e">// internal, so we can continuosly listen
+</span><span style="color:#75715e"></span>        }
     )
 
-    const(
-        killListeners               ServerEventType = 0
-        ServerServe                 ServerEventType = 1
-        EnterRoundTripEvent         ServerEventType = 2
-        RoundTripRetriedEvent       ServerEventType = 3
-        PrePendingDialEvent         ServerEventType = 4
-        PostPendingDialEvent        ServerEventType = 5
-        WaitResLoopEvent            ServerEventType = 6
-        ReadLoopBeforeNextReadEvent ServerEventType = 7
+    <span style="color:#66d9ef">const</span>(
+        <span style="color:#a6e22e">killListeners</span>               <span style="color:#a6e22e">ServerEventType</span> = <span style="color:#ae81ff">0</span>
+        <span style="color:#a6e22e">ServerServe</span>                 <span style="color:#a6e22e">ServerEventType</span> = <span style="color:#ae81ff">1</span>
+        <span style="color:#a6e22e">EnterRoundTripEvent</span>         <span style="color:#a6e22e">ServerEventType</span> = <span style="color:#ae81ff">2</span>
+        <span style="color:#a6e22e">RoundTripRetriedEvent</span>       <span style="color:#a6e22e">ServerEventType</span> = <span style="color:#ae81ff">3</span>
+        <span style="color:#a6e22e">PrePendingDialEvent</span>         <span style="color:#a6e22e">ServerEventType</span> = <span style="color:#ae81ff">4</span>
+        <span style="color:#a6e22e">PostPendingDialEvent</span>        <span style="color:#a6e22e">ServerEventType</span> = <span style="color:#ae81ff">5</span>
+        <span style="color:#a6e22e">WaitResLoopEvent</span>            <span style="color:#a6e22e">ServerEventType</span> = <span style="color:#ae81ff">6</span>
+        <span style="color:#a6e22e">ReadLoopBeforeNextReadEvent</span> <span style="color:#a6e22e">ServerEventType</span> = <span style="color:#ae81ff">7</span>
     )
 
-    func (r *srvEvDispatcher) dispatch(event ServerEventType) {
-    	if len(r.lsns[event]) == 0{
-    	     return
+    <span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">srvEvDispatcher</span>) <span style="color:#a6e22e">dispatch</span>(<span style="color:#a6e22e">event</span> <span style="color:#a6e22e">ServerEventType</span>) {
+    	<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">lsns</span>[<span style="color:#a6e22e">event</span>]) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>{
+    	     <span style="color:#66d9ef">return</span>
         }
-        r.mu.Lock()
-        defer r.mu.Unlock()
-        // for each listener of that event type
-        for i := 0; i &lt; len(r.lsns[event]); i++ {
-            lisn := r.lsns[event][i]
-            select {
-            case lisn.ch &lt;- event: // we're writting into the channel
-            default:
+        <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">mu</span>.<span style="color:#a6e22e">Lock</span>()
+        <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">mu</span>.<span style="color:#a6e22e">Unlock</span>()
+        <span style="color:#75715e">// for each listener of that event type
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; len(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">lsns</span>[<span style="color:#a6e22e">event</span>]); <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+            <span style="color:#a6e22e">lisn</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">lsns</span>[<span style="color:#a6e22e">event</span>][<span style="color:#a6e22e">i</span>]
+            <span style="color:#66d9ef">select</span> {
+            <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">lisn</span>.<span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">event</span>: <span style="color:#75715e">// we&#39;re writting into the channel
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">default</span>:
             }
         }
     }
-    // &quot;mounting&quot; the effective listener
-    func (r *srvEvDispatcher) on(event ServerEventType) chan ServerEventType {
-        r.mu.Lock()
-        defer r.mu.Unlock()
-        ch := make(chan ServerEventType, 1)
-        r.lsns[event] = append(r.lsns[event], srvEvListner{ch: ch})
-        return ch
+    <span style="color:#75715e">// &#34;mounting&#34; the effective listener
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">srvEvDispatcher</span>) <span style="color:#a6e22e">on</span>(<span style="color:#a6e22e">event</span> <span style="color:#a6e22e">ServerEventType</span>) <span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">ServerEventType</span> {
+        <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">mu</span>.<span style="color:#a6e22e">Lock</span>()
+        <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">mu</span>.<span style="color:#a6e22e">Unlock</span>()
+        <span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#a6e22e">ServerEventType</span>, <span style="color:#ae81ff">1</span>)
+        <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">lsns</span>[<span style="color:#a6e22e">event</span>] = append(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">lsns</span>[<span style="color:#a6e22e">event</span>], <span style="color:#a6e22e">srvEvListner</span>{<span style="color:#a6e22e">ch</span>: <span style="color:#a6e22e">ch</span>})
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ch</span>
     }
-    // helper method that will receive an event via a channel, then mount itself to listen for more
-    func (h ServerEventHandler) Next() {
-        h.Add(1)
-        go func() {
-            defer h.Done()
-            func() {
-                switch &lt;-h.ch {
-                case h.eventType:
-                    h.handler()
-                case killListeners:
-                    // on kill, we will not do &quot;next&quot; execution
-                    h.willRemount = false
+    <span style="color:#75715e">// helper method that will receive an event via a channel, then mount itself to listen for more
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">h</span> <span style="color:#a6e22e">ServerEventHandler</span>) <span style="color:#a6e22e">Next</span>() {
+        <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">Add</span>(<span style="color:#ae81ff">1</span>)
+        <span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+            <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">Done</span>()
+            <span style="color:#66d9ef">func</span>() {
+                <span style="color:#66d9ef">switch</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">ch</span> {
+                <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">eventType</span>:
+                    <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">handler</span>()
+                <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">killListeners</span>:
+                    <span style="color:#75715e">// on kill, we will not do &#34;next&#34; execution
+</span><span style="color:#75715e"></span>                    <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">willRemount</span> = <span style="color:#66d9ef">false</span>
                 }
             }()
         }()
-        h.Wait()
-        if h.willRemount {
-            // next execution
-            go h.Next()
+        <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">Wait</span>()
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">willRemount</span> {
+            <span style="color:#75715e">// next execution
+</span><span style="color:#75715e"></span>            <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">Next</span>()
         }
     }
-    // usage &quot;defer eventListener.Kill()&quot;. Will use a custom type that tells the above helper to stop mounting itself
-    func (h ServerEventHandler) Kill() {
-        h.ch &lt;- killListeners
+    <span style="color:#75715e">// usage &#34;defer eventListener.Kill()&#34;. Will use a custom type that tells the above helper to stop mounting itself
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">h</span> <span style="color:#a6e22e">ServerEventHandler</span>) <span style="color:#a6e22e">Kill</span>() {
+        <span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">killListeners</span>
     }
-    // called from tests, to listen for server events
-    func ListenTestEvent(eventType ServerEventType, f func()) ServerEventHandler {
-        wg := ServerEventHandler{ch: testEventsEmitter.on(eventType), handler: f, eventType: eventType, willRemount: true}
-        // first execution
-        go wg.Next()
-        return wg
+    <span style="color:#75715e">// called from tests, to listen for server events
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ListenTestEvent</span>(<span style="color:#a6e22e">eventType</span> <span style="color:#a6e22e">ServerEventType</span>, <span style="color:#a6e22e">f</span> <span style="color:#66d9ef">func</span>()) <span style="color:#a6e22e">ServerEventHandler</span> {
+        <span style="color:#a6e22e">wg</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">ServerEventHandler</span>{<span style="color:#a6e22e">ch</span>: <span style="color:#a6e22e">testEventsEmitter</span>.<span style="color:#a6e22e">on</span>(<span style="color:#a6e22e">eventType</span>), <span style="color:#a6e22e">handler</span>: <span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">eventType</span>: <span style="color:#a6e22e">eventType</span>, <span style="color:#a6e22e">willRemount</span>: <span style="color:#66d9ef">true</span>}
+        <span style="color:#75715e">// first execution
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Next</span>()
+        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">wg</span>
     }
-</code></pre>
-
-<p>You can find the code <a href="https://github.com/badu/http">here</a>.</p>
-
+</code></pre></div><p>You can find the code <a href="https://github.com/badu/http">here</a>.</p>
 <p>To be continued.</p>
 </div>
     

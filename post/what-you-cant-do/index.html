@@ -85,7 +85,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.57.0-DEV" />
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.63.0-DEV" />
 
 
 
@@ -202,338 +202,311 @@
 </div>
 
     <br>
-    <div class="text-justify">
-
-<h3 id="what-s-the-problem">What&rsquo;s the problem?</h3>
-
-<p>A while ago, I was working on backend application in which we were trying to increase readability of the code, while defining a standard. In my morning explorations I&rsquo;ve found a technique (sorry, can&rsquo;t remember where : I&rsquo;ll edit this article when I&rsquo;ll remember) that allowed us to use reflection inside a <code>before</code> type handler, thus decoding JSON payloads would be agnostic to controllers.</p>
-
+    <div class="text-justify"><h3 id="whats-the-problem">What's the problem?</h3>
+<p>A while ago, I was working on backend application in which we were trying to increase readability of the code, while defining a standard. In my morning explorations I've found a technique (sorry, can't remember where : I'll edit this article when I'll remember) that allowed us to use reflection inside a <code>before</code> type handler, thus decoding JSON payloads would be agnostic to controllers.</p>
 <p>A typical controller signature looks like this :</p>
-
-<pre><code class="language-go">func PostAddress(c *context.Context, entity *Address) error
-</code></pre>
-
-<p>Basically, the <code>before</code> handler would both construct the context (in which, for instance, to deposit the currently logged in user) and also decode the JSON payload and provide it as parameter when everything fine. Of course, in the above declaration, a convention was already made : the first parameter would always be context, the second one always a pointer to the desired decoded payload and the function will always have to return an error.</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">PostAddress</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">entity</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Address</span>) <span style="color:#66d9ef">error</span>
+</code></pre></div><p>Basically, the <code>before</code> handler would both construct the context (in which, for instance, to deposit the currently logged in user) and also decode the JSON payload and provide it as parameter when everything fine. Of course, in the above declaration, a convention was already made : the first parameter would always be context, the second one always a pointer to the desired decoded payload and the function will always have to return an error.</p>
 <p>Now, the problem increase in complexity once you would like to receive as URL path parameters, route parameters or HTTP headers. Taking the above example (context aside), a desired controller signature should look like this:</p>
-
-<pre><code class="language-go">func GetAddressesForUser(HeaderUserAgent string, URLParamUserId, URLVarPage, URLVarPerPage int) (entity []*Address,error)
-</code></pre>
-
-<p>The first parameter would come from HTTP headers, the second one from the route parsing and Page, PerPage should be taken from URL parameters. Nothing special, once you could make a convention that the parameter names would provide the name of what you require, in our example (yes, you&rsquo;ve guessed it), it&rsquo;s the start of the parameter name : Header - I need this from headers, URLParam - take this from route and URLVar to be taken from the URL after the question mark.</p>
-
-<p>Well, Go does not provide access to parameter names, even via reflection. Looking for the reason why, I&rsquo;ve found this <a href="https://github.com/golang/go/issues/12384#issuecomment-137321421">argument</a> of Russ Cox: &ldquo;Reflect provides information about types. Function parameter names are not part of the func type. In contrast, struct field names are. [&hellip;] I think it would likely be a mistake to expand the scope of package reflect beyond the clearly defined line of &ldquo;types&rdquo;. It&rsquo;s not obvious to me where else to draw a line between func parameter names and the entire source files.&ldquo;.</p>
-
-<p>Despite the fact that I don&rsquo;t agree with him, I can&rsquo;t argue that this won&rsquo;t be extremly complicated. Now, how about finding a workaround?</p>
-
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">GetAddressesForUser</span>(<span style="color:#a6e22e">HeaderUserAgent</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">URLParamUserId</span>, <span style="color:#a6e22e">URLVarPage</span>, <span style="color:#a6e22e">URLVarPerPage</span> <span style="color:#66d9ef">int</span>) (<span style="color:#a6e22e">entity</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">Address</span>,<span style="color:#66d9ef">error</span>)
+</code></pre></div><p>The first parameter would come from HTTP headers, the second one from the route parsing and Page, PerPage should be taken from URL parameters. Nothing special, once you could make a convention that the parameter names would provide the name of what you require, in our example (yes, you've guessed it), it's the start of the parameter name : Header - I need this from headers, URLParam - take this from route and URLVar to be taken from the URL after the question mark.</p>
+<p>Well, Go does not provide access to parameter names, even via reflection. Looking for the reason why, I've found this <a href="https://github.com/golang/go/issues/12384#issuecomment-137321421">argument</a> of Russ Cox: &ldquo;Reflect provides information about types. Function parameter names are not part of the func type. In contrast, struct field names are. [&hellip;] I think it would likely be a mistake to expand the scope of package reflect beyond the clearly defined line of &ldquo;types&rdquo;. It's not obvious to me where else to draw a line between func parameter names and the entire source files.&quot;.</p>
+<p>Despite the fact that I don't agree with him, I can't argue that this won't be extremly complicated. Now, how about finding a workaround?</p>
 <h3 id="solution">Solution</h3>
-
 <p>The closest you can get to what you want is passing a struct. Create a struct type that wraps your current parameters, and change your function to accept a value of that struct (or a pointer to it). Combining all the required parameters in a struct, for each controller function would imply - even for a small project - a lot of struct declarations. To avoid such I wish that Go would support local struct declarations (that is just syntactic sugar) like this:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">State</span>) <span style="color:#a6e22e">MethodA</span>(<span style="color:#a6e22e">args</span> <span style="color:#66d9ef">struct</span> { <span style="color:#a6e22e">Arg1</span> <span style="color:#66d9ef">int</span>; <span style="color:#a6e22e">Arg2</span> <span style="color:#66d9ef">string</span> }) <span style="color:#66d9ef">error</span> {
+   <span style="color:#75715e">// use args.Arg1, args.Arg2, etc.
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>But it doesn't. By this time, I know you are eager to see the code. I will asume that you know your way around with <a href="https://github.com/gorilla/mux">Gorilla muxer</a>, so here is the commented code:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">routers</span>
 
-<pre><code class="language-go">func (r *State) MethodA(args struct { Arg1 int; Arg2 string }) error {
-   // use args.Arg1, args.Arg2, etc.
-}
-</code></pre>
-
-<p>But it doesn&rsquo;t. By this time, I know you are eager to see the code. I will asume that you know your way around with <a href="https://github.com/gorilla/mux">Gorilla muxer</a>, so here is the commented code:</p>
-
-<pre><code class="language-go">package routers
-
-import (
-    &quot;github.com/gorilla/mux&quot;
-    &quot;fmt&quot;
-    &quot;net/http&quot;
-    &quot;reflect&quot;
-    &quot;encoding/json&quot;
-    &quot;io/ioutil&quot;
-    &quot;context&quot;
-    &quot;runtime&quot;
-    &quot;strings&quot;
-    &quot;strconv&quot;
+<span style="color:#f92672">import</span> (
+    <span style="color:#e6db74">&#34;github.com/gorilla/mux&#34;</span>
+    <span style="color:#e6db74">&#34;fmt&#34;</span>
+    <span style="color:#e6db74">&#34;net/http&#34;</span>
+    <span style="color:#e6db74">&#34;reflect&#34;</span>
+    <span style="color:#e6db74">&#34;encoding/json&#34;</span>
+    <span style="color:#e6db74">&#34;io/ioutil&#34;</span>
+    <span style="color:#e6db74">&#34;context&#34;</span>
+    <span style="color:#e6db74">&#34;runtime&#34;</span>
+    <span style="color:#e6db74">&#34;strings&#34;</span>
+    <span style="color:#e6db74">&#34;strconv&#34;</span>
 )
 
-type IValidator interface {
-	Validate() error
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">IValidator</span> <span style="color:#66d9ef">interface</span> {
+	<span style="color:#a6e22e">Validate</span>() <span style="color:#66d9ef">error</span>
 }
 
-type ParamAndIndex struct {
-    tag   string
-    index int
-    isVar bool
+<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ParamAndIndex</span> <span style="color:#66d9ef">struct</span> {
+    <span style="color:#a6e22e">tag</span>   <span style="color:#66d9ef">string</span>
+    <span style="color:#a6e22e">index</span> <span style="color:#66d9ef">int</span>
+    <span style="color:#a6e22e">isVar</span> <span style="color:#66d9ef">bool</span>
 }
 
-func collectRequirements(fnValue reflect.Value) (reflect.Type, reflect.Type, reflect.Type, []ParamAndIndex, []string) {
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">collectRequirements</span>(<span style="color:#a6e22e">fnValue</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Value</span>) (<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Type</span>, <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Type</span>, <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Type</span>, []<span style="color:#a6e22e">ParamAndIndex</span>, []<span style="color:#66d9ef">string</span>) {
 
-	// checking if we're registering a function, not something else
-	functionType := fnValue.Type()
-	if functionType.Kind() != reflect.Func {
-		panic(&quot;Can only register functions.&quot;)
+	<span style="color:#75715e">// checking if we&#39;re registering a function, not something else
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">functionType</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fnValue</span>.<span style="color:#a6e22e">Type</span>()
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">functionType</span>.<span style="color:#a6e22e">Kind</span>() <span style="color:#f92672">!=</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Func</span> {
+		panic(<span style="color:#e6db74">&#34;Can only register functions.&#34;</span>)
 	}
 
-	// getting the function name (for debugging purposes)
-	fnCallerName := runtime.FuncForPC(fnValue.Pointer()).Name()
-	parts := strings.Split(fnCallerName, &quot;/&quot;)
-	callerName := parts[len(parts)-1]
+	<span style="color:#75715e">// getting the function name (for debugging purposes)
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fnCallerName</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">FuncForPC</span>(<span style="color:#a6e22e">fnValue</span>.<span style="color:#a6e22e">Pointer</span>()).<span style="color:#a6e22e">Name</span>()
+	<span style="color:#a6e22e">parts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">fnCallerName</span>, <span style="color:#e6db74">&#34;/&#34;</span>)
+	<span style="color:#a6e22e">callerName</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parts</span>[len(<span style="color:#a6e22e">parts</span>)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
 
-	// collecting injected parameters
-	var payloadType reflect.Type
-	var paramType reflect.Type
-	var headersType reflect.Type
-	var paramFields []ParamAndIndex
-	var headerFields []string
+	<span style="color:#75715e">// collecting injected parameters
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">payloadType</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Type</span>
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">paramType</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Type</span>
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">headersType</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Type</span>
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">paramFields</span> []<span style="color:#a6e22e">ParamAndIndex</span>
+	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">headerFields</span> []<span style="color:#66d9ef">string</span>
 
-	if functionType.NumIn() == 0 {
-		panic(&quot;Handler must have at least one argument : context.Context&quot;)
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">functionType</span>.<span style="color:#a6e22e">NumIn</span>() <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+		panic(<span style="color:#e6db74">&#34;Handler must have at least one argument : context.Context&#34;</span>)
 	}
-	// convention : first param is always context.Context
-	contextParam := functionType.In(0)
-	if &quot;context.Context&quot; != contextParam.String() {
-		panic(&quot;bad handler func : first param should be context.Context&quot;)
+	<span style="color:#75715e">// convention : first param is always context.Context
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">contextParam</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">functionType</span>.<span style="color:#a6e22e">In</span>(<span style="color:#ae81ff">0</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;context.Context&#34;</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">contextParam</span>.<span style="color:#a6e22e">String</span>() {
+		panic(<span style="color:#e6db74">&#34;bad handler func : first param should be context.Context&#34;</span>)
 	}
 
-	for p := 1; p &lt; functionType.NumIn(); p++ {
-		param := functionType.In(p)
-		paramName := param.Name()
-		// param types should have the name starting with &quot;Param&quot; (e.g. &quot;ParamPageAndSomethingElse&quot;)
-		if strings.HasPrefix(paramName, &quot;Param&quot;) {
-			paramType = param
-			for j := 0; j &lt; param.NumField(); j++ {
-				field := param.Field(j)
-				// if a field is read from muxer vars, it should have a tag set to the name of the required parameter
-				varTag := field.Tag.Get(&quot;var&quot;)
-				// if a field is read from muxer form, it should have a tag set to the name of the required parameter
-				formTag := field.Tag.Get(&quot;form&quot;)
-				if len(varTag) &gt; 0 {
-					paramFields = append(paramFields, ParamAndIndex{tag: varTag, index: j, isVar: true})
+	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>; <span style="color:#a6e22e">p</span> &lt; <span style="color:#a6e22e">functionType</span>.<span style="color:#a6e22e">NumIn</span>(); <span style="color:#a6e22e">p</span><span style="color:#f92672">++</span> {
+		<span style="color:#a6e22e">param</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">functionType</span>.<span style="color:#a6e22e">In</span>(<span style="color:#a6e22e">p</span>)
+		<span style="color:#a6e22e">paramName</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">param</span>.<span style="color:#a6e22e">Name</span>()
+		<span style="color:#75715e">// param types should have the name starting with &#34;Param&#34; (e.g. &#34;ParamPageAndSomethingElse&#34;)
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">paramName</span>, <span style="color:#e6db74">&#34;Param&#34;</span>) {
+			<span style="color:#a6e22e">paramType</span> = <span style="color:#a6e22e">param</span>
+			<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">j</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">j</span> &lt; <span style="color:#a6e22e">param</span>.<span style="color:#a6e22e">NumField</span>(); <span style="color:#a6e22e">j</span><span style="color:#f92672">++</span> {
+				<span style="color:#a6e22e">field</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">param</span>.<span style="color:#a6e22e">Field</span>(<span style="color:#a6e22e">j</span>)
+				<span style="color:#75715e">// if a field is read from muxer vars, it should have a tag set to the name of the required parameter
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">varTag</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">field</span>.<span style="color:#a6e22e">Tag</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;var&#34;</span>)
+				<span style="color:#75715e">// if a field is read from muxer form, it should have a tag set to the name of the required parameter
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">formTag</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">field</span>.<span style="color:#a6e22e">Tag</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;form&#34;</span>)
+				<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">varTag</span>) &gt; <span style="color:#ae81ff">0</span> {
+					<span style="color:#a6e22e">paramFields</span> = append(<span style="color:#a6e22e">paramFields</span>, <span style="color:#a6e22e">ParamAndIndex</span>{<span style="color:#a6e22e">tag</span>: <span style="color:#a6e22e">varTag</span>, <span style="color:#a6e22e">index</span>: <span style="color:#a6e22e">j</span>, <span style="color:#a6e22e">isVar</span>: <span style="color:#66d9ef">true</span>})
 				}
 
-				if len(formTag) &gt; 0 {
-					paramFields = append(paramFields, ParamAndIndex{tag: formTag, index: j})
+				<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">formTag</span>) &gt; <span style="color:#ae81ff">0</span> {
+					<span style="color:#a6e22e">paramFields</span> = append(<span style="color:#a6e22e">paramFields</span>, <span style="color:#a6e22e">ParamAndIndex</span>{<span style="color:#a6e22e">tag</span>: <span style="color:#a6e22e">formTag</span>, <span style="color:#a6e22e">index</span>: <span style="color:#a6e22e">j</span>})
 				}
 			}
-			// convention : Headers mark headers struct (e.g. &quot;HeadersForMe&quot;)
-		} else if strings.HasPrefix(paramName, &quot;Headers&quot;) {
-			headersType = param
-			// forced add of the &quot;User-Agent&quot; - more can be added here, of course...
-			headerFields = append(headerFields, &quot;User-Agent&quot;)
-			for j := 0; j &lt; param.NumField(); j++ {
-				field := param.Field(j)
-				// all headers should have hdr tag
-				hdrTag := field.Tag.Get(&quot;hdr&quot;)
-				if len(hdrTag) &gt; 0 {
-					headerFields = append(headerFields, hdrTag)
+			<span style="color:#75715e">// convention : Headers mark headers struct (e.g. &#34;HeadersForMe&#34;)
+</span><span style="color:#75715e"></span>		} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">paramName</span>, <span style="color:#e6db74">&#34;Headers&#34;</span>) {
+			<span style="color:#a6e22e">headersType</span> = <span style="color:#a6e22e">param</span>
+			<span style="color:#75715e">// forced add of the &#34;User-Agent&#34; - more can be added here, of course...
+</span><span style="color:#75715e"></span>			<span style="color:#a6e22e">headerFields</span> = append(<span style="color:#a6e22e">headerFields</span>, <span style="color:#e6db74">&#34;User-Agent&#34;</span>)
+			<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">j</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">j</span> &lt; <span style="color:#a6e22e">param</span>.<span style="color:#a6e22e">NumField</span>(); <span style="color:#a6e22e">j</span><span style="color:#f92672">++</span> {
+				<span style="color:#a6e22e">field</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">param</span>.<span style="color:#a6e22e">Field</span>(<span style="color:#a6e22e">j</span>)
+				<span style="color:#75715e">// all headers should have hdr tag
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">hdrTag</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">field</span>.<span style="color:#a6e22e">Tag</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#e6db74">&#34;hdr&#34;</span>)
+				<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">hdrTag</span>) &gt; <span style="color:#ae81ff">0</span> {
+					<span style="color:#a6e22e">headerFields</span> = append(<span style="color:#a6e22e">headerFields</span>, <span style="color:#a6e22e">hdrTag</span>)
 				}
 			}
-		} else {
-			if payloadType != nil {
-				panic(&quot;Seems you are expecting two payloads on &quot; + callerName + &quot;. You should take only one.&quot;)
+		} <span style="color:#66d9ef">else</span> {
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">payloadType</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+				panic(<span style="color:#e6db74">&#34;Seems you are expecting two payloads on &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">callerName</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;. You should take only one.&#34;</span>)
 			}
-			// convention : second param is always the json payload (which gets automatically decoded)
-			switch functionType.In(p).Kind() {
-			case reflect.Ptr, reflect.Map, reflect.Slice:
-				payloadType = functionType.In(p)
-			default:
-				fmt.Printf(&quot;Second argument must be an *object, map, or slice and it's %q on %s [will be ignored].\n&quot;, functionType.In(p).String(), callerName)
+			<span style="color:#75715e">// convention : second param is always the json payload (which gets automatically decoded)
+</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">functionType</span>.<span style="color:#a6e22e">In</span>(<span style="color:#a6e22e">p</span>).<span style="color:#a6e22e">Kind</span>() {
+			<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Ptr</span>, <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Map</span>, <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Slice</span>:
+				<span style="color:#a6e22e">payloadType</span> = <span style="color:#a6e22e">functionType</span>.<span style="color:#a6e22e">In</span>(<span style="color:#a6e22e">p</span>)
+			<span style="color:#66d9ef">default</span>:
+				<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Second argument must be an *object, map, or slice and it&#39;s %q on %s [will be ignored].\n&#34;</span>, <span style="color:#a6e22e">functionType</span>.<span style="color:#a6e22e">In</span>(<span style="color:#a6e22e">p</span>).<span style="color:#a6e22e">String</span>(), <span style="color:#a6e22e">callerName</span>)
 			}
 		}
 	}
 
-	// the function must always return 2 params
-	if functionType.NumOut() != 2 {
-		panic(&quot;Handler has &quot; + strconv.Itoa(functionType.NumOut()) + &quot; returns. Must have two : pointer to something and error. (while registering &quot; + callerName + &quot;)&quot;)
+	<span style="color:#75715e">// the function must always return 2 params
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">functionType</span>.<span style="color:#a6e22e">NumOut</span>() <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span> {
+		panic(<span style="color:#e6db74">&#34;Handler has &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#a6e22e">functionType</span>.<span style="color:#a6e22e">NumOut</span>()) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; returns. Must have two : pointer to something and error. (while registering &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">callerName</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;)&#34;</span>)
 	}
 
-	// last param returned must be error
-	errorParam := functionType.Out(1)
-	if &quot;error&quot; != errorParam.String() {
-		panic(&quot;bad handler func : last parameter is supposed to be error&quot;)
+	<span style="color:#75715e">// last param returned must be error
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">errorParam</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">functionType</span>.<span style="color:#a6e22e">Out</span>(<span style="color:#ae81ff">1</span>)
+	<span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;error&#34;</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">errorParam</span>.<span style="color:#a6e22e">String</span>() {
+		panic(<span style="color:#e6db74">&#34;bad handler func : last parameter is supposed to be error&#34;</span>)
 	}
 
-	return payloadType, paramType, headersType, paramFields, headerFields
+	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">payloadType</span>, <span style="color:#a6e22e">paramType</span>, <span style="color:#a6e22e">headersType</span>, <span style="color:#a6e22e">paramFields</span>, <span style="color:#a6e22e">headerFields</span>
 }
 
-func HandleFunc(router *mux.Router, route string, fn interface{}) *mux.Route {
-	// reflect on the provided handler (controller with signature above)
-	fnValue := reflect.ValueOf(fn)
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">HandleFunc</span>(<span style="color:#a6e22e">router</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">mux</span>.<span style="color:#a6e22e">Router</span>, <span style="color:#a6e22e">route</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">fn</span> <span style="color:#66d9ef">interface</span>{}) <span style="color:#f92672">*</span><span style="color:#a6e22e">mux</span>.<span style="color:#a6e22e">Route</span> {
+	<span style="color:#75715e">// reflect on the provided handler (controller with signature above)
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fnValue</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">ValueOf</span>(<span style="color:#a6e22e">fn</span>)
 
-	// get payload, parameters and headers that will be injected
-	payloadType, paramType, headersType, paramFields, headerFields := collectRequirements(fnValue)
+	<span style="color:#75715e">// get payload, parameters and headers that will be injected
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">payloadType</span>, <span style="color:#a6e22e">paramType</span>, <span style="color:#a6e22e">headersType</span>, <span style="color:#a6e22e">paramFields</span>, <span style="color:#a6e22e">headerFields</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">collectRequirements</span>(<span style="color:#a6e22e">fnValue</span>)
 
-	// sometimes controller expects the request itself - we're providing it
-	isRequestInjected := false
-	if payloadType != nil &amp;&amp; payloadType.Kind() == reflect.Ptr &amp;&amp; payloadType.Elem().Name() == &quot;Request&quot; {
-		isRequestInjected = true
+	<span style="color:#75715e">// sometimes controller expects the request itself - we&#39;re providing it
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">isRequestInjected</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">false</span>
+	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">payloadType</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">payloadType</span>.<span style="color:#a6e22e">Kind</span>() <span style="color:#f92672">==</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Ptr</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">payloadType</span>.<span style="color:#a6e22e">Elem</span>().<span style="color:#a6e22e">Name</span>() <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;Request&#34;</span> {
+		<span style="color:#a6e22e">isRequestInjected</span> = <span style="color:#66d9ef">true</span>
 	}
-	// the actual before handler, which collects and build all the informations expected
-	return router.HandleFunc(route, func(w http.ResponseWriter, r *http.Request) {
+	<span style="color:#75715e">// the actual before handler, which collects and build all the informations expected
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">router</span>.<span style="color:#a6e22e">HandleFunc</span>(<span style="color:#a6e22e">route</span>, <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>, <span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Request</span>) {
 
-		// checking if client has sent us content type
-		if len(r.Header[&quot;Content-Type&quot;]) == 0{
-			w.WriteHeader(http.StatusBadRequest)
-			w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;missing Content-Type\&quot;}&quot;))
-            return
+		<span style="color:#75715e">// checking if client has sent us content type
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Header</span>[<span style="color:#e6db74">&#34;Content-Type&#34;</span>]) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>{
+			<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">WriteHeader</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusBadRequest</span>)
+			<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#e6db74">&#34;{\&#34;error\&#34;:\&#34;missing Content-Type\&#34;}&#34;</span>))
+            <span style="color:#66d9ef">return</span>
 		}
 
-		// content type &quot;negociation&quot; - in our case we're dealing with json, but you can extend the functionality after your needs (being crazy like GOB over HTTP :))
-		if r.Header[&quot;Content-Type&quot;][0] != &quot;application/json&quot; {
-			w.WriteHeader(http.StatusBadRequest)
-			w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;unknown Content-Type\&quot;}&quot;))
-			return
+		<span style="color:#75715e">// content type &#34;negociation&#34; - in our case we&#39;re dealing with json, but you can extend the functionality after your needs (being crazy like GOB over HTTP :))
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Header</span>[<span style="color:#e6db74">&#34;Content-Type&#34;</span>][<span style="color:#ae81ff">0</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;application/json&#34;</span> {
+			<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">WriteHeader</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusBadRequest</span>)
+			<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#e6db74">&#34;{\&#34;error\&#34;:\&#34;unknown Content-Type\&#34;}&#34;</span>))
+			<span style="color:#66d9ef">return</span>
 		}
 
-		var err error
-        var reqBody []byte
-        // only if the controller is not expecting Request itself, we're reading the body
-        if !isRequestInjected {
-        	// now we read the request body
-        	reqBody, err = ioutil.ReadAll(r.Body)
-        	if err != nil {
-        		w.WriteHeader(http.StatusInternalServerError)
-        		w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;&quot; + err.Error()+ &quot;\&quot;}&quot;))
-        		return
+		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>
+        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">reqBody</span> []<span style="color:#66d9ef">byte</span>
+        <span style="color:#75715e">// only if the controller is not expecting Request itself, we&#39;re reading the body
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">isRequestInjected</span> {
+        	<span style="color:#75715e">// now we read the request body
+</span><span style="color:#75715e"></span>        	<span style="color:#a6e22e">reqBody</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadAll</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Body</span>)
+        	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        		<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">WriteHeader</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusInternalServerError</span>)
+        		<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#e6db74">&#34;{\&#34;error\&#34;:\&#34;&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>()<span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;\&#34;}&#34;</span>))
+        		<span style="color:#66d9ef">return</span>
         	}
-        	// always defering close
-        	defer r.Body.Close()
+        	<span style="color:#75715e">// always defering close
+</span><span style="color:#75715e"></span>        	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
         }
 
-        // starting to build the arguments of calling our handler. First one, the context
-        in := []reflect.Value{ reflect.ValueOf(context.Background())}
+        <span style="color:#75715e">// starting to build the arguments of calling our handler. First one, the context
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">in</span> <span style="color:#f92672">:=</span> []<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Value</span>{ <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">ValueOf</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>())}
 
-        if payloadType != nil {
-        	// Building the deserialize value
-        	var deserializeTo reflect.Value
-        	switch payloadType.Kind() {
-        	case reflect.Slice, reflect.Map:
-        		deserializeTo = reflect.New(payloadType)
-        		in = append(in, deserializeTo.Elem())
-        	case reflect.Ptr:
-        		if !isRequestInjected {
-        			// the most common scenario - expecting a struct
-        			deserializeTo = reflect.New(payloadType.Elem())
-        			in = append(in, deserializeTo)
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">payloadType</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        	<span style="color:#75715e">// Building the deserialize value
+</span><span style="color:#75715e"></span>        	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">deserializeTo</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Value</span>
+        	<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">payloadType</span>.<span style="color:#a6e22e">Kind</span>() {
+        	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Slice</span>, <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Map</span>:
+        		<span style="color:#a6e22e">deserializeTo</span> = <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">payloadType</span>)
+        		<span style="color:#a6e22e">in</span> = append(<span style="color:#a6e22e">in</span>, <span style="color:#a6e22e">deserializeTo</span>.<span style="color:#a6e22e">Elem</span>())
+        	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">Ptr</span>:
+        		<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">isRequestInjected</span> {
+        			<span style="color:#75715e">// the most common scenario - expecting a struct
+</span><span style="color:#75715e"></span>        			<span style="color:#a6e22e">deserializeTo</span> = <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">payloadType</span>.<span style="color:#a6e22e">Elem</span>())
+        			<span style="color:#a6e22e">in</span> = append(<span style="color:#a6e22e">in</span>, <span style="color:#a6e22e">deserializeTo</span>)
         		    }
             }
-            if !isRequestInjected {
-        		// json decode the payload
-        		if err = json.Unmarshal(reqBody, deserializeTo.Interface()); err != nil {
-        			w.WriteHeader(http.StatusBadRequest)
-        			w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;&quot;+fmt.Sprintf(&quot;Unmarshal error: %v. Received from client : `%s`&quot;, err, string(reqBody))+&quot;\&quot;}&quot;))
-                    return
+            <span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">isRequestInjected</span> {
+        		<span style="color:#75715e">// json decode the payload
+</span><span style="color:#75715e"></span>        		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">Unmarshal</span>(<span style="color:#a6e22e">reqBody</span>, <span style="color:#a6e22e">deserializeTo</span>.<span style="color:#a6e22e">Interface</span>()); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        			<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">WriteHeader</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusBadRequest</span>)
+        			<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#e6db74">&#34;{\&#34;error\&#34;:\&#34;&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;Unmarshal error: %v. Received from client : `%s`&#34;</span>, <span style="color:#a6e22e">err</span>, string(<span style="color:#a6e22e">reqBody</span>))<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;\&#34;}&#34;</span>))
+                    <span style="color:#66d9ef">return</span>
         		}
-        		// checking if value is implementing Validate() error
-        		iVal, isValidator := deserializeTo.Interface().(IValidator)
-        		if isValidator {
-        			// it does - we call validate
-        			err = iVal.Validate()
-        			if err != nil {        				
-        				w.WriteHeader(http.StatusBadRequest)
-        				w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;&quot;+fmt.Sprintf(&quot;Validation error : %v&quot;, err)+&quot;\&quot;}&quot;))
-                        return
+        		<span style="color:#75715e">// checking if value is implementing Validate() error
+</span><span style="color:#75715e"></span>        		<span style="color:#a6e22e">iVal</span>, <span style="color:#a6e22e">isValidator</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">deserializeTo</span>.<span style="color:#a6e22e">Interface</span>().(<span style="color:#a6e22e">IValidator</span>)
+        		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">isValidator</span> {
+        			<span style="color:#75715e">// it does - we call validate
+</span><span style="color:#75715e"></span>        			<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">iVal</span>.<span style="color:#a6e22e">Validate</span>()
+        			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {        				
+        				<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">WriteHeader</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusBadRequest</span>)
+        				<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#e6db74">&#34;{\&#34;error\&#34;:\&#34;&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;Validation error : %v&#34;</span>, <span style="color:#a6e22e">err</span>)<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;\&#34;}&#34;</span>))
+                        <span style="color:#66d9ef">return</span>
         			}
         		}
-        	} else {
-        			// append request as it is, since body is going to be read in controller.
-        			in = append(in, reflect.ValueOf(r))
+        	} <span style="color:#66d9ef">else</span> {
+        			<span style="color:#75715e">// append request as it is, since body is going to be read in controller.
+</span><span style="color:#75715e"></span>        			<span style="color:#a6e22e">in</span> = append(<span style="color:#a6e22e">in</span>, <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">ValueOf</span>(<span style="color:#a6e22e">r</span>))
         	}
         }
 
-        // we have parameters that need to be injected
-        if paramType != nil {
-        	vars := mux.Vars(r)
-        	p := reflect.New(paramType).Elem()
-        	for _, pf := range paramFields {
-        		// if the parameter is in muxer vars
-        		if pf.isVar {
-        			p.Field(pf.index).Set(reflect.ValueOf(vars[pf.tag]))
-        		} else {
-        			// otherwise it must come from muxer form
-        			fv := r.FormValue(pf.tag)
-        			p.Field(pf.index).Set(reflect.ValueOf(fv))
+        <span style="color:#75715e">// we have parameters that need to be injected
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">paramType</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        	<span style="color:#a6e22e">vars</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">mux</span>.<span style="color:#a6e22e">Vars</span>(<span style="color:#a6e22e">r</span>)
+        	<span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">paramType</span>).<span style="color:#a6e22e">Elem</span>()
+        	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">pf</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">paramFields</span> {
+        		<span style="color:#75715e">// if the parameter is in muxer vars
+</span><span style="color:#75715e"></span>        		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">pf</span>.<span style="color:#a6e22e">isVar</span> {
+        			<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Field</span>(<span style="color:#a6e22e">pf</span>.<span style="color:#a6e22e">index</span>).<span style="color:#a6e22e">Set</span>(<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">ValueOf</span>(<span style="color:#a6e22e">vars</span>[<span style="color:#a6e22e">pf</span>.<span style="color:#a6e22e">tag</span>]))
+        		} <span style="color:#66d9ef">else</span> {
+        			<span style="color:#75715e">// otherwise it must come from muxer form
+</span><span style="color:#75715e"></span>        			<span style="color:#a6e22e">fv</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">FormValue</span>(<span style="color:#a6e22e">pf</span>.<span style="color:#a6e22e">tag</span>)
+        			<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">Field</span>(<span style="color:#a6e22e">pf</span>.<span style="color:#a6e22e">index</span>).<span style="color:#a6e22e">Set</span>(<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">ValueOf</span>(<span style="color:#a6e22e">fv</span>))
         		}
         	}
-        	// adding the injected
-        	in = append(in, p)
+        	<span style="color:#75715e">// adding the injected
+</span><span style="color:#75715e"></span>        	<span style="color:#a6e22e">in</span> = append(<span style="color:#a6e22e">in</span>, <span style="color:#a6e22e">p</span>)
         }
 
-        // we have headers that need to be injected
-        if headersType != nil {
-        	h := reflect.New(headersType).Elem()
-        	for idx, hf := range headerFields {
-        		switch hf {
-        		case &quot;User-Agent&quot;:
-        			h.Field(idx).Set(reflect.ValueOf(r.UserAgent()))
-        		default:
-        			h.Field(idx).Set(reflect.ValueOf(r.Header.Get(hf)))
+        <span style="color:#75715e">// we have headers that need to be injected
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">headersType</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        	<span style="color:#a6e22e">h</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">headersType</span>).<span style="color:#a6e22e">Elem</span>()
+        	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">idx</span>, <span style="color:#a6e22e">hf</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">headerFields</span> {
+        		<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">hf</span> {
+        		<span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;User-Agent&#34;</span>:
+        			<span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">Field</span>(<span style="color:#a6e22e">idx</span>).<span style="color:#a6e22e">Set</span>(<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">ValueOf</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">UserAgent</span>()))
+        		<span style="color:#66d9ef">default</span>:
+        			<span style="color:#a6e22e">h</span>.<span style="color:#a6e22e">Field</span>(<span style="color:#a6e22e">idx</span>).<span style="color:#a6e22e">Set</span>(<span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">ValueOf</span>(<span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">Header</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#a6e22e">hf</span>)))
         		}
         	}
-        	in = append(in, h)
+        	<span style="color:#a6e22e">in</span> = append(<span style="color:#a6e22e">in</span>, <span style="color:#a6e22e">h</span>)
         }
 
-        // finally, we're calling the handler with all the params
-        out := fnValue.Call(in)
+        <span style="color:#75715e">// finally, we&#39;re calling the handler with all the params
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">out</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fnValue</span>.<span style="color:#a6e22e">Call</span>(<span style="color:#a6e22e">in</span>)
 
-        // processing return of the handler (should be payload, error)
-        isError := out[0].IsNil()
-        // preparing the json encoder
-        enc := json.NewEncoder(w)
-        // we have error
-        if isError {
-        	// header
-        	w.Header().Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
-            problem, ok := out[1].Interface().(error)
-        	if !ok {
-        		// should never happen, since the check is done in the collect function. But better safe than sorry.
-        		w.WriteHeader(http.StatusInternalServerError)
-        		w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;not error - second param should be error.\&quot;}&quot;))
-                return
+        <span style="color:#75715e">// processing return of the handler (should be payload, error)
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">isError</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">out</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">IsNil</span>()
+        <span style="color:#75715e">// preparing the json encoder
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">enc</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">json</span>.<span style="color:#a6e22e">NewEncoder</span>(<span style="color:#a6e22e">w</span>)
+        <span style="color:#75715e">// we have error
+</span><span style="color:#75715e"></span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">isError</span> {
+        	<span style="color:#75715e">// header
+</span><span style="color:#75715e"></span>        	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Content-Type&#34;</span>, <span style="color:#e6db74">&#34;application/json&#34;</span>)
+            <span style="color:#a6e22e">problem</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">out</span>[<span style="color:#ae81ff">1</span>].<span style="color:#a6e22e">Interface</span>().(<span style="color:#66d9ef">error</span>)
+        	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">ok</span> {
+        		<span style="color:#75715e">// should never happen, since the check is done in the collect function. But better safe than sorry.
+</span><span style="color:#75715e"></span>        		<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">WriteHeader</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusInternalServerError</span>)
+        		<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#e6db74">&#34;{\&#34;error\&#34;:\&#34;not error - second param should be error.\&#34;}&#34;</span>))
+                <span style="color:#66d9ef">return</span>
         	}
-        	w.WriteHeader(http.StatusInternalServerError)
-        	w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;&quot;+problem.Error()+&quot;\&quot;}&quot;))
-            return
-        } else {
+        	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">WriteHeader</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusInternalServerError</span>)
+        	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#e6db74">&#34;{\&#34;error\&#34;:\&#34;&#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">problem</span>.<span style="color:#a6e22e">Error</span>()<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;\&#34;}&#34;</span>))
+            <span style="color:#66d9ef">return</span>
+        } <span style="color:#66d9ef">else</span> {
 
-        	// bytes are delivered as they are (since they help you for downloads)
-        	if byts, ok := out[0].Interface().([]byte); ok {
-        		w.Write(byts)
-        		return
+        	<span style="color:#75715e">// bytes are delivered as they are (since they help you for downloads)
+</span><span style="color:#75715e"></span>        	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">byts</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">out</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">Interface</span>().([]<span style="color:#66d9ef">byte</span>); <span style="color:#a6e22e">ok</span> {
+        		<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Write</span>(<span style="color:#a6e22e">byts</span>)
+        		<span style="color:#66d9ef">return</span>
         	}
-        	// only now we're seting header, so download can work correctly
-        	w.Header().Set(&quot;Content-Type&quot;, &quot;application/json&quot;)
+        	<span style="color:#75715e">// only now we&#39;re seting header, so download can work correctly
+</span><span style="color:#75715e"></span>        	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Content-Type&#34;</span>, <span style="color:#e6db74">&#34;application/json&#34;</span>)
 
-        	// no error has occured - serializing payload
-        	err := enc.Encode(out[0].Interface())
-        	if err != nil {
-        		w.WriteHeader(http.StatusInternalServerError)
-        		w.Write([]byte(&quot;{\&quot;error\&quot;:\&quot;encoding payload error : &quot;+err.Error()+&quot;\&quot;}&quot;))
-        		return
+        	<span style="color:#75715e">// no error has occured - serializing payload
+</span><span style="color:#75715e"></span>        	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">enc</span>.<span style="color:#a6e22e">Encode</span>(<span style="color:#a6e22e">out</span>[<span style="color:#ae81ff">0</span>].<span style="color:#a6e22e">Interface</span>())
+        	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+        		<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">WriteHeader</span>(<span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">StatusInternalServerError</span>)
+        		<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#e6db74">&#34;{\&#34;error\&#34;:\&#34;encoding payload error : &#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">err</span>.<span style="color:#a6e22e">Error</span>()<span style="color:#f92672">+</span><span style="color:#e6db74">&#34;\&#34;}&#34;</span>))
+        		<span style="color:#66d9ef">return</span>
         	}
         }
 	}
 }
-</code></pre>
-
-<p>First question you might ask, is where the controller would require the Request itself. Well, this is the case for uploading files, in which the controller itself would have the responsability of reading the request <code>Body</code>. Last thing : example of Headers and Params structs:</p>
-
-<pre><code class="language-go">    type Headers struct {
-		UserAgent      string // this doesn't require tag to be `hdr:&quot;User-Agent&quot;`
-		AcceptLanguage string `hdr:&quot;Accept-Language&quot;`
+</code></pre></div><p>First question you might ask, is where the controller would require the Request itself. Well, this is the case for uploading files, in which the controller itself would have the responsability of reading the request <code>Body</code>. Last thing : example of Headers and Params structs:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    <span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Headers</span> <span style="color:#66d9ef">struct</span> {
+		<span style="color:#a6e22e">UserAgent</span>      <span style="color:#66d9ef">string</span> <span style="color:#75715e">// this doesn&#39;t require tag to be `hdr:&#34;User-Agent&#34;`
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">AcceptLanguage</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">hdr:&#34;Accept-Language&#34;</span><span style="color:#e6db74">`</span>
 	}
 
-	type ParamKeyAndDevice struct {
-        Key        string `var:&quot;key&quot;` // taken form url e.g. /api/v1/contents/123, where 123 will be the key
-        DeviceID   string `form:&quot;id&quot;` // taken from path vars e.g. ?id=something
-        DeviceName string `form:&quot;name&quot;`
-        End        string `form:&quot;end&quot;`
+	<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ParamKeyAndDevice</span> <span style="color:#66d9ef">struct</span> {
+        <span style="color:#a6e22e">Key</span>        <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">var:&#34;key&#34;</span><span style="color:#e6db74">`</span> <span style="color:#75715e">// taken form url e.g. /api/v1/contents/123, where 123 will be the key
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">DeviceID</span>   <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">form:&#34;id&#34;</span><span style="color:#e6db74">`</span> <span style="color:#75715e">// taken from path vars e.g. ?id=something
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">DeviceName</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">form:&#34;name&#34;</span><span style="color:#e6db74">`</span>
+        <span style="color:#a6e22e">End</span>        <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">form:&#34;end&#34;</span><span style="color:#e6db74">`</span>
     }
-</code></pre>
-
-<h3 id="end-note">End note</h3>
-
+</code></pre></div><h3 id="end-note">End note</h3>
 <p>Another big limitation on reflection is that while you can use reflection to create new functions (take a look at this <a href="https://github.com/golang/go/blob/master/src/net/http/httptrace/trace.go#L197">beautiful usage example</a> of <code>MakeFunc</code>), there’s no way to create new methods at runtime.</p>
-
-<p>Unfortunatelly, this means you cannot use reflection to implement an interface at runtime - believe me, I&rsquo;ve tried. In Java, this functionality is called a dynamic proxy.</p>
-
-<p>There is an workaround for this too, a bit ugly if you ask me, but it can be done. I&rsquo;ll write about it in a later post.</p>
+<p>Unfortunatelly, this means you cannot use reflection to implement an interface at runtime - believe me, I've tried. In Java, this functionality is called a dynamic proxy.</p>
+<p>There is an workaround for this too, a bit ugly if you ask me, but it can be done. I'll write about it in a later post.</p>
 </div>
     
 

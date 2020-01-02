@@ -85,7 +85,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.57.0-DEV" />
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.63.0-DEV" />
 
 
 
@@ -202,339 +202,293 @@
 </div>
 
     <br>
-    <div class="text-justify">
-
-<h2 id="a-radix-story">A Radix Story</h2>
-
-<h4 id="yes-all-you-need-is-standard-net-http">Yes, All You Need is Standard &ldquo;net/http&rdquo;</h4>
-
-<p>There are, out there in the wild, an abundance of routers that a developer can use. In my opinion, one thing that they all share is the lack of separation of concerns. By separation of concerns I mean mixing handlers with routes and conditions, putting on top of that some cool optimized algorithm for looking up a route (or maybe I should say inspecting a string&hellip;). If you don&rsquo;t need everything those packages provide and you feel you should get rid of those training wheels, read on.</p>
-
+    <div class="text-justify"><h2 id="a-radix-story">A Radix Story</h2>
+<h4 id="yes-all-you-need-is-standard-nethttp">Yes, All You Need is Standard &ldquo;net/http&rdquo;</h4>
+<p>There are, out there in the wild, an abundance of routers that a developer can use. In my opinion, one thing that they all share is the lack of separation of concerns. By separation of concerns I mean mixing handlers with routes and conditions, putting on top of that some cool optimized algorithm for looking up a route (or maybe I should say inspecting a string&hellip;). If you don't need everything those packages provide and you feel you should get rid of those training wheels, read on.</p>
 <h4 id="a-small-detour">A Small Detour</h4>
-
 <p>I should probably write a separate article on the subject of what I consider to be a good Go developer, but here is short version of my opinion.</p>
-
 <p>As you all can observe, the whole variety of packages are competing with each other on the matters of allocations and speed. From my point of view this hides a powerful truth about Go language and the developers who use it.</p>
-
 <p>One of the main reasons for switching languages and becoming a Golang developer has to do with speed execution. For this reason and this reason only, I think that we can tell a good developer from a mediocre one, just by looking at his abilities to use the tools that he has and create new ones specialized for the problem that needs a solution.</p>
-
 <p>Long story short, I strongly believe that a good Golang developer should have a wide enough knowhow and apply it whenever needed by adapting a generic solution to a particular case - for the sake of simplicity, speed and allocations.</p>
-
 <h4 id="what-we-are-trying-to-solve">What We Are Trying To Solve?</h4>
-
-<p>The problem is really simple : let&rsquo;s separate the concerns in such manner that we can adapt a sufficient small piece of code to our needs, whatever those needs might be.</p>
-
+<p>The problem is really simple : let's separate the concerns in such manner that we can adapt a sufficient small piece of code to our needs, whatever those needs might be.</p>
 <p>In the case of a router, http.Request gives us access to the requested path. So, if we are able to process that path in a way that we need, we might not need a router at all. In the end we should be able to write a well anchored set of business logic rules without making the effort to adapt our mental model to a set of rules and conventions imposed by the authors of a package.</p>
+<p>To give you a simple example, most routers won't allow you to have a <code>otherwise</code> route : match this route with this handler - and so on, but otherwise, put all other requests on this handler. This comes handy when you need to cover a dynamic defined route, like serving a request based on the slug of a title or the slug of category (title slug being the <code>otherwise</code> handler).</p>
+<p>Let's try to forget about what a route really  is, by splitting it into three main properties : a http method (GET/POST/PUT/etc.), a path string and a function which needs to be called if that path string looks like something particular.</p>
+<p>From now on, we're going to deal with that string only. Leaving the theory alone, the <a href="https://en.wikipedia.org/wiki/Radix_tree">applications</a> of a radix tree are constructing a tree of pieces of strings which hold a reference to an object (fancy called associative arrays with keys).</p>
+<p>Let's get coding:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	<span style="color:#f92672">package</span> <span style="color:#a6e22e">radix</span>
 
-<p>To give you a simple example, most routers won&rsquo;t allow you to have a <code>otherwise</code> route : match this route with this handler - and so on, but otherwise, put all other requests on this handler. This comes handy when you need to cover a dynamic defined route, like serving a request based on the slug of a title or the slug of category (title slug being the <code>otherwise</code> handler).</p>
-
-<p>Let&rsquo;s try to forget about what a route really  is, by splitting it into three main properties : a http method (GET/POST/PUT/etc.), a path string and a function which needs to be called if that path string looks like something particular.</p>
-
-<p>From now on, we&rsquo;re going to deal with that string only. Leaving the theory alone, the <a href="https://en.wikipedia.org/wiki/Radix_tree">applications</a> of a radix tree are constructing a tree of pieces of strings which hold a reference to an object (fancy called associative arrays with keys).</p>
-
-<p>Let&rsquo;s get coding:</p>
-
-<pre><code class="language-go">	package radix
-
-	type (
-		Tree struct {
-			root Node
+	<span style="color:#66d9ef">type</span> (
+		<span style="color:#a6e22e">Tree</span> <span style="color:#66d9ef">struct</span> {
+			<span style="color:#a6e22e">root</span> <span style="color:#a6e22e">Node</span>
 		}
 
-		Edge struct {
-			label  string
-			parent *Node
-			child  *Node
+		<span style="color:#a6e22e">Edge</span> <span style="color:#66d9ef">struct</span> {
+			<span style="color:#a6e22e">label</span>  <span style="color:#66d9ef">string</span>
+			<span style="color:#a6e22e">parent</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>
+			<span style="color:#a6e22e">child</span>  <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>
 		}
 
-		Edges []Edge
+		<span style="color:#a6e22e">Edges</span> []<span style="color:#a6e22e">Edge</span>
 
-		leafNode struct {
-			key   string
-			value interface{}
+		<span style="color:#a6e22e">leafNode</span> <span style="color:#66d9ef">struct</span> {
+			<span style="color:#a6e22e">key</span>   <span style="color:#66d9ef">string</span>
+			<span style="color:#a6e22e">value</span> <span style="color:#66d9ef">interface</span>{}
 		}
 
-		Node struct {
-			leaf  *leafNode
-			edges Edges
+		<span style="color:#a6e22e">Node</span> <span style="color:#66d9ef">struct</span> {
+			<span style="color:#a6e22e">leaf</span>  <span style="color:#f92672">*</span><span style="color:#a6e22e">leafNode</span>
+			<span style="color:#a6e22e">edges</span> <span style="color:#a6e22e">Edges</span>
 		}
 	)
 
-	func (n *Node) isLeaf() bool {
-		return n.leaf != nil &amp;&amp; len(n.edges) == 0
+	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>) <span style="color:#a6e22e">isLeaf</span>() <span style="color:#66d9ef">bool</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">leaf</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> len(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">edges</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>
 	}
 
-	func (n *Node) createNode(edgeKey, leafKey string, value interface{}) {
-		leafNode := &amp;Node{
-			leaf: &amp;leafNode{
-				key:   leafKey,
-				value: value,
+	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>) <span style="color:#a6e22e">createNode</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">leafKey</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">value</span> <span style="color:#66d9ef">interface</span>{}) {
+		<span style="color:#a6e22e">leafNode</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Node</span>{
+			<span style="color:#a6e22e">leaf</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">leafNode</span>{
+				<span style="color:#a6e22e">key</span>:   <span style="color:#a6e22e">leafKey</span>,
+				<span style="color:#a6e22e">value</span>: <span style="color:#a6e22e">value</span>,
 			},
 		}
-		newEdge := Edge{
-			label:  edgeKey,
-			parent: n,
-			child:  leafNode,
+		<span style="color:#a6e22e">newEdge</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Edge</span>{
+			<span style="color:#a6e22e">label</span>:  <span style="color:#a6e22e">edgeKey</span>,
+			<span style="color:#a6e22e">parent</span>: <span style="color:#a6e22e">n</span>,
+			<span style="color:#a6e22e">child</span>:  <span style="color:#a6e22e">leafNode</span>,
 		}
-		n.edges = append(n.edges, newEdge)
+		<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">edges</span> = append(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">edges</span>, <span style="color:#a6e22e">newEdge</span>)
 	}
 
-	func (n *Node) createNodeWithEdges(newKey string, edgeKey string) *Node {
-		if n.isLeaf() {
-			//node is leaf node could not split, return nil
-			return nil
+	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>) <span style="color:#a6e22e">createNodeWithEdges</span>(<span style="color:#a6e22e">newKey</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">edgeKey</span> <span style="color:#66d9ef">string</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span> {
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">isLeaf</span>() {
+			<span style="color:#75715e">//node is leaf node could not split, return nil
+</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
 		}
 
-		for idx, edge := range n.edges {
-			if edge.label == edgeKey {
-				// backup for split
-				oldNode := edge.child
-				// create a new node
-				newNode := &amp;Node{}
-				// replace current edge with a new one
-				n.edges[idx] = Edge{
-					label:  newKey,
-					parent: n,
-					child:  newNode,
+		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">idx</span>, <span style="color:#a6e22e">edge</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">edges</span> {
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">edgeKey</span> {
+				<span style="color:#75715e">// backup for split
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">oldNode</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>
+				<span style="color:#75715e">// create a new node
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">newNode</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Node</span>{}
+				<span style="color:#75715e">// replace current edge with a new one
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">edges</span>[<span style="color:#a6e22e">idx</span>] = <span style="color:#a6e22e">Edge</span>{
+					<span style="color:#a6e22e">label</span>:  <span style="color:#a6e22e">newKey</span>,
+					<span style="color:#a6e22e">parent</span>: <span style="color:#a6e22e">n</span>,
+					<span style="color:#a6e22e">child</span>:  <span style="color:#a6e22e">newNode</span>,
 				}
-				// connect to original node
-				remainKey := strings.TrimPrefix(edgeKey, newKey)
-				newEdge := Edge{
-					label:  remainKey,
-					parent: newNode,
-					child:  oldNode,
+				<span style="color:#75715e">// connect to original node
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">remainKey</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">newKey</span>)
+				<span style="color:#a6e22e">newEdge</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Edge</span>{
+					<span style="color:#a6e22e">label</span>:  <span style="color:#a6e22e">remainKey</span>,
+					<span style="color:#a6e22e">parent</span>: <span style="color:#a6e22e">newNode</span>,
+					<span style="color:#a6e22e">child</span>:  <span style="color:#a6e22e">oldNode</span>,
 				}
-				// append the edges with that new edge
-				newNode.edges = append(newNode.edges, newEdge)
-				return newNode
+				<span style="color:#75715e">// append the edges with that new edge
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">newNode</span>.<span style="color:#a6e22e">edges</span> = append(<span style="color:#a6e22e">newNode</span>.<span style="color:#a6e22e">edges</span>, <span style="color:#a6e22e">newEdge</span>)
+				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">newNode</span>
 			}
 		}
-		return nil
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
 	}
 
-	// it's recursive
-	func (t *Tree) insert(target *Node, edgeKey string, leafKey string, value interface{}) {
-		// we've reached leaf
-		if target.isLeaf() {
-			if leafKey == target.leaf.key {
-				// the same leaf key, update value
-				// if overwriting values is by convention forbidden, should panic
-				target.leaf.value = value
-			} else {
-				// insert leaf key value as new child node of target
-				// original leaf node, became another leaf of target
-				target.createNode(edgeKey, leafKey, value)
-				// we have a convention here, regarding empty strings
-				target.createNode(&quot;&quot;, target.leaf.key, target.leaf.value)
-				target.leaf = nil
+	<span style="color:#75715e">// it&#39;s recursive
+</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Tree</span>) <span style="color:#a6e22e">insert</span>(<span style="color:#a6e22e">target</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>, <span style="color:#a6e22e">edgeKey</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">leafKey</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">value</span> <span style="color:#66d9ef">interface</span>{}) {
+		<span style="color:#75715e">// we&#39;ve reached leaf
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">isLeaf</span>() {
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">leafKey</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">leaf</span>.<span style="color:#a6e22e">key</span> {
+				<span style="color:#75715e">// the same leaf key, update value
+</span><span style="color:#75715e"></span>				<span style="color:#75715e">// if overwriting values is by convention forbidden, should panic
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">leaf</span>.<span style="color:#a6e22e">value</span> = <span style="color:#a6e22e">value</span>
+			} <span style="color:#66d9ef">else</span> {
+				<span style="color:#75715e">// insert leaf key value as new child node of target
+</span><span style="color:#75715e"></span>				<span style="color:#75715e">// original leaf node, became another leaf of target
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">createNode</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">leafKey</span>, <span style="color:#a6e22e">value</span>)
+				<span style="color:#75715e">// we have a convention here, regarding empty strings
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">createNode</span>(<span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">leaf</span>.<span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">leaf</span>.<span style="color:#a6e22e">value</span>)
+				<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">leaf</span> = <span style="color:#66d9ef">nil</span>
 			}
-			return
+			<span style="color:#66d9ef">return</span>
 		}
 
-		// second case, checking edges
-		for _, edge := range target.edges {
-			compare, found := longestPrefix(edgeKey, edge.label)
-			if found {
-				if compare == edge.label {
-					// trim edge.label from new key
-					nextTargetKey := strings.TrimPrefix(edgeKey, edge.label)
-					// recurse
-					t.insert(edge.child, nextTargetKey, leafKey, value)
-				} else {
-					// using compare to create new node and separate two edges
-					splitNode := target.createNodeWithEdges(compare, edge.label)
-					if splitNode == nil {
-						panic(&quot;Unexpected error on creating new node and separating edges&quot;)
+		<span style="color:#75715e">// second case, checking edges
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">edge</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">edges</span> {
+			<span style="color:#a6e22e">compare</span>, <span style="color:#a6e22e">found</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">longestPrefix</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>)
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">found</span> {
+				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">compare</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span> {
+					<span style="color:#75715e">// trim edge.label from new key
+</span><span style="color:#75715e"></span>					<span style="color:#a6e22e">nextTargetKey</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>)
+					<span style="color:#75715e">// recurse
+</span><span style="color:#75715e"></span>					<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">insert</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>, <span style="color:#a6e22e">nextTargetKey</span>, <span style="color:#a6e22e">leafKey</span>, <span style="color:#a6e22e">value</span>)
+				} <span style="color:#66d9ef">else</span> {
+					<span style="color:#75715e">// using compare to create new node and separate two edges
+</span><span style="color:#75715e"></span>					<span style="color:#a6e22e">splitNode</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">createNodeWithEdges</span>(<span style="color:#a6e22e">compare</span>, <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>)
+					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">splitNode</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+						panic(<span style="color:#e6db74">&#34;Unexpected error on creating new node and separating edges&#34;</span>)
 					}
-					splitContainKey := strings.TrimPrefix(edgeKey, compare)
-					splitNode.createNode(splitContainKey, leafKey, value)
+					<span style="color:#a6e22e">splitContainKey</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">compare</span>)
+					<span style="color:#a6e22e">splitNode</span>.<span style="color:#a6e22e">createNode</span>(<span style="color:#a6e22e">splitContainKey</span>, <span style="color:#a6e22e">leafKey</span>, <span style="color:#a6e22e">value</span>)
 				}
-				return
+				<span style="color:#66d9ef">return</span>
 			}
 		}
-		// new edge with new leaf key on leaf node
-		target.createNode(edgeKey, leafKey, value)
+		<span style="color:#75715e">// new edge with new leaf key on leaf node
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">createNode</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">leafKey</span>, <span style="color:#a6e22e">value</span>)
 	}
 
-	func (t *Tree) Insert(what string, value interface{}) {
-		//leaf key and edge key are the same
-		t.insert(&amp;t.root, what, what, value)
+	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Tree</span>) <span style="color:#a6e22e">Insert</span>(<span style="color:#a6e22e">what</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">value</span> <span style="color:#66d9ef">interface</span>{}) {
+		<span style="color:#75715e">//leaf key and edge key are the same
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">insert</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">root</span>, <span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">value</span>)
 	}
 
-	func (t *Tree) search(where *Node, what string) (interface{}, bool) {
-		if where.isLeaf() {
-			return where.leaf.value, true
+	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Tree</span>) <span style="color:#a6e22e">search</span>(<span style="color:#a6e22e">where</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>, <span style="color:#a6e22e">what</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">interface</span>{}, <span style="color:#66d9ef">bool</span>) {
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">where</span>.<span style="color:#a6e22e">isLeaf</span>() {
+			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">where</span>.<span style="color:#a6e22e">leaf</span>.<span style="color:#a6e22e">value</span>, <span style="color:#66d9ef">true</span>
 		}
-		for _, edge := range where.edges {
-			if compare, found := longestPrefix(what, edge.label); found {
-				nextSearchKey := strings.TrimPrefix(what, compare)
-				return t.search(edge.child, nextSearchKey)
+		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">edge</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">where</span>.<span style="color:#a6e22e">edges</span> {
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">compare</span>, <span style="color:#a6e22e">found</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">longestPrefix</span>(<span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>); <span style="color:#a6e22e">found</span> {
+				<span style="color:#a6e22e">nextSearchKey</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">compare</span>)
+				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">search</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>, <span style="color:#a6e22e">nextSearchKey</span>)
 			}
 		}
-		return nil, false
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#66d9ef">false</span>
 	}
 
-	func (t *Tree) Search(what string) (interface{}, bool) {
-		return t.search(&amp;t.root, what)
+	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Tree</span>) <span style="color:#a6e22e">Search</span>(<span style="color:#a6e22e">what</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">interface</span>{}, <span style="color:#66d9ef">bool</span>) {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">search</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">root</span>, <span style="color:#a6e22e">what</span>)
 	}
 
-	func longestPrefix(s1, s2 string) (string, bool) {
-		found := false
-		for i := 0; i &lt; len(s1) &amp;&amp; i &lt; len(s2); i++ {
-			if s1[i] != s2[i] {
-				result := s1[:i]
-				return result, found
+	<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">longestPrefix</span>(<span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">s2</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">bool</span>) {
+		<span style="color:#a6e22e">found</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">false</span>
+		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; len(<span style="color:#a6e22e">s1</span>) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">i</span> &lt; len(<span style="color:#a6e22e">s2</span>); <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">s1</span>[<span style="color:#a6e22e">i</span>] <span style="color:#f92672">!=</span> <span style="color:#a6e22e">s2</span>[<span style="color:#a6e22e">i</span>] {
+				<span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s1</span>[:<span style="color:#a6e22e">i</span>]
+				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>, <span style="color:#a6e22e">found</span>
 			}
-			found = true
+			<span style="color:#a6e22e">found</span> = <span style="color:#66d9ef">true</span>
 		}
 
-		if len(s1) &gt; len(s2) {
-			return s2, found
-		} else if len(s1) == len(s2) {
-			// special case : &quot;&quot; is not a subset of &quot;&quot;
-			return s1, s1 == s2
+		<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">s1</span>) &gt; len(<span style="color:#a6e22e">s2</span>) {
+			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s2</span>, <span style="color:#a6e22e">found</span>
+		} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">s1</span>) <span style="color:#f92672">==</span> len(<span style="color:#a6e22e">s2</span>) {
+			<span style="color:#75715e">// special case : &#34;&#34; is not a subset of &#34;&#34;
+</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">s1</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">s2</span>
 		}
 
-		return s1, found
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">found</span>
 	}
-</code></pre>
-
-<p>The code is pretty straight forward, however I&rsquo;ve placed some comments here and there, just in case.</p>
-
-<p>As you can see inside the <a href="https://github.com/badu/badu.github.io/blob/master/code/2/radix_test.go">test</a>, I&rsquo;ve tested the search against some HTTP headers, just in case someone might find it useful to discard any unwanted headers inside a middleware. Later on, I&rsquo;ll probably benchmark the classical method of collecting HTTP headers against this method. However, this is not the point here.</p>
-
-<p>Usually, we, developers need to match URLs like <code>/posts/{tag}/{id:[0-9]+}</code> in the HTTP path and while we&rsquo;re at it also extract those meaningful arguments. Things seem even more complicated when the string contains query values, like <code>/posts/{tag}?filter=date&amp;author=3</code>.</p>
-
+</code></pre></div><p>The code is pretty straight forward, however I've placed some comments here and there, just in case.</p>
+<p>As you can see inside the <a href="https://github.com/badu/badu.github.io/blob/master/code/2/radix_test.go">test</a>, I've tested the search against some HTTP headers, just in case someone might find it useful to discard any unwanted headers inside a middleware. Later on, I'll probably benchmark the classical method of collecting HTTP headers against this method. However, this is not the point here.</p>
+<p>Usually, we, developers need to match URLs like <code>/posts/{tag}/{id:[0-9]+}</code> in the HTTP path and while we're at it also extract those meaningful arguments. Things seem even more complicated when the string contains query values, like <code>/posts/{tag}?filter=date&amp;author=3</code>.</p>
 <h4 id="the-star-lookup">The Star Lookup</h4>
-
-<p>Let&rsquo;s make the following convention : we don&rsquo;t care (at the moment) how an argument look like. For us, everything that is an argument is a star (<code>*</code>), leaving the decision of converting and validation to the next business logic level (which might be as well the handler itself).</p>
-
+<p>Let's make the following convention : we don't care (at the moment) how an argument look like. For us, everything that is an argument is a star (<code>*</code>), leaving the decision of converting and validation to the next business logic level (which might be as well the handler itself).</p>
 <p>Given the above convention, the path <code>/posts/{tag}/{id:[0-9]+}</code> would translate to <code>/posts/*/*</code>, ok?</p>
-
 <p>Also, in order to capture the query values <code>/posts/{id:[0-9]+}?filter=date</code> would translate to <code>/posts/*?*</code>.</p>
-
-<p>Here&rsquo;s the code :</p>
-
-<pre><code class="language-go">	func (e Edge) isStar() bool {
-		return strings.HasPrefix(e.label, &quot;*&quot;) || strings.HasPrefix(e.label, &quot;/*&quot;) || strings.HasPrefix(e.label, &quot;?*&quot;)
+<p>Here's the code :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">Edge</span>) <span style="color:#a6e22e">isStar</span>() <span style="color:#66d9ef">bool</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">label</span>, <span style="color:#e6db74">&#34;*&#34;</span>) <span style="color:#f92672">||</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">label</span>, <span style="color:#e6db74">&#34;/*&#34;</span>) <span style="color:#f92672">||</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">label</span>, <span style="color:#e6db74">&#34;?*&#34;</span>)
 	}
 
-	func (t *Tree) starSearch(where *Node, what string) (interface{}, bool) {
-		if where.isLeaf() {
-			return where.leaf.value, true
+	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Tree</span>) <span style="color:#a6e22e">starSearch</span>(<span style="color:#a6e22e">where</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>, <span style="color:#a6e22e">what</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">interface</span>{}, <span style="color:#66d9ef">bool</span>) {
+		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">where</span>.<span style="color:#a6e22e">isLeaf</span>() {
+			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">where</span>.<span style="color:#a6e22e">leaf</span>.<span style="color:#a6e22e">value</span>, <span style="color:#66d9ef">true</span>
 		}
 
-		for _, edge := range where.edges {
-			if edge.isStar() {
-				// search key is empty and we're on the &quot;/*&quot; means we're looking for the last sibling of the edge
-				if what == &quot;&quot; &amp;&amp; strings.HasPrefix(edge.label, &quot;/*&quot;) {
-					continue
+		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">edge</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">where</span>.<span style="color:#a6e22e">edges</span> {
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">isStar</span>() {
+				<span style="color:#75715e">// search key is empty and we&#39;re on the &#34;/*&#34; means we&#39;re looking for the last sibling of the edge
+</span><span style="color:#75715e"></span>				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">what</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>, <span style="color:#e6db74">&#34;/*&#34;</span>) {
+					<span style="color:#66d9ef">continue</span>
 				}
-				// different kind of star... (&quot;*&quot; or &quot;?*&quot;)
-
-				// remove the common parts
-				remove, found := longestPrefix(what, edge.label)
-				if found {
-					what = strings.TrimPrefix(what, remove)
+				<span style="color:#75715e">// different kind of star... (&#34;*&#34; or &#34;?*&#34;)
+</span><span style="color:#75715e"></span>
+				<span style="color:#75715e">// remove the common parts
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">remove</span>, <span style="color:#a6e22e">found</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">longestPrefix</span>(<span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>)
+				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">found</span> {
+					<span style="color:#a6e22e">what</span> = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">remove</span>)
 				}
 
-				// split by slashes so we can build a new key
-				parts := strings.Split(what, &quot;/&quot;)
+				<span style="color:#75715e">// split by slashes so we can build a new key
+</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">parts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">what</span>, <span style="color:#e6db74">&#34;/&#34;</span>)
 
-				switch len(parts) {
-				case 1:
-					// ok, we had one piece
-					// looking for the question mark - might be handy to give up on this for speed
-					index := strings.Index(what, &quot;?&quot;)
-					if index &gt; 0 {
-						//TODO : collect star key after question mark
-						fmt.Println(&quot;Collect after question mark &quot;, what[index:])
-						// lookup question marks - down in the tree
-						return t.starSearch(edge.child, what[index:])
+				<span style="color:#66d9ef">switch</span> len(<span style="color:#a6e22e">parts</span>) {
+				<span style="color:#66d9ef">case</span> <span style="color:#ae81ff">1</span>:
+					<span style="color:#75715e">// ok, we had one piece
+</span><span style="color:#75715e"></span>					<span style="color:#75715e">// looking for the question mark - might be handy to give up on this for speed
+</span><span style="color:#75715e"></span>					<span style="color:#a6e22e">index</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Index</span>(<span style="color:#a6e22e">what</span>, <span style="color:#e6db74">&#34;?&#34;</span>)
+					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">index</span> &gt; <span style="color:#ae81ff">0</span> {
+						<span style="color:#75715e">//TODO : collect star key after question mark
+</span><span style="color:#75715e"></span>						<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Collect after question mark &#34;</span>, <span style="color:#a6e22e">what</span>[<span style="color:#a6e22e">index</span>:])
+						<span style="color:#75715e">// lookup question marks - down in the tree
+</span><span style="color:#75715e"></span>						<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">starSearch</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>, <span style="color:#a6e22e">what</span>[<span style="color:#a6e22e">index</span>:])
 					}
-					// don't have a question mark, but we have a star (continue) - looking for the last sibling edge
-					if strings.HasPrefix(edge.label, &quot;?*&quot;) &amp;&amp; remove != &quot;?&quot; {
-						continue
+					<span style="color:#75715e">// don&#39;t have a question mark, but we have a star (continue) - looking for the last sibling edge
+</span><span style="color:#75715e"></span>					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>, <span style="color:#e6db74">&#34;?*&#34;</span>) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">remove</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;?&#34;</span> {
+						<span style="color:#66d9ef">continue</span>
 					}
-					//TODO : collect star key
-					fmt.Println(&quot;Collect Path Part&quot;, what)
-					// we have a star, no question mark - looking for the node leaf
-					return t.starSearch(edge.child, &quot;&quot;)
-				default:
-					//TODO : collect star key part of the path
-					fmt.Println(&quot;Collect Path Part&quot;, parts[0])
-					// building a new key with the parts that we have
-					what = strings.Join(parts[1:], &quot;/&quot;)
-					return t.starSearch(edge.child, what)
+					<span style="color:#75715e">//TODO : collect star key
+</span><span style="color:#75715e"></span>					<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Collect Path Part&#34;</span>, <span style="color:#a6e22e">what</span>)
+					<span style="color:#75715e">// we have a star, no question mark - looking for the node leaf
+</span><span style="color:#75715e"></span>					<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">starSearch</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>, <span style="color:#e6db74">&#34;&#34;</span>)
+				<span style="color:#66d9ef">default</span>:
+					<span style="color:#75715e">//TODO : collect star key part of the path
+</span><span style="color:#75715e"></span>					<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Collect Path Part&#34;</span>, <span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">0</span>])
+					<span style="color:#75715e">// building a new key with the parts that we have
+</span><span style="color:#75715e"></span>					<span style="color:#a6e22e">what</span> = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Join</span>(<span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">1</span>:], <span style="color:#e6db74">&#34;/&#34;</span>)
+					<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">starSearch</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>, <span style="color:#a6e22e">what</span>)
 				}
 			}
 
-			if compare, found := longestPrefix(what, edge.label); found {
-				nextSearchKey := strings.TrimPrefix(what, compare)
-				return t.starSearch(edge.child, nextSearchKey)
+			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">compare</span>, <span style="color:#a6e22e">found</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">longestPrefix</span>(<span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>); <span style="color:#a6e22e">found</span> {
+				<span style="color:#a6e22e">nextSearchKey</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">compare</span>)
+				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">starSearch</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>, <span style="color:#a6e22e">nextSearchKey</span>)
 			}
 		}
 
-		return nil, false
+		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#66d9ef">false</span>
 	}
 
-	func (t *Tree) StarSearch(what string) (interface{}, bool) {
-		// TODO : use a mutex here if you are using this concurrent
-		return t.starSearch(&amp;t.root, what)
+	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Tree</span>) <span style="color:#a6e22e">StarSearch</span>(<span style="color:#a6e22e">what</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">interface</span>{}, <span style="color:#66d9ef">bool</span>) {
+		<span style="color:#75715e">// TODO : use a mutex here if you are using this concurrent
+</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">starSearch</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">root</span>, <span style="color:#a6e22e">what</span>)
 	}
-</code></pre>
-
-<p>Remember, you have to adapt this to your specific needs and for this reason I haven&rsquo;t imposed a way of capturing path parts that match star (<code>*</code>). I&rsquo;ve left comments where you can do that.</p>
-
+</code></pre></div><p>Remember, you have to adapt this to your specific needs and for this reason I haven't imposed a way of capturing path parts that match star (<code>*</code>). I've left comments where you can do that.</p>
 <p>In the above starSearch function there is a catch : if the edges slice is not sorted, so the last sibling is the star (<code>*</code>), the search will not work. To sort those slices, we need the following:</p>
-
-<pre><code class="language-go">	func (e Edges) Len() int {
-		return len(e)
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">Edges</span>) <span style="color:#a6e22e">Len</span>() <span style="color:#66d9ef">int</span> {
+		<span style="color:#66d9ef">return</span> len(<span style="color:#a6e22e">e</span>)
 	}
 
-	func (e Edges) Less(i, j int) bool {
-		return e[i].label &gt; e[j].label
+	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">Edges</span>) <span style="color:#a6e22e">Less</span>(<span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">j</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">bool</span> {
+		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">label</span> &gt; <span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">j</span>].<span style="color:#a6e22e">label</span>
 	}
 
-	func (e Edges) Swap(i, j int) {
-		e[i], e[j] = e[j], e[i]
+	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">Edges</span>) <span style="color:#a6e22e">Swap</span>(<span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">j</span> <span style="color:#66d9ef">int</span>) {
+		<span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">i</span>], <span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">j</span>] = <span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">j</span>], <span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">i</span>]
 	}
 
-	func (e Edges) Sort() {
-		sort.Sort(e)
+	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">Edges</span>) <span style="color:#a6e22e">Sort</span>() {
+		<span style="color:#a6e22e">sort</span>.<span style="color:#a6e22e">Sort</span>(<span style="color:#a6e22e">e</span>)
 	}
-</code></pre>
-
-<p>The functions createNode and createNodeWithEdges will have the following additional piece of code:</p>
-
-<pre><code class="language-go">	if useSortEdges {
-		// we're always sorting in reverse, so stars are last siblings
-		newNode.edges.Sort()
+</code></pre></div><p>The functions createNode and createNodeWithEdges will have the following additional piece of code:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">useSortEdges</span> {
+		<span style="color:#75715e">// we&#39;re always sorting in reverse, so stars are last siblings
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">newNode</span>.<span style="color:#a6e22e">edges</span>.<span style="color:#a6e22e">Sort</span>()
 	}
-</code></pre>
-
-<h4 id="recommendations">Recommendations</h4>
-
-<p>First, don&rsquo;t forget to use mutex for search - I&rsquo;ve left a comment there - if you are using it in a concurrent way.</p>
-
-<p>Secondly, the problem of defining one route is that you can&rsquo;t do this <code>/*/*</code> and expect it to work only in one route. In order to make it work you need an <code>exception string</code> (see TestStarOneRoute) and that exception string to look like <code>*/something-never-matched</code>.</p>
-
+</code></pre></div><h4 id="recommendations">Recommendations</h4>
+<p>First, don't forget to use mutex for search - I've left a comment there - if you are using it in a concurrent way.</p>
+<p>Secondly, the problem of defining one route is that you can't do this <code>/*/*</code> and expect it to work only in one route. In order to make it work you need an <code>exception string</code> (see TestStarOneRoute) and that exception string to look like <code>*/something-never-matched</code>.</p>
 <p>Regarding leafNode struct value property, which is typed <code>interface{}</code> in the above code - you should do whatever you like with it. To give you an obvious example:</p>
-
-<pre><code class="language-go">	leafNode struct {
-        key   string
-		value http.HandlerFunc
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	<span style="color:#a6e22e">leafNode</span> <span style="color:#66d9ef">struct</span> {
+        <span style="color:#a6e22e">key</span>   <span style="color:#66d9ef">string</span>
+		<span style="color:#a6e22e">value</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandlerFunc</span>
 	}
-</code></pre>
-
-<p>Last, but not least, you can alter things like adding a flag to the tree to mark it as dirty, then process all the edges in the tree and mark them as isStar <code>true/false</code> so <code>isStar() bool</code> function can be replaced like that. Or you could rewrite some parts to reduce allocations.</p>
-
+</code></pre></div><p>Last, but not least, you can alter things like adding a flag to the tree to mark it as dirty, then process all the edges in the tree and mark them as isStar <code>true/false</code> so <code>isStar() bool</code> function can be replaced like that. Or you could rewrite some parts to reduce allocations.</p>
 <h4 id="other-usages">Other usages</h4>
-
 <p>Besides request routing, radix trees can be used in building ACLs (storing capabilities/permissions in the <code>value</code> property), spell checkers, auto-complete suggestions and <a href="https://github.com/hashicorp/go-memdb">in memory database</a>.</p>
-
 <h4 id="code">Code</h4>
-
 <p>The complete code (tests included) is <a href="https://github.com/badu/badu.github.io/blob/master/code/2">here</a>.</p>
 </div>
     

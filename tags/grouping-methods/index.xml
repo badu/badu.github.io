@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Grouping Methods on Recency Bias</title>
@@ -18,7 +18,7 @@
       
       <guid>http://badu.github.io/post/changing-perspective/</guid>
       <description>Changing perspective Using abstractions is more about what your code can do. Encapsulation is about how we achieve that functionality.
-Foreword &amp;ldquo;I was introduced to complex concepts almost immediately&amp;hellip; with examples I&amp;rsquo;d never use in real life. It confused me, I didn&amp;rsquo;t understand it, and eventually quit trying to learn Go because I thought I&amp;rsquo;d never get it&amp;rdquo; - quote from a beginner captured by Mat Ryer
+Foreword &amp;ldquo;I was introduced to complex concepts almost immediately&amp;hellip; with examples I&#39;d never use in real life. It confused me, I didn&#39;t understand it, and eventually quit trying to learn Go because I thought I&#39;d never get it&amp;rdquo; - quote from a beginner captured by Mat Ryer
 The present writing is about concurrency and use of channels in Go.</description>
     </item>
     

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Advanced on Recency Bias</title>
@@ -17,8 +17,8 @@
       <pubDate>Sat, 10 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/mirror-mirror/</guid>
-      <description>TL;DR While I was mentoring, I encouraged my pupils to break things so they understand how they work. Using reflect package seems easy, but understanding the mechanics is hard. So, this week, following my own advice, I&amp;rsquo;ve tried to create my own reflect package. Here is what I&amp;rsquo;ve learned.
-Playing with Fire Most of the articles on the subject I&amp;rsquo;ve read have (more or less) the following advice : &amp;ldquo;if you find yourself doing this in a real program, stop immediately and seek help.</description>
+      <description>TL;DR While I was mentoring, I encouraged my pupils to break things so they understand how they work. Using reflect package seems easy, but understanding the mechanics is hard. So, this week, following my own advice, I&#39;ve tried to create my own reflect package. Here is what I&#39;ve learned.
+Playing with Fire Most of the articles on the subject I&#39;ve read have (more or less) the following advice : &amp;ldquo;if you find yourself doing this in a real program, stop immediately and seek help.</description>
     </item>
     
     <item>
@@ -27,9 +27,9 @@ Playing with Fire Most of the articles on the subject I&amp;rsquo;ve read have (
       <pubDate>Mon, 05 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/known-world-stops/</guid>
-      <description>Last week, I took the time searching for patterns inside the main packages. Besides a bunch of aha moments, I&amp;rsquo;ve realized that some neat tricks can be used to achieve some goals otherwise achievable by applying different techniques.
-For instance, let&amp;rsquo;s say you have a pool or a cache. How do you call your cleanup function?
-Decisions regarding where to place that call can be made by testing and benchmarking.</description>
+      <description>Last week, I took the time searching for patterns inside the main packages. Besides a bunch of aha moments, I&#39;ve realized that some neat tricks can be used to achieve some goals otherwise achievable by applying different techniques.
+For instance, let&#39;s say you have a pool or a cache. How do you call your cleanup function?
+Decisions regarding where to place that call can be made by testing and benchmarking. But what if there is another neat way to do so : just before the garbage collection runs, you can mount yourself a function and receive a call on it.</description>
     </item>
     
   </channel>

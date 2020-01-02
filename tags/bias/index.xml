@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Bias on Recency Bias</title>
@@ -17,7 +17,7 @@
       <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/why-recency-bias/</guid>
-      <description>The name of my blog came to me after reading this article. It&amp;rsquo;s defined as &amp;ldquo;Placing higher value on recent events than ones that occurred further in the past&amp;rdquo; by the author.
+      <description>The name of my blog came to me after reading this article. It&#39;s defined as &amp;ldquo;Placing higher value on recent events than ones that occurred further in the past&amp;rdquo; by the author.
 Looking on Wikipedia, you will not find the recency bias in the cognitive biases list. My best guess is because recency bias is related to learning and intelligence.
 Yes, I find myself using the same design patterns over and over again.</description>
     </item>

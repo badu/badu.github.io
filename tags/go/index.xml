@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Go on Recency Bias</title>
@@ -19,8 +19,8 @@
       <guid>http://badu.github.io/post/interviewing-go-developer-part-2/</guid>
       <description>Foreword See part 1.
 Q: What will return the following code?
-func returnNormal() int { i := 1 defer func() { i++ }() return i } func returnNamed() (i int) { i = 1 defer func() { i++ }() return i } func main() { fmt.Printf(&amp;quot;returnNormal() = %d\n&amp;quot;, returnNormal()) fmt.Printf(&amp;quot;returnNamed() = %d\n&amp;quot;, returnNamed()) }  A: returnNormal() = 1 and returnNamed() = 2 3 points
-Q: What will print the following code?</description>
+func returnNormal() int { i := 1 defer func() { i++ }() return i } func returnNamed() (i int) { i = 1 defer func() { i++ }() return i } func main() { fmt.Printf(&amp;#34;returnNormal() = %d\n&amp;#34;, returnNormal()) fmt.Printf(&amp;#34;returnNamed() = %d\n&amp;#34;, returnNamed()) } A: returnNormal() = 1 and returnNamed() = 2 [3 points] (why : lazy evaluation)
+ Q: What will print the following code?</description>
     </item>
     
     <item>
@@ -30,7 +30,7 @@ Q: What will print the following code?</description>
       
       <guid>http://badu.github.io/post/changing-perspective/</guid>
       <description>Changing perspective Using abstractions is more about what your code can do. Encapsulation is about how we achieve that functionality.
-Foreword &amp;ldquo;I was introduced to complex concepts almost immediately&amp;hellip; with examples I&amp;rsquo;d never use in real life. It confused me, I didn&amp;rsquo;t understand it, and eventually quit trying to learn Go because I thought I&amp;rsquo;d never get it&amp;rdquo; - quote from a beginner captured by Mat Ryer
+Foreword &amp;ldquo;I was introduced to complex concepts almost immediately&amp;hellip; with examples I&#39;d never use in real life. It confused me, I didn&#39;t understand it, and eventually quit trying to learn Go because I thought I&#39;d never get it&amp;rdquo; - quote from a beginner captured by Mat Ryer
 The present writing is about concurrency and use of channels in Go.</description>
     </item>
     
@@ -40,8 +40,8 @@ The present writing is about concurrency and use of channels in Go.</description
       <pubDate>Sun, 18 Nov 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/interviewing-go-developer-part-1/</guid>
-      <description>Foreword There is no such thing as essential interview questions. Despite the fact that I&amp;rsquo;m trying to help you, formulate questions and/or answers, I cannot help you point in the right direction, since each job has specific requirements and each person is unique.
-My word of advising is don&amp;rsquo;t jump to conclusions, just because someone didn&amp;rsquo;t answer your question like you expected you to do. And there are people out there - myself included - who are able to explain you a concept without remembering the actual name or the acronym.</description>
+      <description>Foreword There is no such thing as essential interview questions. Despite the fact that I&#39;m trying to help you, formulate questions and/or answers, I cannot help you point in the right direction, since each job has specific requirements and each person is unique.
+My word of advising is don&#39;t jump to conclusions, just because someone didn&#39;t answer your question like you expected you to do. And there are people out there - myself included - who are able to explain you a concept without remembering the actual name or the acronym.</description>
     </item>
     
     <item>
@@ -50,7 +50,7 @@ My word of advising is don&amp;rsquo;t jump to conclusions, just because someone
       <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/what-you-cant-do/</guid>
-      <description>What&amp;rsquo;s the problem? A while ago, I was working on backend application in which we were trying to increase readability of the code, while defining a standard. In my morning explorations I&amp;rsquo;ve found a technique (sorry, can&amp;rsquo;t remember where : I&amp;rsquo;ll edit this article when I&amp;rsquo;ll remember) that allowed us to use reflection inside a before type handler, thus decoding JSON payloads would be agnostic to controllers.
+      <description>What&#39;s the problem? A while ago, I was working on backend application in which we were trying to increase readability of the code, while defining a standard. In my morning explorations I&#39;ve found a technique (sorry, can&#39;t remember where : I&#39;ll edit this article when I&#39;ll remember) that allowed us to use reflection inside a before type handler, thus decoding JSON payloads would be agnostic to controllers.
 A typical controller signature looks like this :</description>
     </item>
     
@@ -60,8 +60,8 @@ A typical controller signature looks like this :</description>
       <pubDate>Sat, 10 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/mirror-mirror/</guid>
-      <description>TL;DR While I was mentoring, I encouraged my pupils to break things so they understand how they work. Using reflect package seems easy, but understanding the mechanics is hard. So, this week, following my own advice, I&amp;rsquo;ve tried to create my own reflect package. Here is what I&amp;rsquo;ve learned.
-Playing with Fire Most of the articles on the subject I&amp;rsquo;ve read have (more or less) the following advice : &amp;ldquo;if you find yourself doing this in a real program, stop immediately and seek help.</description>
+      <description>TL;DR While I was mentoring, I encouraged my pupils to break things so they understand how they work. Using reflect package seems easy, but understanding the mechanics is hard. So, this week, following my own advice, I&#39;ve tried to create my own reflect package. Here is what I&#39;ve learned.
+Playing with Fire Most of the articles on the subject I&#39;ve read have (more or less) the following advice : &amp;ldquo;if you find yourself doing this in a real program, stop immediately and seek help.</description>
     </item>
     
     <item>
@@ -70,9 +70,9 @@ Playing with Fire Most of the articles on the subject I&amp;rsquo;ve read have (
       <pubDate>Mon, 05 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/known-world-stops/</guid>
-      <description>Last week, I took the time searching for patterns inside the main packages. Besides a bunch of aha moments, I&amp;rsquo;ve realized that some neat tricks can be used to achieve some goals otherwise achievable by applying different techniques.
-For instance, let&amp;rsquo;s say you have a pool or a cache. How do you call your cleanup function?
-Decisions regarding where to place that call can be made by testing and benchmarking.</description>
+      <description>Last week, I took the time searching for patterns inside the main packages. Besides a bunch of aha moments, I&#39;ve realized that some neat tricks can be used to achieve some goals otherwise achievable by applying different techniques.
+For instance, let&#39;s say you have a pool or a cache. How do you call your cleanup function?
+Decisions regarding where to place that call can be made by testing and benchmarking. But what if there is another neat way to do so : just before the garbage collection runs, you can mount yourself a function and receive a call on it.</description>
     </item>
     
     <item>
@@ -90,11 +90,11 @@ Decisions regarding where to place that call can be made by testing and benchmar
       <pubDate>Sat, 24 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/net-http-week2/</guid>
-      <description>TL;DR This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I&amp;rsquo;m inviting you to learn aside me.
+      <description>TL;DR This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I&#39;m inviting you to learn aside me.
 You are allowed to judge the code. You are not allowed to judge the people.
 Part 1
 ListenAndServe As you might well know, using http package is easy :
-package main import ( &amp;quot;io&amp;quot; &amp;quot;net/http&amp;quot; &amp;quot;log&amp;quot; ) func main() { http.HandleFunc(&amp;quot;/hello&amp;quot;, func (w http.</description>
+package main import ( &amp;#34;io&amp;#34; &amp;#34;net/http&amp;#34; &amp;#34;log&amp;#34; ) func main() { http.HandleFunc(&amp;#34;/hello&amp;#34;, func (w http.</description>
     </item>
     
     <item>
@@ -103,7 +103,7 @@ package main import ( &amp;quot;io&amp;quot; &amp;quot;net/http&amp;quot; &amp;q
       <pubDate>Sun, 18 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/net-http-week1/</guid>
-      <description>TL;DR This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I&amp;rsquo;m inviting you to learn aside me.
+      <description>TL;DR This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I&#39;m inviting you to learn aside me.
 You are allowed to judge the code. You are not allowed to judge the people.
 First Glance I have a confession to make : despite the fact that &amp;ldquo;Keep types close&amp;rdquo; rule is fair enough, the architect in me needs to reorganize the code in such a manner that a 10000 feet view to be possible.</description>
     </item>
@@ -115,7 +115,7 @@ First Glance I have a confession to make : despite the fact that &amp;ldquo;Keep
       
       <guid>http://badu.github.io/post/comparing-go-is-wrong/</guid>
       <description>TL;DR &amp;ldquo;Java is to Javascript like Car is to Carpet.&amp;rdquo; - Collective Genius
-My Computer Language is Better than Yours Some programming languages were - let&amp;rsquo;s say - discovered over time, whereas others were created academically by carefully selecting the features that would provide solutions to a set of problems. There’s nothing terribly new about spawning programming languages. However, haters gonna hate and will always find one, in an office near you or over the Internet.</description>
+My Computer Language is Better than Yours Some programming languages were - let&#39;s say - discovered over time, whereas others were created academically by carefully selecting the features that would provide solutions to a set of problems. There’s nothing terribly new about spawning programming languages. However, haters gonna hate and will always find one, in an office near you or over the Internet.</description>
     </item>
     
   </channel>

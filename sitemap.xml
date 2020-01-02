@@ -1,11 +1,10 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
     <loc>http://badu.github.io/tags/2019/</loc>
     <lastmod>2019-12-30T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -16,43 +15,36 @@
   <url>
     <loc>http://badu.github.io/post/</loc>
     <lastmod>2019-12-30T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/</loc>
     <lastmod>2019-12-30T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/review/</loc>
     <lastmod>2019-12-30T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/</loc>
     <lastmod>2019-12-30T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/developer/</loc>
     <lastmod>2018-12-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/go/</loc>
     <lastmod>2018-12-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/interview/</loc>
     <lastmod>2018-12-07T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -68,13 +60,11 @@
   <url>
     <loc>http://badu.github.io/tags/channels/</loc>
     <lastmod>2018-11-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/grouping-methods/</loc>
     <lastmod>2018-11-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -85,13 +75,11 @@
   <url>
     <loc>http://badu.github.io/tags/reflect/</loc>
     <lastmod>2018-06-15T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/standard-package/</loc>
     <lastmod>2018-06-15T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -107,31 +95,26 @@
   <url>
     <loc>http://badu.github.io/tags/psychology/</loc>
     <lastmod>2018-03-22T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/recruiter/</loc>
     <lastmod>2018-03-22T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/skills/</loc>
     <lastmod>2018-03-22T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/talent/</loc>
     <lastmod>2018-03-22T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/advanced/</loc>
     <lastmod>2018-03-10T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -142,19 +125,16 @@
   <url>
     <loc>http://badu.github.io/tags/unsafe/</loc>
     <lastmod>2018-03-10T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/compiler/</loc>
     <lastmod>2018-03-05T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/directives/</loc>
     <lastmod>2018-03-05T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -170,37 +150,31 @@
   <url>
     <loc>http://badu.github.io/tags/radix/</loc>
     <lastmod>2018-02-27T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/router/</loc>
     <lastmod>2018-02-27T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/search/</loc>
     <lastmod>2018-02-27T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/tree/</loc>
     <lastmod>2018-02-27T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/analysis/</loc>
     <lastmod>2018-02-24T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/http/</loc>
     <lastmod>2018-02-24T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -211,7 +185,6 @@
   <url>
     <loc>http://badu.github.io/tags/net/</loc>
     <lastmod>2018-02-24T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -227,31 +200,26 @@
   <url>
     <loc>http://badu.github.io/tags/languages/</loc>
     <lastmod>2017-11-15T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/programming/</loc>
     <lastmod>2017-11-15T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/agile/</loc>
     <lastmod>2017-11-14T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/management/</loc>
     <lastmod>2017-11-14T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/people/</loc>
     <lastmod>2017-11-14T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -262,19 +230,16 @@
   <url>
     <loc>http://badu.github.io/tags/bogdan-dinu/</loc>
     <lastmod>2018-11-18T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/curriculum-vitae/</loc>
     <lastmod>2018-11-18T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/resume/</loc>
     <lastmod>2018-11-18T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -285,19 +250,16 @@
   <url>
     <loc>http://badu.github.io/tags/bias/</loc>
     <lastmod>2017-11-09T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/cognitive/</loc>
     <lastmod>2017-11-09T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://badu.github.io/tags/recency/</loc>
     <lastmod>2017-11-09T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -307,7 +269,6 @@
   
   <url>
     <loc>http://badu.github.io/categories/</loc>
-    <priority>0</priority>
   </url>
   
 </urlset>

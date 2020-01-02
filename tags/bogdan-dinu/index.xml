@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Bogdan Dinu on Recency Bias</title>
@@ -18,9 +18,8 @@
       
       <guid>http://badu.github.io/about/</guid>
       <description>Skills | Experience | Education | History
-Note for Recruiters For those of you that are trying to relocate me, please understand this is not the case. At least not for now. Please read this and F.A.Q. prior to contacting me. Thanks in advance!
-Hello, my name is Bogdan and I am a Go language enthusiast. In case you want to skip to Go language skills, click here.
-I&amp;rsquo;ve started to program computers in 1991.</description>
+ Note for Recruiters For those of you that are trying to relocate me, please understand this is not the case. At least not for now. Please read this and F.A.Q. prior to contacting me. Thanks in advance!
+ Hello, my name is Bogdan and I am a Go language enthusiast. In case you want to skip to Go language skills, click here.</description>
     </item>
     
   </channel>

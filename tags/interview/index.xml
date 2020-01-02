@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Interview on Recency Bias</title>
@@ -19,8 +19,8 @@
       <guid>http://badu.github.io/post/interviewing-go-developer-part-2/</guid>
       <description>Foreword See part 1.
 Q: What will return the following code?
-func returnNormal() int { i := 1 defer func() { i++ }() return i } func returnNamed() (i int) { i = 1 defer func() { i++ }() return i } func main() { fmt.Printf(&amp;quot;returnNormal() = %d\n&amp;quot;, returnNormal()) fmt.Printf(&amp;quot;returnNamed() = %d\n&amp;quot;, returnNamed()) }  A: returnNormal() = 1 and returnNamed() = 2 3 points
-Q: What will print the following code?</description>
+func returnNormal() int { i := 1 defer func() { i++ }() return i } func returnNamed() (i int) { i = 1 defer func() { i++ }() return i } func main() { fmt.Printf(&amp;#34;returnNormal() = %d\n&amp;#34;, returnNormal()) fmt.Printf(&amp;#34;returnNamed() = %d\n&amp;#34;, returnNamed()) } A: returnNormal() = 1 and returnNamed() = 2 [3 points] (why : lazy evaluation)
+ Q: What will print the following code?</description>
     </item>
     
     <item>
@@ -29,8 +29,8 @@ Q: What will print the following code?</description>
       <pubDate>Sun, 18 Nov 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/interviewing-go-developer-part-1/</guid>
-      <description>Foreword There is no such thing as essential interview questions. Despite the fact that I&amp;rsquo;m trying to help you, formulate questions and/or answers, I cannot help you point in the right direction, since each job has specific requirements and each person is unique.
-My word of advising is don&amp;rsquo;t jump to conclusions, just because someone didn&amp;rsquo;t answer your question like you expected you to do. And there are people out there - myself included - who are able to explain you a concept without remembering the actual name or the acronym.</description>
+      <description>Foreword There is no such thing as essential interview questions. Despite the fact that I&#39;m trying to help you, formulate questions and/or answers, I cannot help you point in the right direction, since each job has specific requirements and each person is unique.
+My word of advising is don&#39;t jump to conclusions, just because someone didn&#39;t answer your question like you expected you to do. And there are people out there - myself included - who are able to explain you a concept without remembering the actual name or the acronym.</description>
     </item>
     
   </channel>
