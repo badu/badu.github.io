@@ -6,10 +6,19 @@
     <description>Recent content on Recency Bias</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Mon, 30 Dec 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Jan 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://badu.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Amice, ești idiot!</title>
+      <link>http://badu.github.io/post/2020/21_01_2020/</link>
+      <pubDate>Tue, 21 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/post/2020/21_01_2020/</guid>
+      <description>În loc de „nu știu alții cum sunt”, eu știu foarte bine cum sunt alții. Unii sunt proști, alții tolerabili, iar alții sunt buni - mai buni decât mine. De la cei din urmă - adică cei mai buni - vreau să învăț, să nu fac greșelile pe care le-au făcut ei, care va să zică să fiu eficient. Pentru că eficiența este o parte integrantă a legii conservării energiei, drept pentru care a fi ineficient reprezintă - în capul meu - a fi împotriva curentului.</description>
+    </item>
     
     <item>
       <title>Anul 2019 și rezoluții pentru 2020</title>
@@ -161,17 +170,6 @@ That project was an awesome second screen smart TV application, that allowed the
       <description>Skills | Experience | Education | History
  Note for Recruiters For those of you that are trying to relocate me, please understand this is not the case. At least not for now. Please read this and F.A.Q. prior to contacting me. Thanks in advance!
  Hello, my name is Bogdan and I am a Go language enthusiast. In case you want to skip to Go language skills, click here.</description>
-    </item>
-    
-    <item>
-      <title>Why Recency Bias?</title>
-      <link>http://badu.github.io/why-recency-bias/</link>
-      <pubDate>Thu, 09 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/why-recency-bias/</guid>
-      <description>The name of my blog came to me after reading this article. It&#39;s defined as &amp;ldquo;Placing higher value on recent events than ones that occurred further in the past&amp;rdquo; by the author.
-Looking on Wikipedia, you will not find the recency bias in the cognitive biases list. My best guess is because recency bias is related to learning and intelligence.
-Yes, I find myself using the same design patterns over and over again.</description>
     </item>
     
   </channel>
