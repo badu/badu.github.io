@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rants on Recency Bias</title>
+    <link>http://badu.github.io/tags/rants/</link>
+    <description>Recent content in rants on Recency Bias</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Tue, 12 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://badu.github.io/tags/rants/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Microservicii</title>
+      <link>http://badu.github.io/post/2020/12_05_2020/</link>
+      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/post/2020/12_05_2020/</guid>
+      <description>Acum doi ani, dacă mă întrebai ce părere am despre microservicii, îți voi fi răspuns că nu-mi place ideea. Asta pentru că am fost obișnuit cu monoliți bine construiți, în echipe relativ mici, pe care le „păzeam” de denaturare fiind foarte atent la direcția în care se mergea. După părerea mea - valabilă și azi - multe lucruri care se pot face în baza de date, ar trebui făcute în baza de date.</description>
+    </item>
+    
+  </channel>
+</rss>

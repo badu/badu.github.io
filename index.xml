@@ -6,10 +6,19 @@
     <description>Recent content on Recency Bias</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Tue, 21 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://badu.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Microservicii</title>
+      <link>http://badu.github.io/post/2020/12_05_2020/</link>
+      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/post/2020/12_05_2020/</guid>
+      <description>Acum doi ani, dacă mă întrebai ce părere am despre microservicii, îți voi fi răspuns că nu-mi place ideea. Asta pentru că am fost obișnuit cu monoliți bine construiți, în echipe relativ mici, pe care le „păzeam” de denaturare fiind foarte atent la direcția în care se mergea. După părerea mea - valabilă și azi - multe lucruri care se pot face în baza de date, ar trebui făcute în baza de date.</description>
+    </item>
     
     <item>
       <title>Amice, ești idiot!</title>
@@ -159,17 +168,6 @@ My Computer Language is Better than Yours Some programming languages were - let&
       <description>TL;DR 10 things that require zero talent :
  being on time work ethic effort body language energy attitude passion being coach-able doing extra being prepared  Before Activemall It was 2015. I was leaving Altfactor because they split and in the process, they killed the most interesting project I&#39;ve ever worked on.
 That project was an awesome second screen smart TV application, that allowed the user to interact with a smart TV from a mobile device like a table or phone.</description>
-    </item>
-    
-    <item>
-      <title>Who is Bogdan?</title>
-      <link>http://badu.github.io/about/</link>
-      <pubDate>Fri, 10 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/about/</guid>
-      <description>Skills | Experience | Education | History
- Note for Recruiters For those of you that are trying to relocate me, please understand this is not the case. At least not for now. Please read this and F.A.Q. prior to contacting me. Thanks in advance!
- Hello, my name is Bogdan and I am a Go language enthusiast. In case you want to skip to Go language skills, click here.</description>
     </item>
     
   </channel>

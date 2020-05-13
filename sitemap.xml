@@ -3,6 +3,36 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://badu.github.io/tags/microservices/</loc>
+    <lastmod>2020-05-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://badu.github.io/post/2020/12_05_2020/</loc>
+    <lastmod>2020-05-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://badu.github.io/post/</loc>
+    <lastmod>2020-05-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://badu.github.io/tags/rants/</loc>
+    <lastmod>2020-05-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://badu.github.io/</loc>
+    <lastmod>2020-05-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://badu.github.io/tags/</loc>
+    <lastmod>2020-05-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://badu.github.io/tags/2020/</loc>
     <lastmod>2020-01-21T00:00:00+00:00</lastmod>
   </url>
@@ -14,21 +44,6 @@
   
   <url>
     <loc>http://badu.github.io/tags/harangues/</loc>
-    <lastmod>2020-01-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://badu.github.io/post/</loc>
-    <lastmod>2020-01-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://badu.github.io/</loc>
-    <lastmod>2020-01-21T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://badu.github.io/tags/</loc>
     <lastmod>2020-01-21T00:00:00+00:00</lastmod>
   </url>
   

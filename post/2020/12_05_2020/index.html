@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Microservicii</title>
+
+    <meta name="description" content="Niște păreri">
+
+    <meta property="site_name" content="recency-bias">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://badu.github.io/post/2020/12_05_2020/">
+    <meta property="og:title" content="Microservicii">
+    <meta property="og:image" content="">
+
+    <meta property="og:description" content="Niște păreri">
+
+    <meta name="twitter:url" content="http://badu.github.io/post/2020/12_05_2020/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@recency-bias">
+    <meta name="twitter:creator" content="@recency-bias">
+    <meta name="twitter:title" content="Microservicii">
+    <meta name="twitter:img:src" content="">
+
+    <meta name="twitter:label1" content="Author">
+    <meta name="twitter:data1" content="Bogdan Dinu">
+    <meta name="twitter:label2" content="Published On">
+    <meta name="twitter:data2" content="May 12, 2020">
+
+
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="dns-prefetch" href="//stats.g.doubleclick.net">
+
+    <link rel="canonical" href="http://badu.github.io/post/2020/12_05_2020/">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+    <link rel="shortcut icon" href="http://badu.github.io/favicon.ico">
+
+<style>
+    html body {
+        font-family: 'Roboto', sans-serif;
+        background-color: white;
+    }
+
+    :root {
+        --accent: #00bcd4;
+        --border-width:  5px ;
+    }
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+
+
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script> 
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.63.0-DEV" />
+
+
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-687869-6"></script>
+    <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'UA-687869-6');
+          (function() {
+          function ready(cb) {
+              /in/.test(document.readyState) 
+                      ? setTimeout(ready.bind(null, cb), 9)
+                      : cb();
+          }
+          ready(function() {
+              
+              var indicator = document.querySelector('.scroll-progress');
+              if (indicator) {
+                  document.addEventListener('scroll', function (e) {
+                      var dh = document.body.scrollHeight;
+                      var wh = window.innerHeight;
+                      var pos = window.scrollY;
+                      var footerHeight = 50;
+                      var perc = pos / (dh - footerHeight - wh) * 100;
+                      indicator.style.setProperty('--scale', (perc / 100));
+                  })
+              }
+              
+              var links = document.links;
+              for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+                  if (links[i].hostname != window.location.hostname) {
+                      links[i].target = '_blank';
+                  }
+              }
+          });
+          }());
+    </script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand visible-xs" href="#">Microservicii</a>
+            <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse">
+        
+            <ul class="nav navbar-nav">
+            
+                <li><a href="/post/">Posts</a></li>
+            
+                <li><a href="/about/">About</a></li>
+            
+                <li><a href="/why-recency-bias/">Why Recency Bias?</a></li>
+            
+            </ul>
+        
+
+        
+            <ul class="nav navbar-nav navbar-right">
+            
+                <li class="navbar-icon"><a href="mailto:badu@badu.ro"><i class="fa fa-envelope-o"></i></a></li>
+            
+                <li class="navbar-icon"><a href="https://github.com/badu/"><i class="fa fa-github"></i></a></li>
+            
+                <li class="navbar-icon"><a href="https://twitter.com/baduro/"><i class="fa fa-twitter"></i></a></li>
+            
+                <li class="navbar-icon"><a href="https://www.linkedin.com/in/golangdeveloper/"><i class="fa fa-linkedin"></i></a></li>
+            
+                <li>
+                    <script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
+                    <div id="SkypeButton_Call_badu.bogdan_1">
+                        <script type="text/javascript">
+                                         Skype.ui({
+                                         "name": "chat",
+                                         "element": "SkypeButton_Call_badu.bogdan_1",
+                                         "participants": ["badu.bogdan"]
+                                         });
+                        </script>
+                    </div>
+                </li>
+            </ul>
+        
+
+        </div>
+
+    </div>
+    
+    <div class="scroll-progress"></div>
+</nav>
+<main>
+<div class="item">
+
+
+
+  
+    <h4><a href="/post/2020/12_05_2020/">Microservicii</a></h4>
+    <h5>Niște păreri</h5>
+    
+      <h5>Published on May 12, 2020</h5>
+    
+ <kbd class="item-tag">microservices</kbd>  <kbd class="item-tag">rants</kbd> 
+<p>About 7 minutes of reading.</p>
+</div>
+
+    <br>
+    <div class="text-justify"><p>Acum doi ani, dacă mă întrebai ce părere am despre microservicii, îți voi fi răspuns că nu-mi place ideea. Asta pentru că am fost obișnuit cu monoliți bine construiți, în echipe relativ mici, pe care le „păzeam” de denaturare fiind foarte atent la direcția în care se mergea. După părerea mea - valabilă și azi - multe lucruri care se pot face în baza de date, ar trebui făcute în baza de date. Nu are niciun rost să reinventezi un view. Nu are niciun rost să nu folosești relațiile dintre tabele, regulile de „constrain”.</p>
+<h2 id="cum-se-nate-un-monolit">Cum se naște un monolit?</h2>
+<p>Atât timp cât echipa e mică, nu se poate numi că lucrează la un monolit. Abia după ce business-ul crește destul de mult, după ce hoarde de ingineri se adaugă proiectului, se poate numi că se lucrează cu un monolit. Înțeleg foarte bine rezistența pe care o are - în general - managementul, atunci când le spui că s-a ajuns la un monolit și e timpul să se migreze spre microservicii. E simplu: vor să scaleze prin adăugarea de noi resurse umane, dar nu au nicio idee despre cum trebuie să crească procesul.</p>
+<p>Echipele - în ansamblu - se mișcă mai încet, decât echipa „inițială”, pentru că sunt mult mai conștiente de riscurile implicate de schimbare. De regulă, riscul vine din modalitatea de cuplare a codului („tight coupling”), de unde se poate spune că un monolit scris bine, adică decuplat, nu e chiar un monolit.</p>
+<p>Nu e chiar evident, dar pe lângă scăderea nivelului de inovare, de posibilitate de a interveni în cod, scade și nivelul de „fericire” al dezvoltatorilor. Asta implică riscul să-ți plece resursele, pentru că ceea ce dezvolți se face cu sânge și cu lacrimi.</p>
+<p>Cum se poate observa că ai ajuns în situația de a lucra cu un monolit:</p>
+<ul>
+<li>numărul de incidente, defecte crește foarte mult</li>
+<li>timpul în care incidentele sunt rezolvate este de ordinul orelor, nu minute</li>
+<li>timpul în care echipele se mișcă este exagerat de mare față de timpul în care o singură echipă se ocupa de dezvoltare</li>
+<li>inovația se îndreaptă serios spre dispariție</li>
+</ul>
+<h2 id="spre-microservicii">Spre microservicii</h2>
+<p>Așa cum am spus, acum doi ani nu-mi plăcea termenul de microservicii. Asta pentru că nu are o definiție unanim acceptată, pentru că de obicei opiniile sunt atât de împărțite încât este necesar un volum imens de muncă de convingere pentru a cădea de acord cu niște chestii.</p>
+<p>Ca să nu bat câmpii, o să trec la concret. În decembrie 2018, m-am alăturat unei echipe destul de mari cu scopul de a transforma un monolit într-o serie de microservicii. Problemele, ca întotdeauna, au venit din motive de resurse umane: arhitecți cu „viziuni” inovatoare, plini de orgolii și filme SF în cap, o adunătură de programatori de PHP, care nu făcuseră nici măcar minimul efort de a adopta o serie de convenții sau un Laravel, ceva, orice, un management absolut nepăsător despre procese.</p>
+<p>Aproape un an de zile am insistat pe oameni și procese, dar asta e altă poveste.</p>
+<p>Înainte să te apuci să spargi un monolit într-o serie de microservicii, cred că ar trebui să ai o părere foarte clară despre:</p>
+<ul>
+<li>oameni și procese: cum se poate organiza dezvoltarea astfel încât să nu se calce pe picioare între ei, să-și asume codul la care lucrează, fără să se aștepte unii pe alții</li>
+<li>să ai o serie de metrici despre monolit, care să-ți arate exact părțile în care monolitul se mișcă greu</li>
+<li>să ai o idee despre sculele pe care plănuiești să le folosești, de la deployment la tracing și multe multe altele</li>
+<li>să alegi cu grijă o serie de coding convention, deployment convention, etc - eventual explicate</li>
+<li>să alegi cu grijă mixul de limbaje și tehnologii pe care le adopți, dar mai ales să măsori nivelul de înțelegere a acelor tehnologii în echipele care vor lucra pe ele. Dacă este necesar, faci training-uri, nu presupui apriori că echipele se vor descurca</li>
+</ul>
+<h2 id="probleme">Probleme</h2>
+<p>Una dintre cele mai deranjante probleme pentru mine, o reprezintă faptul că sunt folosite tehnologii pe care nu le înțelegem la fel cu toții. O experiență neplăcută am avut cu AWS SQS, în sensul că echipa cu care lucram îl folosea așa cum credea de cuviință, mai exact, după fiecare request, folosea metoda „adormirea” pentru un interval de timp. Deși pot să înțeleg că asta au găsit pe StackOverflow, nu pot să înțeleg de ce, după ce-am scris un proof-of-concept care era capabil să proceseze 6750 de mesaje pe minut, am primit un răspuns de genul „deși soluția ta e bună, nu o putem băga în producție pentru că deja am testat o serie de funcționalități”. Păi frate, trebuia făcut ca lumea de la bun început.</p>
+<p>De curând am văzut o prezentare, în care se povestea că au ales Kafka ca event bus și că simt că s-au fraierit. Mi se pare și normal să pățești așa ceva, pentru că înainte de toate trebuie să-ți stabilești nivelul de cunoaștere: oare chiar știu cum funcționează pub-sub? Oare chiar înțeleg ce face Kafka, în scenariul în care îl folosesc drept event bus? Oare n-ar fi mai bun Apache Flink? Sau NATs? Mai ales NATs, că e scris în Go&hellip;</p>
+<p>Viziunea mea asupra unui microserviciu care expune REST API este că nu trebuie să aibă niciun fel de rute. Fără /users, fără /account/0. Verbele HTTP ar trebui să fie de ajuns pentru un microserviciu care face exact ce spune definiția aia Linuxistă: do one thing and do it well. Că tot vorbim de REST API, m-am tot mirat de ce echipele cu care am lucrat nu au grijă să nu întoarcă null-uri în răspunsurile lor json. Probabil că nu a măsurat nimeni cât bandwidth e folosit aiurea, doar ca să spui că ceva nu există. Să zicem că e 3%, pentru 1GB pe oră de date transferate. Vi se pare puțin? Mie nu.</p>
+<p>Probabil că v-ați întrebat, ca și mine, de ce este prezent Elastic Search într-o mulțime de soluții. Păi, să vezi și să nu crezi, atunci când transformi monolitul într-o serie de microservicii, mai și pierzi ceva. Acel ceva se numește posibilitatea de a face search. Adică search items with price range this and that, with color red and produced by producer X s-a dus rândeaua. E foarte greu să scrii acest search folosind microserviciile pe care tocmai le definești. Și-atunci faci ghem toată informația și-o bagi în elastic search, ca să poți să faci căutări.</p>
+<p>Am văzut o rezistență la învățare, cam peste tot. Când spui „ar trebui să folosim SAGA drept design pattern” sau „hai să nu reinventăm apa caldă, chestia asta pe care vreți s-o inventați are un nume, și anume event sourcing, command and query responsibility segregation, etc” și nu se întâmplă nimic, ceea ce se produce este în pericol de a fi absolut inutil. Oamenii ăia de le-au dat nume acestor pattern-uri, s-au întâlnit exact cu aceleași probleme pe care tu încerci să le rezolvi.</p>
+<p>Apropo de rezistență la învățare, unul dintre cele mai mari pericole este mind-set-ul. De exemplu, un programator de Javascript vine și-ți face un Future în Go.
+Și-i spui, „Gicule, uite tată aici:”</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)      <span style="color:#75715e">// future
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">c</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">f</span>() }() <span style="color:#75715e">// async
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">c</span>             <span style="color:#75715e">// await
+</span></code></pre></div><p>Dar el nu, și nu. Și exemple ca ăsta am o groază.</p>
+<p>Întotdeauna mă gândesc întâi la transport. Asta pentru că pierderea de timp îmi pare să aibă drept sursă, modalitatea în care noi, dezvoltatorii de soluții, transformăm continuu ceva în altceva. Deci primești json, transformi în ceva pe care-l înțelege mysql. Și-l transformi și în protobuf, pe care-l înțelege alt microserviciu. Și-l transformi și în ceva pe care-l înțelege elastic search. Aparent, toate sunt necesare. Ei bine, nu sunt. Principalul e să le cauți, iar după ce le-ai găsit, să le eviți.</p>
+<h2 id="n-loc-de-concluzie">În loc de concluzie</h2>
+<p>Să transformi un monolit într-o gașcă de microservicii e un lucru foarte complicat. Și succesul depinde de foarte multe variabile.</p>
+</div>
+    
+
+
+
+    <h4 class="page-header">Comments</h4>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "recency-bias" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</main>
+<footer>
+    <p class="copyright text-muted"> Recency Bias &copy; 2020
+        - Powered by <a href="https://gohugo.io">Hugo</a>.</p>
+</footer>
+</body>
+</html>
+

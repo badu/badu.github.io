@@ -6,10 +6,28 @@
     <description>Recent content in Tags on Recency Bias</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Tue, 21 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://badu.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>microservices</title>
+      <link>http://badu.github.io/tags/microservices/</link>
+      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/tags/microservices/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>rants</title>
+      <link>http://badu.github.io/tags/rants/</link>
+      <pubDate>Tue, 12 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/tags/rants/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>2020</title>
@@ -125,24 +143,6 @@
       <pubDate>Thu, 22 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/tags/recruiter/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Skills</title>
-      <link>http://badu.github.io/tags/skills/</link>
-      <pubDate>Thu, 22 Mar 2018 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/skills/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Talent</title>
-      <link>http://badu.github.io/tags/talent/</link>
-      <pubDate>Thu, 22 Mar 2018 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/talent/</guid>
       <description></description>
     </item>
     
