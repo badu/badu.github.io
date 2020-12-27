@@ -85,7 +85,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.63.0-DEV" />
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.75.0-DEV" />
 
 
 
@@ -203,7 +203,7 @@
 
     <br>
     <div class="text-justify"><p>Acum doi ani, dacă mă întrebai ce părere am despre microservicii, îți voi fi răspuns că nu-mi place ideea. Asta pentru că am fost obișnuit cu monoliți bine construiți, în echipe relativ mici, pe care le „păzeam” de denaturare fiind foarte atent la direcția în care se mergea. După părerea mea - valabilă și azi - multe lucruri care se pot face în baza de date, ar trebui făcute în baza de date. Nu are niciun rost să reinventezi un view. Nu are niciun rost să nu folosești relațiile dintre tabele, regulile de „constrain”.</p>
-<h2 id="cum-se-nate-un-monolit">Cum se naște un monolit?</h2>
+<h2 id="cum-se-naște-un-monolit">Cum se naște un monolit?</h2>
 <p>Atât timp cât echipa e mică, nu se poate numi că lucrează la un monolit. Abia după ce business-ul crește destul de mult, după ce hoarde de ingineri se adaugă proiectului, se poate numi că se lucrează cu un monolit. Înțeleg foarte bine rezistența pe care o are - în general - managementul, atunci când le spui că s-a ajuns la un monolit și e timpul să se migreze spre microservicii. E simplu: vor să scaleze prin adăugarea de noi resurse umane, dar nu au nicio idee despre cum trebuie să crească procesul.</p>
 <p>Echipele - în ansamblu - se mișcă mai încet, decât echipa „inițială”, pentru că sunt mult mai conștiente de riscurile implicate de schimbare. De regulă, riscul vine din modalitatea de cuplare a codului („tight coupling”), de unde se poate spune că un monolit scris bine, adică decuplat, nu e chiar un monolit.</p>
 <p>Nu e chiar evident, dar pe lângă scăderea nivelului de inovare, de posibilitate de a interveni în cod, scade și nivelul de „fericire” al dezvoltatorilor. Asta implică riscul să-ți plece resursele, pentru că ceea ce dezvolți se face cu sânge și cu lacrimi.</p>
@@ -239,7 +239,7 @@
 </span><span style="color:#75715e"></span><span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">c</span>             <span style="color:#75715e">// await
 </span></code></pre></div><p>Dar el nu, și nu. Și exemple ca ăsta am o groază.</p>
 <p>Întotdeauna mă gândesc întâi la transport. Asta pentru că pierderea de timp îmi pare să aibă drept sursă, modalitatea în care noi, dezvoltatorii de soluții, transformăm continuu ceva în altceva. Deci primești json, transformi în ceva pe care-l înțelege mysql. Și-l transformi și în protobuf, pe care-l înțelege alt microserviciu. Și-l transformi și în ceva pe care-l înțelege elastic search. Aparent, toate sunt necesare. Ei bine, nu sunt. Principalul e să le cauți, iar după ce le-ai găsit, să le eviți.</p>
-<h2 id="n-loc-de-concluzie">În loc de concluzie</h2>
+<h2 id="în-loc-de-concluzie">În loc de concluzie</h2>
 <p>Să transformi un monolit într-o gașcă de microservicii e un lucru foarte complicat. Și succesul depinde de foarte multe variabile.</p>
 </div>
     

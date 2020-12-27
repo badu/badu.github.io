@@ -6,10 +6,16 @@
     <description>Recent content in Posts on Recency Bias</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Tue, 12 May 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="http://badu.github.io/post/index.xml" rel="self" type="application/rss+xml" />
-    
+    <lastBuildDate>Sun, 27 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="http://badu.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Anul 2020 și rezoluții pentru 2021</title>
+      <link>http://badu.github.io/post/2020/2020/</link>
+      <pubDate>Sun, 27 Dec 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/post/2020/2020/</guid>
+      <description>Long story short Ca în anul ce-a trecut nu mi-am dorit niciodată atât de mult compasiune. De unde frate? A fost fiecare pentru el, ca de obicei în neamul ăsta de &amp;hellip; nici nu știu ce atribut i se potrivește pe primul loc (aș spune „hate-ri”, „oameni în split„). Fiecare pentru el a fost regula jocului.
+Mă uit la rezoluțiile din 2019 și-mi dau seama că n-am făcut mai mult. Foarte probabil e că nici n-o să fac de aici înainte.</description>
+    </item>
     
     <item>
       <title>Microservicii</title>
@@ -59,7 +65,7 @@ func returnNormal() int { i := 1 defer func() { i++ }() return i } func returnNa
       
       <guid>http://badu.github.io/post/changing-perspective/</guid>
       <description>Changing perspective Using abstractions is more about what your code can do. Encapsulation is about how we achieve that functionality.
-Foreword &amp;ldquo;I was introduced to complex concepts almost immediately&amp;hellip; with examples I&#39;d never use in real life. It confused me, I didn&#39;t understand it, and eventually quit trying to learn Go because I thought I&#39;d never get it&amp;rdquo; - quote from a beginner captured by Mat Ryer
+Foreword &amp;ldquo;I was introduced to complex concepts almost immediately&amp;hellip; with examples I&amp;rsquo;d never use in real life. It confused me, I didn&amp;rsquo;t understand it, and eventually quit trying to learn Go because I thought I&amp;rsquo;d never get it&amp;rdquo; - quote from a beginner captured by Mat Ryer
 The present writing is about concurrency and use of channels in Go.</description>
     </item>
     
@@ -69,8 +75,8 @@ The present writing is about concurrency and use of channels in Go.</description
       <pubDate>Sun, 18 Nov 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/interviewing-go-developer-part-1/</guid>
-      <description>Foreword There is no such thing as essential interview questions. Despite the fact that I&#39;m trying to help you, formulate questions and/or answers, I cannot help you point in the right direction, since each job has specific requirements and each person is unique.
-My word of advising is don&#39;t jump to conclusions, just because someone didn&#39;t answer your question like you expected you to do. And there are people out there - myself included - who are able to explain you a concept without remembering the actual name or the acronym.</description>
+      <description>Foreword There is no such thing as essential interview questions. Despite the fact that I&amp;rsquo;m trying to help you, formulate questions and/or answers, I cannot help you point in the right direction, since each job has specific requirements and each person is unique.
+My word of advising is don&amp;rsquo;t jump to conclusions, just because someone didn&amp;rsquo;t answer your question like you expected you to do. And there are people out there - myself included - who are able to explain you a concept without remembering the actual name or the acronym.</description>
     </item>
     
     <item>
@@ -79,7 +85,7 @@ My word of advising is don&#39;t jump to conclusions, just because someone didn&
       <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/what-you-cant-do/</guid>
-      <description>What&#39;s the problem? A while ago, I was working on backend application in which we were trying to increase readability of the code, while defining a standard. In my morning explorations I&#39;ve found a technique (sorry, can&#39;t remember where : I&#39;ll edit this article when I&#39;ll remember) that allowed us to use reflection inside a before type handler, thus decoding JSON payloads would be agnostic to controllers.
+      <description>What&amp;rsquo;s the problem? A while ago, I was working on backend application in which we were trying to increase readability of the code, while defining a standard. In my morning explorations I&amp;rsquo;ve found a technique (sorry, can&amp;rsquo;t remember where : I&amp;rsquo;ll edit this article when I&amp;rsquo;ll remember) that allowed us to use reflection inside a before type handler, thus decoding JSON payloads would be agnostic to controllers.
 A typical controller signature looks like this :</description>
     </item>
     
@@ -101,8 +107,8 @@ I can totally understand that you might have no idea about programming skills, n
       <pubDate>Sat, 10 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/mirror-mirror/</guid>
-      <description>TL;DR While I was mentoring, I encouraged my pupils to break things so they understand how they work. Using reflect package seems easy, but understanding the mechanics is hard. So, this week, following my own advice, I&#39;ve tried to create my own reflect package. Here is what I&#39;ve learned.
-Playing with Fire Most of the articles on the subject I&#39;ve read have (more or less) the following advice : &amp;ldquo;if you find yourself doing this in a real program, stop immediately and seek help.</description>
+      <description>TL;DR While I was mentoring, I encouraged my pupils to break things so they understand how they work. Using reflect package seems easy, but understanding the mechanics is hard. So, this week, following my own advice, I&amp;rsquo;ve tried to create my own reflect package. Here is what I&amp;rsquo;ve learned.
+Playing with Fire Most of the articles on the subject I&amp;rsquo;ve read have (more or less) the following advice : &amp;ldquo;if you find yourself doing this in a real program, stop immediately and seek help.</description>
     </item>
     
     <item>
@@ -111,8 +117,8 @@ Playing with Fire Most of the articles on the subject I&#39;ve read have (more o
       <pubDate>Mon, 05 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/known-world-stops/</guid>
-      <description>Last week, I took the time searching for patterns inside the main packages. Besides a bunch of aha moments, I&#39;ve realized that some neat tricks can be used to achieve some goals otherwise achievable by applying different techniques.
-For instance, let&#39;s say you have a pool or a cache. How do you call your cleanup function?
+      <description>Last week, I took the time searching for patterns inside the main packages. Besides a bunch of aha moments, I&amp;rsquo;ve realized that some neat tricks can be used to achieve some goals otherwise achievable by applying different techniques.
+For instance, let&amp;rsquo;s say you have a pool or a cache. How do you call your cleanup function?
 Decisions regarding where to place that call can be made by testing and benchmarking. But what if there is another neat way to do so : just before the garbage collection runs, you can mount yourself a function and receive a call on it.</description>
     </item>
     
@@ -131,7 +137,7 @@ Decisions regarding where to place that call can be made by testing and benchmar
       <pubDate>Sat, 24 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/net-http-week2/</guid>
-      <description>TL;DR This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I&#39;m inviting you to learn aside me.
+      <description>TL;DR This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I&amp;rsquo;m inviting you to learn aside me.
 You are allowed to judge the code. You are not allowed to judge the people.
 Part 1
 ListenAndServe As you might well know, using http package is easy :
@@ -144,7 +150,7 @@ package main import ( &amp;#34;io&amp;#34; &amp;#34;net/http&amp;#34; &amp;#34;l
       <pubDate>Sun, 18 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/net-http-week1/</guid>
-      <description>TL;DR This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I&#39;m inviting you to learn aside me.
+      <description>TL;DR This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I&amp;rsquo;m inviting you to learn aside me.
 You are allowed to judge the code. You are not allowed to judge the people.
 First Glance I have a confession to make : despite the fact that &amp;ldquo;Keep types close&amp;rdquo; rule is fair enough, the architect in me needs to reorganize the code in such a manner that a 10000 feet view to be possible.</description>
     </item>
@@ -156,18 +162,7 @@ First Glance I have a confession to make : despite the fact that &amp;ldquo;Keep
       
       <guid>http://badu.github.io/post/comparing-go-is-wrong/</guid>
       <description>TL;DR &amp;ldquo;Java is to Javascript like Car is to Carpet.&amp;rdquo; - Collective Genius
-My Computer Language is Better than Yours Some programming languages were - let&#39;s say - discovered over time, whereas others were created academically by carefully selecting the features that would provide solutions to a set of problems. There’s nothing terribly new about spawning programming languages. However, haters gonna hate and will always find one, in an office near you or over the Internet.</description>
-    </item>
-    
-    <item>
-      <title>Why I Left Activemall</title>
-      <link>http://badu.github.io/post/why-i-left-activemall/</link>
-      <pubDate>Tue, 14 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/post/why-i-left-activemall/</guid>
-      <description>TL;DR 10 things that require zero talent :
- being on time work ethic effort body language energy attitude passion being coach-able doing extra being prepared  Before Activemall It was 2015. I was leaving Altfactor because they split and in the process, they killed the most interesting project I&#39;ve ever worked on.
-That project was an awesome second screen smart TV application, that allowed the user to interact with a smart TV from a mobile device like a table or phone.</description>
+My Computer Language is Better than Yours Some programming languages were - let&amp;rsquo;s say - discovered over time, whereas others were created academically by carefully selecting the features that would provide solutions to a set of problems. There’s nothing terribly new about spawning programming languages. However, haters gonna hate and will always find one, in an office near you or over the Internet.</description>
     </item>
     
   </channel>

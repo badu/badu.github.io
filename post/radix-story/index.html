@@ -85,7 +85,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.63.0-DEV" />
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.75.0-DEV" />
 
 
 
@@ -204,19 +204,19 @@
     <br>
     <div class="text-justify"><h2 id="a-radix-story">A Radix Story</h2>
 <h4 id="yes-all-you-need-is-standard-nethttp">Yes, All You Need is Standard &ldquo;net/http&rdquo;</h4>
-<p>There are, out there in the wild, an abundance of routers that a developer can use. In my opinion, one thing that they all share is the lack of separation of concerns. By separation of concerns I mean mixing handlers with routes and conditions, putting on top of that some cool optimized algorithm for looking up a route (or maybe I should say inspecting a string&hellip;). If you don't need everything those packages provide and you feel you should get rid of those training wheels, read on.</p>
+<p>There are, out there in the wild, an abundance of routers that a developer can use. In my opinion, one thing that they all share is the lack of separation of concerns. By separation of concerns I mean mixing handlers with routes and conditions, putting on top of that some cool optimized algorithm for looking up a route (or maybe I should say inspecting a string&hellip;). If you don&rsquo;t need everything those packages provide and you feel you should get rid of those training wheels, read on.</p>
 <h4 id="a-small-detour">A Small Detour</h4>
 <p>I should probably write a separate article on the subject of what I consider to be a good Go developer, but here is short version of my opinion.</p>
 <p>As you all can observe, the whole variety of packages are competing with each other on the matters of allocations and speed. From my point of view this hides a powerful truth about Go language and the developers who use it.</p>
 <p>One of the main reasons for switching languages and becoming a Golang developer has to do with speed execution. For this reason and this reason only, I think that we can tell a good developer from a mediocre one, just by looking at his abilities to use the tools that he has and create new ones specialized for the problem that needs a solution.</p>
 <p>Long story short, I strongly believe that a good Golang developer should have a wide enough knowhow and apply it whenever needed by adapting a generic solution to a particular case - for the sake of simplicity, speed and allocations.</p>
 <h4 id="what-we-are-trying-to-solve">What We Are Trying To Solve?</h4>
-<p>The problem is really simple : let's separate the concerns in such manner that we can adapt a sufficient small piece of code to our needs, whatever those needs might be.</p>
+<p>The problem is really simple : let&rsquo;s separate the concerns in such manner that we can adapt a sufficient small piece of code to our needs, whatever those needs might be.</p>
 <p>In the case of a router, http.Request gives us access to the requested path. So, if we are able to process that path in a way that we need, we might not need a router at all. In the end we should be able to write a well anchored set of business logic rules without making the effort to adapt our mental model to a set of rules and conventions imposed by the authors of a package.</p>
-<p>To give you a simple example, most routers won't allow you to have a <code>otherwise</code> route : match this route with this handler - and so on, but otherwise, put all other requests on this handler. This comes handy when you need to cover a dynamic defined route, like serving a request based on the slug of a title or the slug of category (title slug being the <code>otherwise</code> handler).</p>
-<p>Let's try to forget about what a route really  is, by splitting it into three main properties : a http method (GET/POST/PUT/etc.), a path string and a function which needs to be called if that path string looks like something particular.</p>
-<p>From now on, we're going to deal with that string only. Leaving the theory alone, the <a href="https://en.wikipedia.org/wiki/Radix_tree">applications</a> of a radix tree are constructing a tree of pieces of strings which hold a reference to an object (fancy called associative arrays with keys).</p>
-<p>Let's get coding:</p>
+<p>To give you a simple example, most routers won&rsquo;t allow you to have a <code>otherwise</code> route : match this route with this handler - and so on, but otherwise, put all other requests on this handler. This comes handy when you need to cover a dynamic defined route, like serving a request based on the slug of a title or the slug of category (title slug being the <code>otherwise</code> handler).</p>
+<p>Let&rsquo;s try to forget about what a route really  is, by splitting it into three main properties : a http method (GET/POST/PUT/etc.), a path string and a function which needs to be called if that path string looks like something particular.</p>
+<p>From now on, we&rsquo;re going to deal with that string only. Leaving the theory alone, the <a href="https://en.wikipedia.org/wiki/Radix_tree">applications</a> of a radix tree are constructing a tree of pieces of strings which hold a reference to an object (fancy called associative arrays with keys).</p>
+<p>Let&rsquo;s get coding:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	<span style="color:#f92672">package</span> <span style="color:#a6e22e">radix</span>
 
 	<span style="color:#66d9ef">type</span> (
@@ -380,14 +380,14 @@
 
 		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">found</span>
 	}
-</code></pre></div><p>The code is pretty straight forward, however I've placed some comments here and there, just in case.</p>
-<p>As you can see inside the <a href="https://github.com/badu/badu.github.io/blob/master/code/2/radix_test.go">test</a>, I've tested the search against some HTTP headers, just in case someone might find it useful to discard any unwanted headers inside a middleware. Later on, I'll probably benchmark the classical method of collecting HTTP headers against this method. However, this is not the point here.</p>
-<p>Usually, we, developers need to match URLs like <code>/posts/{tag}/{id:[0-9]+}</code> in the HTTP path and while we're at it also extract those meaningful arguments. Things seem even more complicated when the string contains query values, like <code>/posts/{tag}?filter=date&amp;author=3</code>.</p>
+</code></pre></div><p>The code is pretty straight forward, however I&rsquo;ve placed some comments here and there, just in case.</p>
+<p>As you can see inside the <a href="https://github.com/badu/badu.github.io/blob/master/code/2/radix_test.go">test</a>, I&rsquo;ve tested the search against some HTTP headers, just in case someone might find it useful to discard any unwanted headers inside a middleware. Later on, I&rsquo;ll probably benchmark the classical method of collecting HTTP headers against this method. However, this is not the point here.</p>
+<p>Usually, we, developers need to match URLs like <code>/posts/{tag}/{id:[0-9]+}</code> in the HTTP path and while we&rsquo;re at it also extract those meaningful arguments. Things seem even more complicated when the string contains query values, like <code>/posts/{tag}?filter=date&amp;author=3</code>.</p>
 <h4 id="the-star-lookup">The Star Lookup</h4>
-<p>Let's make the following convention : we don't care (at the moment) how an argument look like. For us, everything that is an argument is a star (<code>*</code>), leaving the decision of converting and validation to the next business logic level (which might be as well the handler itself).</p>
+<p>Let&rsquo;s make the following convention : we don&rsquo;t care (at the moment) how an argument look like. For us, everything that is an argument is a star (<code>*</code>), leaving the decision of converting and validation to the next business logic level (which might be as well the handler itself).</p>
 <p>Given the above convention, the path <code>/posts/{tag}/{id:[0-9]+}</code> would translate to <code>/posts/*/*</code>, ok?</p>
 <p>Also, in order to capture the query values <code>/posts/{id:[0-9]+}?filter=date</code> would translate to <code>/posts/*?*</code>.</p>
-<p>Here's the code :</p>
+<p>Here&rsquo;s the code :</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">Edge</span>) <span style="color:#a6e22e">isStar</span>() <span style="color:#66d9ef">bool</span> {
 		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">label</span>, <span style="color:#e6db74">&#34;*&#34;</span>) <span style="color:#f92672">||</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">label</span>, <span style="color:#e6db74">&#34;/*&#34;</span>) <span style="color:#f92672">||</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">label</span>, <span style="color:#e6db74">&#34;?*&#34;</span>)
 	}
@@ -455,7 +455,7 @@
 		<span style="color:#75715e">// TODO : use a mutex here if you are using this concurrent
 </span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">starSearch</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">root</span>, <span style="color:#a6e22e">what</span>)
 	}
-</code></pre></div><p>Remember, you have to adapt this to your specific needs and for this reason I haven't imposed a way of capturing path parts that match star (<code>*</code>). I've left comments where you can do that.</p>
+</code></pre></div><p>Remember, you have to adapt this to your specific needs and for this reason I haven&rsquo;t imposed a way of capturing path parts that match star (<code>*</code>). I&rsquo;ve left comments where you can do that.</p>
 <p>In the above starSearch function there is a catch : if the edges slice is not sorted, so the last sibling is the star (<code>*</code>), the search will not work. To sort those slices, we need the following:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">Edges</span>) <span style="color:#a6e22e">Len</span>() <span style="color:#66d9ef">int</span> {
 		<span style="color:#66d9ef">return</span> len(<span style="color:#a6e22e">e</span>)
@@ -478,8 +478,8 @@
 </span><span style="color:#75715e"></span>		<span style="color:#a6e22e">newNode</span>.<span style="color:#a6e22e">edges</span>.<span style="color:#a6e22e">Sort</span>()
 	}
 </code></pre></div><h4 id="recommendations">Recommendations</h4>
-<p>First, don't forget to use mutex for search - I've left a comment there - if you are using it in a concurrent way.</p>
-<p>Secondly, the problem of defining one route is that you can't do this <code>/*/*</code> and expect it to work only in one route. In order to make it work you need an <code>exception string</code> (see TestStarOneRoute) and that exception string to look like <code>*/something-never-matched</code>.</p>
+<p>First, don&rsquo;t forget to use mutex for search - I&rsquo;ve left a comment there - if you are using it in a concurrent way.</p>
+<p>Secondly, the problem of defining one route is that you can&rsquo;t do this <code>/*/*</code> and expect it to work only in one route. In order to make it work you need an <code>exception string</code> (see TestStarOneRoute) and that exception string to look like <code>*/something-never-matched</code>.</p>
 <p>Regarding leafNode struct value property, which is typed <code>interface{}</code> in the above code - you should do whatever you like with it. To give you an obvious example:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	<span style="color:#a6e22e">leafNode</span> <span style="color:#66d9ef">struct</span> {
         <span style="color:#a6e22e">key</span>   <span style="color:#66d9ef">string</span>

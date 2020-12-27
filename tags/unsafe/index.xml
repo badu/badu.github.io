@@ -6,19 +6,15 @@
     <description>Recent content in Unsafe on Recency Bias</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sat, 10 Mar 2018 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="http://badu.github.io/tags/unsafe/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sat, 10 Mar 2018 00:00:00 +0000</lastBuildDate><atom:link href="http://badu.github.io/tags/unsafe/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Mirror Mirror on ...</title>
       <link>http://badu.github.io/post/mirror-mirror/</link>
       <pubDate>Sat, 10 Mar 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/mirror-mirror/</guid>
-      <description>TL;DR While I was mentoring, I encouraged my pupils to break things so they understand how they work. Using reflect package seems easy, but understanding the mechanics is hard. So, this week, following my own advice, I&#39;ve tried to create my own reflect package. Here is what I&#39;ve learned.
-Playing with Fire Most of the articles on the subject I&#39;ve read have (more or less) the following advice : &amp;ldquo;if you find yourself doing this in a real program, stop immediately and seek help.</description>
+      <description>TL;DR While I was mentoring, I encouraged my pupils to break things so they understand how they work. Using reflect package seems easy, but understanding the mechanics is hard. So, this week, following my own advice, I&amp;rsquo;ve tried to create my own reflect package. Here is what I&amp;rsquo;ve learned.
+Playing with Fire Most of the articles on the subject I&amp;rsquo;ve read have (more or less) the following advice : &amp;ldquo;if you find yourself doing this in a real program, stop immediately and seek help.</description>
     </item>
     
   </channel>

@@ -6,11 +6,7 @@
     <description>Recent content in Interview on Recency Bias</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Fri, 07 Dec 2018 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="http://badu.github.io/tags/interview/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Fri, 07 Dec 2018 00:00:00 +0000</lastBuildDate><atom:link href="http://badu.github.io/tags/interview/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Interview Questions for Go Developer Position - Part II</title>
       <link>http://badu.github.io/post/interviewing-go-developer-part-2/</link>
@@ -29,8 +25,8 @@ func returnNormal() int { i := 1 defer func() { i++ }() return i } func returnNa
       <pubDate>Sun, 18 Nov 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/interviewing-go-developer-part-1/</guid>
-      <description>Foreword There is no such thing as essential interview questions. Despite the fact that I&#39;m trying to help you, formulate questions and/or answers, I cannot help you point in the right direction, since each job has specific requirements and each person is unique.
-My word of advising is don&#39;t jump to conclusions, just because someone didn&#39;t answer your question like you expected you to do. And there are people out there - myself included - who are able to explain you a concept without remembering the actual name or the acronym.</description>
+      <description>Foreword There is no such thing as essential interview questions. Despite the fact that I&amp;rsquo;m trying to help you, formulate questions and/or answers, I cannot help you point in the right direction, since each job has specific requirements and each person is unique.
+My word of advising is don&amp;rsquo;t jump to conclusions, just because someone didn&amp;rsquo;t answer your question like you expected you to do. And there are people out there - myself included - who are able to explain you a concept without remembering the actual name or the acronym.</description>
     </item>
     
   </channel>

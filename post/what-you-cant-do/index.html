@@ -85,7 +85,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.63.0-DEV" />
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.75.0-DEV" />
 
 
 
@@ -202,22 +202,22 @@
 </div>
 
     <br>
-    <div class="text-justify"><h3 id="whats-the-problem">What's the problem?</h3>
-<p>A while ago, I was working on backend application in which we were trying to increase readability of the code, while defining a standard. In my morning explorations I've found a technique (sorry, can't remember where : I'll edit this article when I'll remember) that allowed us to use reflection inside a <code>before</code> type handler, thus decoding JSON payloads would be agnostic to controllers.</p>
+    <div class="text-justify"><h3 id="whats-the-problem">What&rsquo;s the problem?</h3>
+<p>A while ago, I was working on backend application in which we were trying to increase readability of the code, while defining a standard. In my morning explorations I&rsquo;ve found a technique (sorry, can&rsquo;t remember where : I&rsquo;ll edit this article when I&rsquo;ll remember) that allowed us to use reflection inside a <code>before</code> type handler, thus decoding JSON payloads would be agnostic to controllers.</p>
 <p>A typical controller signature looks like this :</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">PostAddress</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">entity</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Address</span>) <span style="color:#66d9ef">error</span>
 </code></pre></div><p>Basically, the <code>before</code> handler would both construct the context (in which, for instance, to deposit the currently logged in user) and also decode the JSON payload and provide it as parameter when everything fine. Of course, in the above declaration, a convention was already made : the first parameter would always be context, the second one always a pointer to the desired decoded payload and the function will always have to return an error.</p>
 <p>Now, the problem increase in complexity once you would like to receive as URL path parameters, route parameters or HTTP headers. Taking the above example (context aside), a desired controller signature should look like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">GetAddressesForUser</span>(<span style="color:#a6e22e">HeaderUserAgent</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">URLParamUserId</span>, <span style="color:#a6e22e">URLVarPage</span>, <span style="color:#a6e22e">URLVarPerPage</span> <span style="color:#66d9ef">int</span>) (<span style="color:#a6e22e">entity</span> []<span style="color:#f92672">*</span><span style="color:#a6e22e">Address</span>,<span style="color:#66d9ef">error</span>)
-</code></pre></div><p>The first parameter would come from HTTP headers, the second one from the route parsing and Page, PerPage should be taken from URL parameters. Nothing special, once you could make a convention that the parameter names would provide the name of what you require, in our example (yes, you've guessed it), it's the start of the parameter name : Header - I need this from headers, URLParam - take this from route and URLVar to be taken from the URL after the question mark.</p>
-<p>Well, Go does not provide access to parameter names, even via reflection. Looking for the reason why, I've found this <a href="https://github.com/golang/go/issues/12384#issuecomment-137321421">argument</a> of Russ Cox: &ldquo;Reflect provides information about types. Function parameter names are not part of the func type. In contrast, struct field names are. [&hellip;] I think it would likely be a mistake to expand the scope of package reflect beyond the clearly defined line of &ldquo;types&rdquo;. It's not obvious to me where else to draw a line between func parameter names and the entire source files.&quot;.</p>
-<p>Despite the fact that I don't agree with him, I can't argue that this won't be extremly complicated. Now, how about finding a workaround?</p>
+</code></pre></div><p>The first parameter would come from HTTP headers, the second one from the route parsing and Page, PerPage should be taken from URL parameters. Nothing special, once you could make a convention that the parameter names would provide the name of what you require, in our example (yes, you&rsquo;ve guessed it), it&rsquo;s the start of the parameter name : Header - I need this from headers, URLParam - take this from route and URLVar to be taken from the URL after the question mark.</p>
+<p>Well, Go does not provide access to parameter names, even via reflection. Looking for the reason why, I&rsquo;ve found this <a href="https://github.com/golang/go/issues/12384#issuecomment-137321421">argument</a> of Russ Cox: &ldquo;Reflect provides information about types. Function parameter names are not part of the func type. In contrast, struct field names are. [&hellip;] I think it would likely be a mistake to expand the scope of package reflect beyond the clearly defined line of &ldquo;types&rdquo;. It&rsquo;s not obvious to me where else to draw a line between func parameter names and the entire source files.&rdquo;.</p>
+<p>Despite the fact that I don&rsquo;t agree with him, I can&rsquo;t argue that this won&rsquo;t be extremly complicated. Now, how about finding a workaround?</p>
 <h3 id="solution">Solution</h3>
 <p>The closest you can get to what you want is passing a struct. Create a struct type that wraps your current parameters, and change your function to accept a value of that struct (or a pointer to it). Combining all the required parameters in a struct, for each controller function would imply - even for a small project - a lot of struct declarations. To avoid such I wish that Go would support local struct declarations (that is just syntactic sugar) like this:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">State</span>) <span style="color:#a6e22e">MethodA</span>(<span style="color:#a6e22e">args</span> <span style="color:#66d9ef">struct</span> { <span style="color:#a6e22e">Arg1</span> <span style="color:#66d9ef">int</span>; <span style="color:#a6e22e">Arg2</span> <span style="color:#66d9ef">string</span> }) <span style="color:#66d9ef">error</span> {
    <span style="color:#75715e">// use args.Arg1, args.Arg2, etc.
 </span><span style="color:#75715e"></span>}
-</code></pre></div><p>But it doesn't. By this time, I know you are eager to see the code. I will asume that you know your way around with <a href="https://github.com/gorilla/mux">Gorilla muxer</a>, so here is the commented code:</p>
+</code></pre></div><p>But it doesn&rsquo;t. By this time, I know you are eager to see the code. I will asume that you know your way around with <a href="https://github.com/gorilla/mux">Gorilla muxer</a>, so here is the commented code:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">routers</span>
 
 <span style="color:#f92672">import</span> (
@@ -494,19 +494,19 @@
 </code></pre></div><p>First question you might ask, is where the controller would require the Request itself. Well, this is the case for uploading files, in which the controller itself would have the responsability of reading the request <code>Body</code>. Last thing : example of Headers and Params structs:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    <span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Headers</span> <span style="color:#66d9ef">struct</span> {
 		<span style="color:#a6e22e">UserAgent</span>      <span style="color:#66d9ef">string</span> <span style="color:#75715e">// this doesn&#39;t require tag to be `hdr:&#34;User-Agent&#34;`
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">AcceptLanguage</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">hdr:&#34;Accept-Language&#34;</span><span style="color:#e6db74">`</span>
+</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">AcceptLanguage</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`hdr:&#34;Accept-Language&#34;`</span>
 	}
 
 	<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ParamKeyAndDevice</span> <span style="color:#66d9ef">struct</span> {
-        <span style="color:#a6e22e">Key</span>        <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">var:&#34;key&#34;</span><span style="color:#e6db74">`</span> <span style="color:#75715e">// taken form url e.g. /api/v1/contents/123, where 123 will be the key
-</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">DeviceID</span>   <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">form:&#34;id&#34;</span><span style="color:#e6db74">`</span> <span style="color:#75715e">// taken from path vars e.g. ?id=something
-</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">DeviceName</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">form:&#34;name&#34;</span><span style="color:#e6db74">`</span>
-        <span style="color:#a6e22e">End</span>        <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">form:&#34;end&#34;</span><span style="color:#e6db74">`</span>
+        <span style="color:#a6e22e">Key</span>        <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`var:&#34;key&#34;`</span> <span style="color:#75715e">// taken form url e.g. /api/v1/contents/123, where 123 will be the key
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">DeviceID</span>   <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`form:&#34;id&#34;`</span> <span style="color:#75715e">// taken from path vars e.g. ?id=something
+</span><span style="color:#75715e"></span>        <span style="color:#a6e22e">DeviceName</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`form:&#34;name&#34;`</span>
+        <span style="color:#a6e22e">End</span>        <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`form:&#34;end&#34;`</span>
     }
 </code></pre></div><h3 id="end-note">End note</h3>
 <p>Another big limitation on reflection is that while you can use reflection to create new functions (take a look at this <a href="https://github.com/golang/go/blob/master/src/net/http/httptrace/trace.go#L197">beautiful usage example</a> of <code>MakeFunc</code>), there’s no way to create new methods at runtime.</p>
-<p>Unfortunatelly, this means you cannot use reflection to implement an interface at runtime - believe me, I've tried. In Java, this functionality is called a dynamic proxy.</p>
-<p>There is an workaround for this too, a bit ugly if you ask me, but it can be done. I'll write about it in a later post.</p>
+<p>Unfortunatelly, this means you cannot use reflection to implement an interface at runtime - believe me, I&rsquo;ve tried. In Java, this functionality is called a dynamic proxy.</p>
+<p>There is an workaround for this too, a bit ugly if you ask me, but it can be done. I&rsquo;ll write about it in a later post.</p>
 </div>
     
 

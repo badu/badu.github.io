@@ -85,7 +85,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.63.0-DEV" />
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.75.0-DEV" />
 
 
 
@@ -203,7 +203,7 @@
 
     <br>
     <div class="text-justify"><h2 id="tldr">TL;DR</h2>
-<p>This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I'm inviting you to learn aside me.</p>
+<p>This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I&rsquo;m inviting you to learn aside me.</p>
 <p>You are allowed to judge the code. You are not allowed to judge the people.</p>
 <p><a href="/post/net-http-week1/">Part 1</a></p>
 <h2 id="listenandserve">ListenAndServe</h2>
@@ -226,13 +226,13 @@
 <p>The design pattern on which the Golang authors has decided to use is called Chain of Responsibility and it looks like <a href="https://github.com/badu/go_design_pattern/blob/master/chain_of_responsibility/chain_of_responsibility.go">this</a>.</p>
 <p>Because it can be simplified using closure functions there was no need to use the &ldquo;next&rdquo; property.</p>
 <h4 id="inside-listenandserve">Inside ListenAndServe</h4>
-<p>Calling ListenAndServe() will create a new pointer to a <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2343">Server</a> and call it's receiver method <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2627">ListenAndServe</a>. In order to listen on a port we need to use net.Listen(&ldquo;tcp&rdquo;, address) which will return an interface : <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/net.go#L361">net.Listener</a> having interface signature:</p>
+<p>Calling ListenAndServe() will create a new pointer to a <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2343">Server</a> and call it&rsquo;s receiver method <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2627">ListenAndServe</a>. In order to listen on a port we need to use net.Listen(&ldquo;tcp&rdquo;, address) which will return an interface : <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/net.go#L361">net.Listener</a> having interface signature:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    <span style="color:#a6e22e">Accept</span>() (<span style="color:#a6e22e">Conn</span>, <span style="color:#66d9ef">error</span>)
     <span style="color:#a6e22e">Close</span>() <span style="color:#66d9ef">error</span>
     <span style="color:#a6e22e">Addr</span>() <span style="color:#a6e22e">Addr</span>
 </code></pre></div><p>As the comment above the interface says, multiple goroutines may invoke methods on a Listener simultaneously.</p>
-<p>Of course, the above net.Listener is <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/tcpsock.go#L224">net.TCPListener</a> implementation, since we've mentioned &ldquo;tcp&rdquo; as a parameter of our call.</p>
-<p>Because we want to handle our own <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L3119">Accept()</a> this net.TCPListener implementation is type asserted to <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L3115">tcpKeepAliveListener</a> which is actually embedding a pointer to net.TCPListener, thus allowing us to &ldquo;override&rdquo; the Accept method. Once we've prepared this, the receiver method <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2678">Serve()</a> is being called, having the above listener as parameter.</p>
+<p>Of course, the above net.Listener is <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/tcpsock.go#L224">net.TCPListener</a> implementation, since we&rsquo;ve mentioned &ldquo;tcp&rdquo; as a parameter of our call.</p>
+<p>Because we want to handle our own <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L3119">Accept()</a> this net.TCPListener implementation is type asserted to <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L3115">tcpKeepAliveListener</a> which is actually embedding a pointer to net.TCPListener, thus allowing us to &ldquo;override&rdquo; the Accept method. Once we&rsquo;ve prepared this, the receiver method <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2678">Serve()</a> is being called, having the above listener as parameter.</p>
 <h4 id="serving">Serving</h4>
 <p>A naive approach to serving on our own would look like:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    <span style="color:#75715e">// ask net to create a tcp listener and return us the interface
@@ -271,8 +271,8 @@
 <p>Worth noticing that inside the serve() function of the conn struct is the only place where server <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L1693">recovers from panic</a>. The effective reading of the tcp connection happens on functions of another struct, called <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L624">connReader</a> - which is an io.Reader wrapper.</p>
 <p>One should know that buffer readers and writers are kept in a sync.Pool.</p>
 <h4 id="a-word-about-tests">A word about tests</h4>
-<p>For some reason <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2680">testHookServerServe</a> - which is a function declared by the tests, was left to go in production. It's not a big deal, because it's used only in one test <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/serve_test.go#L1360">TestServeTLS</a>. However, there are many test <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/transport.go#L1877">&ldquo;hooks&rdquo;</a> left around inside the production code.</p>
-<p>I've decided to replace them with the following technique:</p>
+<p>For some reason <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2680">testHookServerServe</a> - which is a function declared by the tests, was left to go in production. It&rsquo;s not a big deal, because it&rsquo;s used only in one test <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/serve_test.go#L1360">TestServeTLS</a>. However, there are many test <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/transport.go#L1877">&ldquo;hooks&rdquo;</a> left around inside the production code.</p>
+<p>I&rsquo;ve decided to replace them with the following technique:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">    <span style="color:#66d9ef">type</span>(
         <span style="color:#a6e22e">ServerEventType</span> <span style="color:#66d9ef">int</span>
 

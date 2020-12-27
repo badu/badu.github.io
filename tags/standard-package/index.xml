@@ -6,18 +6,14 @@
     <description>Recent content in Standard package on Recency Bias</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Fri, 15 Jun 2018 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="http://badu.github.io/tags/standard-package/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Fri, 15 Jun 2018 00:00:00 +0000</lastBuildDate><atom:link href="http://badu.github.io/tags/standard-package/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>What you can&#39;t do with reflect</title>
       <link>http://badu.github.io/post/what-you-cant-do/</link>
       <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/what-you-cant-do/</guid>
-      <description>What&#39;s the problem? A while ago, I was working on backend application in which we were trying to increase readability of the code, while defining a standard. In my morning explorations I&#39;ve found a technique (sorry, can&#39;t remember where : I&#39;ll edit this article when I&#39;ll remember) that allowed us to use reflection inside a before type handler, thus decoding JSON payloads would be agnostic to controllers.
+      <description>What&amp;rsquo;s the problem? A while ago, I was working on backend application in which we were trying to increase readability of the code, while defining a standard. In my morning explorations I&amp;rsquo;ve found a technique (sorry, can&amp;rsquo;t remember where : I&amp;rsquo;ll edit this article when I&amp;rsquo;ll remember) that allowed us to use reflection inside a before type handler, thus decoding JSON payloads would be agnostic to controllers.
 A typical controller signature looks like this :</description>
     </item>
     
@@ -27,7 +23,7 @@ A typical controller signature looks like this :</description>
       <pubDate>Sat, 24 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/net-http-week2/</guid>
-      <description>TL;DR This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I&#39;m inviting you to learn aside me.
+      <description>TL;DR This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I&amp;rsquo;m inviting you to learn aside me.
 You are allowed to judge the code. You are not allowed to judge the people.
 Part 1
 ListenAndServe As you might well know, using http package is easy :
@@ -40,7 +36,7 @@ package main import ( &amp;#34;io&amp;#34; &amp;#34;net/http&amp;#34; &amp;#34;l
       <pubDate>Sun, 18 Feb 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/post/net-http-week1/</guid>
-      <description>TL;DR This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I&#39;m inviting you to learn aside me.
+      <description>TL;DR This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I&amp;rsquo;m inviting you to learn aside me.
 You are allowed to judge the code. You are not allowed to judge the people.
 First Glance I have a confession to make : despite the fact that &amp;ldquo;Keep types close&amp;rdquo; rule is fair enough, the architect in me needs to reorganize the code in such a manner that a 10000 feet view to be possible.</description>
     </item>

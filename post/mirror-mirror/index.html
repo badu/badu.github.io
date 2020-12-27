@@ -85,7 +85,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.63.0-DEV" />
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.75.0-DEV" />
 
 
 
@@ -203,14 +203,14 @@
 
     <br>
     <div class="text-justify"><h4 id="tldr">TL;DR</h4>
-<p>While I was mentoring, I encouraged my pupils to break things so they understand how they work. Using reflect package seems easy, but understanding the mechanics is hard. So, this week, following my own advice, I've tried to create my own reflect package. Here is what I've learned.</p>
+<p>While I was mentoring, I encouraged my pupils to break things so they understand how they work. Using reflect package seems easy, but understanding the mechanics is hard. So, this week, following my own advice, I&rsquo;ve tried to create my own reflect package. Here is what I&rsquo;ve learned.</p>
 <h4 id="playing-with-fire">Playing with Fire</h4>
-<p>Most of the articles on the subject I've read have (more or less) the following advice : &ldquo;if you find yourself doing this in a real program, stop immediately and seek help. You are doing something wrong. You’ve been warned!&quot;. Now, wait a minute, mister. That is hypocrisy!</p>
+<p>Most of the articles on the subject I&rsquo;ve read have (more or less) the following advice : &ldquo;if you find yourself doing this in a real program, stop immediately and seek help. You are doing something wrong. You’ve been warned!&rdquo;. Now, wait a minute, mister. That is hypocrisy!</p>
 <p>If you take a look at the importers of <a href="https://godoc.org/reflect?importers">reflect</a> you will easily find that using the <code>fmt</code> implies you are using reflect. Using &ldquo;unsafe&rdquo; features in Golang is only for developers that develop the language itself? Maybe looking on importers of <a href="https://godoc.org/unsafe?importers">unsafe</a> tells you otherwise.</p>
 <h4 id="unsafe---after-that-we-reflect"><code>unsafe</code> - after that we <code>reflect</code></h4>
 <p>I quote from the documentation : &ldquo;unsafe.Pointer type  allows a program to defeat the type system and read and write arbitrary memory. It should be used with extreme care&rdquo;.</p>
-<p>Let's say you have type <code>John</code> which you are trying to convert to type <code>Ivan</code>. The documentation states that Ivan has to be smaller or equal with John (in terms of properties it has) and those to share the `equivalent memory layout.</p>
-<p>Let's code:</p>
+<p>Let&rsquo;s say you have type <code>John</code> which you are trying to convert to type <code>Ivan</code>. The documentation states that Ivan has to be smaller or equal with John (in terms of properties it has) and those to share the `equivalent memory layout.</p>
+<p>Let&rsquo;s code:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestIsJohnIvan</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
 	<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">John</span> <span style="color:#66d9ef">struct</span> {
 		<span style="color:#a6e22e">Name</span>   <span style="color:#66d9ef">string</span>
@@ -235,7 +235,7 @@
 	}
 	<span style="color:#a6e22e">smallIvan</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">*</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">ShortIvan</span>)(<span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">john</span>))
 	<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Logf</span>(<span style="color:#e6db74">&#34;Small Ivan (just powers) : %v&#34;</span>, <span style="color:#a6e22e">smallIvan</span>.<span style="color:#a6e22e">Age</span>)
-</code></pre></div><p>You would expect that age to be 40, but it's not : it's 5717318. Why? Because an uint is built by taking the required value from the Name property of John. The correct way to get a smaller Ivan is to omit the name property (observe that the third property is omitted too):</p>
+</code></pre></div><p>You would expect that age to be 40, but it&rsquo;s not : it&rsquo;s 5717318. Why? Because an uint is built by taking the required value from the Name property of John. The correct way to get a smaller Ivan is to omit the name property (observe that the third property is omitted too):</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">ShortIvan</span> <span style="color:#66d9ef">struct</span> {
 		<span style="color:#a6e22e">_</span> <span style="color:#66d9ef">string</span>
 		<span style="color:#a6e22e">Age</span> <span style="color:#66d9ef">uint</span>
@@ -254,7 +254,7 @@
 </span><span style="color:#75715e"></span>	}
 	<span style="color:#a6e22e">chuckNorris</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">*</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">UpgradedIvan</span>)(<span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">john</span>))
 	<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Logf</span>(<span style="color:#e6db74">&#34;Chuck Ivan : %v&#34;</span>, <span style="color:#a6e22e">chuckNorris</span>)
-</code></pre></div><p>Well, it works, but with side effects : Address gets filled with same value as Name, Guns with Age and AFloat get a value of 4e-45. So, this the non-safety point that a developer should never touch. As long as we're respecting the rules, it's safe to play unsafe.</p>
+</code></pre></div><p>Well, it works, but with side effects : Address gets filled with same value as Name, Guns with Age and AFloat get a value of 4e-45. So, this the non-safety point that a developer should never touch. As long as we&rsquo;re respecting the rules, it&rsquo;s safe to play unsafe.</p>
 <p>Also, <code>upgrading</code> John seems better (simpler) by using embedding:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">EmbeddedJohn</span> <span style="color:#66d9ef">struct</span> {
 		<span style="color:#a6e22e">John</span>
@@ -287,7 +287,7 @@
 }
 </code></pre></div><h4 id="unsafe-conclusions"><code>Unsafe</code> conclusions</h4>
 <p>The unsafe package is serving for Go compiler instead of Go runtime, because it has facilities for low-level programming including operations that violate the type system.</p>
-<p>I would never use the above method of conversion, but investigation was needed because of what's about to be described regarding reflect.</p>
+<p>I would never use the above method of conversion, but investigation was needed because of what&rsquo;s about to be described regarding reflect.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Point</span> <span style="color:#66d9ef">struct</span> {
 	<span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span> <span style="color:#66d9ef">int</span>
 }
@@ -305,7 +305,7 @@
 	<span style="color:#a6e22e">mem</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Extract</span>(<span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>), <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Sizeof</span>(<span style="color:#a6e22e">p</span>))
 	<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Logf</span>(<span style="color:#e6db74">&#34;What&#39;s the Point? %v&#34;</span>, <span style="color:#a6e22e">mem</span>)
 }
-</code></pre></div><p>Yes, you can extract the content of the memory, but what's the point? Well, a friend of mine (with the same name and the same passion for Golang) might find this as a useful way to hide sensitive data, by reversing the extract into carefully  filling it with secrets which comes from somewhere else.</p>
+</code></pre></div><p>Yes, you can extract the content of the memory, but what&rsquo;s the point? Well, a friend of mine (with the same name and the same passion for Golang) might find this as a useful way to hide sensitive data, by reversing the extract into carefully  filling it with secrets which comes from somewhere else.</p>
 <h4 id="reflect"><code>reflect</code></h4>
 <p>If you kept in mind that <code>unsafe</code> is about the compiler and not the runtime, here is the proof:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TestInTheBeginning</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">testing</span>.<span style="color:#a6e22e">T</span>) {
@@ -333,12 +333,12 @@
 	<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Logf</span>(<span style="color:#e6db74">&#34;After looking in the mirror : %v %v %v %v %v %v&#34;</span>, <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">sz</span>, <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">dt</span>, <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">knd</span>, <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">str</span>, <span style="color:#a6e22e">v</span>.<span style="color:#a6e22e">w</span>)
 }
 </code></pre></div><p>Once you run the above test, you will get the properties filled in with some values which seem pure magic. But there must be an explanation.
-We didn't import <code>reflect</code> package. Also, the code is unreadable thus proving there is no magic convention like structs named in certain way or properties have some particular names.</p>
-<p>So, what happen? Well, these data structures (<code>e</code> and <code>r</code> types) are <a href="https://github.com/golang/go/blob/master/src/cmd/compile/internal/gc/reflect.go">known</a> to the compiler which does it's job and at the runtime we're getting those results. To reinforce that truth, if we're replacing that <code>t</code> function with it's body <code>v :=(*(*e)(unsafe.Pointer(&amp;p))).abracadabra</code>, it won't work anymore. And even more, if we're changing the parameter type of the <code>t</code> function from <code>interface{}</code> to <code>*Point</code> it will not work as expected.</p>
+We didn&rsquo;t import <code>reflect</code> package. Also, the code is unreadable thus proving there is no magic convention like structs named in certain way or properties have some particular names.</p>
+<p>So, what happen? Well, these data structures (<code>e</code> and <code>r</code> types) are <a href="https://github.com/golang/go/blob/master/src/cmd/compile/internal/gc/reflect.go">known</a> to the compiler which does it&rsquo;s job and at the runtime we&rsquo;re getting those results. To reinforce that truth, if we&rsquo;re replacing that <code>t</code> function with it&rsquo;s body <code>v :=(*(*e)(unsafe.Pointer(&amp;p))).abracadabra</code>, it won&rsquo;t work anymore. And even more, if we&rsquo;re changing the parameter type of the <code>t</code> function from <code>interface{}</code> to <code>*Point</code> it will not work as expected.</p>
 <p>If you <a href="https://github.com/golang/go/blob/master/src/reflect/type.go#L297">look</a> in reflect package, you will see that <code>rtype</code> struct looks exactly the same as our <code>r</code> struct, even if the properties are named different. Same goes for <a href="https://github.com/golang/go/blob/master/src/reflect/value.go#L181"><code>emptyInterface</code></a> and our <code>e</code> struct - despite the fact that we are not using the <code>word</code> property - remember omitting properties in the unsafe example above?</p>
 <h4 id="building-your-own-reflection-package">Building your own reflection package</h4>
-<p>Can you build your own <code>reflect</code> package? So far my conclusion is yes, you can. At least for reading and writing the properties of structs it's quite easy.</p>
-<p>However, I've encountered some problems that I want to present here. First, the (long but minimal) code (mostly copy pasted from reflect):</p>
+<p>Can you build your own <code>reflect</code> package? So far my conclusion is yes, you can. At least for reading and writing the properties of structs it&rsquo;s quite easy.</p>
+<p>However, I&rsquo;ve encountered some problems that I want to present here. First, the (long but minimal) code (mostly copy pasted from reflect):</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">
 <span style="color:#f92672">import</span> (
 	<span style="color:#e6db74">&#34;testing&#34;</span>
@@ -429,7 +429,7 @@ We didn't import <code>reflect</code> package. Also, the code is unreadable thus
 		<span style="color:#a6e22e">offsetAnon</span> <span style="color:#66d9ef">uintptr</span>
 	}
 	<span style="color:#a6e22e">structType</span> <span style="color:#66d9ef">struct</span> {
-		<span style="color:#a6e22e">rtype</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">reflect:&#34;struct&#34;</span><span style="color:#e6db74">`</span>
+		<span style="color:#a6e22e">rtype</span> <span style="color:#e6db74">`reflect:&#34;struct&#34;`</span>
 		<span style="color:#a6e22e">pkgPath</span> <span style="color:#a6e22e">name</span>
 		<span style="color:#a6e22e">fields</span>  []<span style="color:#a6e22e">structField</span>
 	}
@@ -442,7 +442,7 @@ We didn't import <code>reflect</code> package. Also, the code is unreadable thus
 		<span style="color:#a6e22e">Len</span>  <span style="color:#66d9ef">int</span>
 	}
 	<span style="color:#a6e22e">ptrType</span> <span style="color:#66d9ef">struct</span> {
-		<span style="color:#a6e22e">rtype</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">reflect:&#34;ptr&#34;</span><span style="color:#e6db74">`</span>
+		<span style="color:#a6e22e">rtype</span> <span style="color:#e6db74">`reflect:&#34;ptr&#34;`</span>
 		<span style="color:#a6e22e">elem</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">rtype</span> <span style="color:#75715e">// pointer element (pointed at) type
 </span><span style="color:#75715e"></span>	}
 )
@@ -640,7 +640,7 @@ We didn't import <code>reflect</code> package. Also, the code is unreadable thus
 		<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">rtype</span>
 	}
 	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">iptr</span> <span style="color:#66d9ef">interface</span>{} = (<span style="color:#f92672">*</span><span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>)(<span style="color:#66d9ef">nil</span>)
-	<span style="color:#a6e22e">prototype</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">*</span>(<span style="color:#f92672">*</span><span style="color:#f92672">*</span><span style="color:#a6e22e">ptrType</span>)(<span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">iptr</span>))
+	<span style="color:#a6e22e">prototype</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">*</span>(<span style="color:#f92672">**</span><span style="color:#a6e22e">ptrType</span>)(<span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">iptr</span>))
 	<span style="color:#a6e22e">pp</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">prototype</span>
 	<span style="color:#a6e22e">pp</span>.<span style="color:#a6e22e">str</span> = <span style="color:#a6e22e">resolveReflectName</span>(<span style="color:#a6e22e">newName</span>(<span style="color:#a6e22e">s</span>, <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#66d9ef">false</span>))
 	<span style="color:#a6e22e">pp</span>.<span style="color:#a6e22e">ptrToThis</span> = <span style="color:#ae81ff">0</span>
@@ -666,7 +666,7 @@ We didn't import <code>reflect</code> package. Also, the code is unreadable thus
 <span style="color:#75715e">//go:linkname addReflectOff reflect.addReflectOff
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">addReflectOff</span>(<span style="color:#a6e22e">ptr</span> <span style="color:#a6e22e">unsafe</span>.<span style="color:#a6e22e">Pointer</span>) <span style="color:#66d9ef">int32</span>
 
-</code></pre></div><p>On the <code>Point</code> struct declared above, we're adding the followings:</p>
+</code></pre></div><p>On the <code>Point</code> struct declared above, we&rsquo;re adding the followings:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#a6e22e">Point</span>) <span style="color:#a6e22e">AnotherMethod</span>(<span style="color:#a6e22e">scale</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">int</span> {
 	<span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
 }
@@ -701,17 +701,17 @@ We didn't import <code>reflect</code> package. Also, the code is unreadable thus
 		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">Logf</span>(<span style="color:#e6db74">&#34;%d : Method %q %v %v %v\n&#34;</span>, <span style="color:#a6e22e">idx</span>, <span style="color:#a6e22e">name</span>.<span style="color:#a6e22e">name</span>(), <span style="color:#a6e22e">typ</span>, <span style="color:#a6e22e">method</span>.<span style="color:#a6e22e">tfn</span>, <span style="color:#a6e22e">method</span>.<span style="color:#a6e22e">ifn</span>)
 	}
 }
-</code></pre></div><p>When we run this test, we're going to see that the methods signature are reported differently than what we've declared. This means we are not doing something that <code>reflect</code> package does.</p>
-<p>Our version of TypeOf function doesn't return an interface and also, that interface is built by calling toPtr() method of the rType. However, with that code added, the problem still doesn't get fixed.</p>
+</code></pre></div><p>When we run this test, we&rsquo;re going to see that the methods signature are reported differently than what we&rsquo;ve declared. This means we are not doing something that <code>reflect</code> package does.</p>
+<p>Our version of TypeOf function doesn&rsquo;t return an interface and also, that interface is built by calling toPtr() method of the rType. However, with that code added, the problem still doesn&rsquo;t get fixed.</p>
 <p>Adding the following code, fixes the test (the signatures are correct).</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">dummy</span> <span style="color:#66d9ef">struct</span>{}
 	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">d</span> <span style="color:#a6e22e">dummy</span>) <span style="color:#a6e22e">A</span>() {}
 	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">_</span> = <span style="color:#a6e22e">reflect</span>.<span style="color:#a6e22e">TypeOf</span>(<span style="color:#a6e22e">dummy</span>{}).<span style="color:#a6e22e">Method</span>(<span style="color:#ae81ff">0</span>)
-</code></pre></div><p>Seems the function <code>func addReflectOff(ptr unsafe.Pointer) int32</code> which is implemented in the runtime package gets called from <code>reflect</code> package which creates <a href="https://github.com/golang/go/blob/34db5f0c4d80b8fe3fb4b5be90efd9ee92bd1d4d/src/runtime/type.go#L147">reflectOffs structs</a> for later lookups. We need to force the compiler to allow us to use the same functions as reflect does. Since we're not using reflect anywhere, dead code removal does not allow us to initialize properly - so we need to force it.</p>
-<p>Indeed, we're importing reflect to write our own reflect, but we're not using it in other than dumb init.</p>
-<p>In the larger version (my own version of reflect), all Value.Call() tests were failing in a segmentation fault, with a reason (method types were zero) - the code being the same as in reflect package. For this reason I've presented you with this small test and it's conclusions.</p>
+</code></pre></div><p>Seems the function <code>func addReflectOff(ptr unsafe.Pointer) int32</code> which is implemented in the runtime package gets called from <code>reflect</code> package which creates <a href="https://github.com/golang/go/blob/34db5f0c4d80b8fe3fb4b5be90efd9ee92bd1d4d/src/runtime/type.go#L147">reflectOffs structs</a> for later lookups. We need to force the compiler to allow us to use the same functions as reflect does. Since we&rsquo;re not using reflect anywhere, dead code removal does not allow us to initialize properly - so we need to force it.</p>
+<p>Indeed, we&rsquo;re importing reflect to write our own reflect, but we&rsquo;re not using it in other than dumb init.</p>
+<p>In the larger version (my own version of reflect), all Value.Call() tests were failing in a segmentation fault, with a reason (method types were zero) - the code being the same as in reflect package. For this reason I&rsquo;ve presented you with this small test and it&rsquo;s conclusions.</p>
 <h4 id="conclusion">Conclusion</h4>
-<p>It took me four days to learn the internals and modify the reflect package for my needs, but in the end I've done it and later I will probably integrate it into the <a href="https://github.com/badu/reflector">reflector</a> package.</p>
+<p>It took me four days to learn the internals and modify the reflect package for my needs, but in the end I&rsquo;ve done it and later I will probably integrate it into the <a href="https://github.com/badu/reflector">reflector</a> package.</p>
 <p>Probably the lack of documentation made things harder to understand and follow. Probably some things are never meant to be - that - public, due to some sort of programming language politics. Who knows but mostly who cares?</p>
 <p>I encourage you to take my advice and break things so you can learn how they work, how other developers solved problems that you cannot think about while just reading the code.</p>
 </div>

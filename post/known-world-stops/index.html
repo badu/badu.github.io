@@ -85,7 +85,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.63.0-DEV" />
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.75.0-DEV" />
 
 
 
@@ -202,24 +202,24 @@
 </div>
 
     <br>
-    <div class="text-justify"><p>Last week, I took the time searching for patterns inside the main packages. Besides a bunch of <code>aha moments</code>, I've realized that some neat tricks can be used to achieve some goals otherwise achievable by applying different techniques.</p>
-<p>For instance, let's say you have a pool or a cache. How do you call your cleanup function?</p>
+    <div class="text-justify"><p>Last week, I took the time searching for patterns inside the main packages. Besides a bunch of <code>aha moments</code>, I&rsquo;ve realized that some neat tricks can be used to achieve some goals otherwise achievable by applying different techniques.</p>
+<p>For instance, let&rsquo;s say you have a pool or a cache. How do you call your cleanup function?</p>
 <p>Decisions regarding where to place that call can be made by testing and benchmarking. But what if there is another neat way to do so : just before the garbage collection runs, you can mount yourself a function and receive a call on it.</p>
 <h4 id="compiler-directives">Compiler Directives</h4>
 <p>A <a href="https://golang.org/cmd/compile/#hdr-Compiler_Directives">compiler directive</a> is a meta information that instructs the compiler on how to behave in certain conditions.</p>
-<p>In our case, we're using the <code>sync.pool</code> <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/sync/pool.go#L218">method</a> of cleaning up the pool:</p>
+<p>In our case, we&rsquo;re using the <code>sync.pool</code> <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/sync/pool.go#L218">method</a> of cleaning up the pool:</p>
 <pre><code>```go
 //go:linkname runtime_registerPoolCleanup sync.runtime_registerPoolCleanup
 func runtime_registerPoolCleanup(cleanup func())
 ```
 </code></pre>
-<p>Here's what we need to do :</p>
+<p>Here&rsquo;s what we need to do :</p>
 <ol>
 <li>
-<p>in our package, create a file named <code>empty.s</code>. As the name says, it's empty.</p>
+<p>in our package, create a file named <code>empty.s</code>. As the name says, it&rsquo;s empty.</p>
 </li>
 <li>
-<p>in the file where we're going to declare the linkname directive, we have to import &ldquo;unsafe&rdquo; package. So, <code>import _ &quot;unsafe&quot;</code>.</p>
+<p>in the file where we&rsquo;re going to declare the linkname directive, we have to import &ldquo;unsafe&rdquo; package. So, <code>import _ &quot;unsafe&quot;</code>.</p>
 </li>
 <li>
 <p>use the directive :</p>
@@ -230,7 +230,7 @@ func runtime_registerPoolCleanup(cleanup func())
 <p>in the same file, declare the <code>init()</code> function and call <code>registerCacheCleanupFn</code> with our cleaning function implementation as parameter.</p>
 </li>
 </ol>
-<p>That's it.</p>
+<p>That&rsquo;s it.</p>
 <p>Advantages of using this technique are obvious. However, we have to keep in mind that our cleaning up implementation should NOT allocate and should NOT call any runtime functions - unless you think you are Mario (the plumber) and can deal with any kind of leak.</p>
 <h4 id="what-else-can-we-use">What else can we use?</h4>
 <p>If we to avoid importing &ldquo;strings&rdquo; just like <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/parse.go#L86">parse.go</a> inside &ldquo;net&rdquo; package does, but still be able to call IndexByte, we need the following declaration :</p>
@@ -258,9 +258,9 @@ func runtime_registerPoolCleanup(cleanup func())
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//go:linkname Now time.now
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Now</span>() (<span style="color:#a6e22e">sec</span> <span style="color:#66d9ef">int64</span>, <span style="color:#a6e22e">nsec</span> <span style="color:#66d9ef">int32</span>, <span style="color:#a6e22e">mono</span> <span style="color:#66d9ef">int64</span>)
 </code></pre></div><h4 id="a-side-note">A Side Note</h4>
-<p>By the way : I've noticed that strings.Index is sometimes unnecessary called when the second parameter is just a byte (e.g. <code>strings.Index(url, &quot;?&quot;)</code> in <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2002">server.go</a>). I know it is a micro optimization, but hey, let's use the right tool for the right job, shall we?</p>
+<p>By the way : I&rsquo;ve noticed that strings.Index is sometimes unnecessary called when the second parameter is just a byte (e.g. <code>strings.Index(url, &quot;?&quot;)</code> in <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2002">server.go</a>). I know it is a micro optimization, but hey, let&rsquo;s use the right tool for the right job, shall we?</p>
 <p>Same observation goes for bytes.IndexByte too.</p>
-<p>Another observation regards strings.TrimPrefix and strings.TrimSuffix - I've notice that sometimes developers checks if string has prefix or suffix before calling them, which is unnecessary because the check is done inside those functions. Perhaps it would be better to change the signatures of those functions like this :</p>
+<p>Another observation regards strings.TrimPrefix and strings.TrimSuffix - I&rsquo;ve notice that sometimes developers checks if string has prefix or suffix before calling them, which is unnecessary because the check is done inside those functions. Perhaps it would be better to change the signatures of those functions like this :</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">prefix</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">bool</span>, <span style="color:#66d9ef">string</span>) <span style="color:#75715e">// returning true if string had that prefix and the trimmed string
 </span></code></pre></div><h4 id="directive-wish">Directive Wish</h4>
 <p>Would be really useful for testing to have a directive that instructs the compiler to include or exclude portions of code, thus we can avoid including testing portions in the production.</p>

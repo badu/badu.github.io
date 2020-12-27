@@ -85,7 +85,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.63.0-DEV" />
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.75.0-DEV" />
 
 
 
@@ -264,7 +264,7 @@
 <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">x</span> = <span style="color:#a6e22e">T2</span>(<span style="color:#a6e22e">t1</span>) <span style="color:#75715e">// OK
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">st1</span> []<span style="color:#a6e22e">T1</span>
 </code></pre></div><hr>
-<p>Q: What's wrong with the following code?</p>
+<p>Q: What&rsquo;s wrong with the following code?</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">info</span> <span style="color:#66d9ef">struct</span>{
 	<span style="color:#a6e22e">data</span> <span style="color:#66d9ef">string</span>
 }
@@ -277,8 +277,8 @@
 <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">list</span> {
     <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">s</span>)
 }
-</code></pre></div><p>A: Don't use pointers inside loops [1 point]
-A: Here. I've fixed it [3 points]</p>
+</code></pre></div><p>A: Don&rsquo;t use pointers inside loops [1 point]
+A: Here. I&rsquo;ve fixed it [3 points]</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">info</span> <span style="color:#66d9ef">struct</span>{
 	<span style="color:#a6e22e">data</span> <span style="color:#66d9ef">string</span>
 }
