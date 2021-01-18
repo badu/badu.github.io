@@ -6,7 +6,18 @@
     <description>Recent content in Posts on Recency Bias</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Sun, 27 Dec 2020 00:00:00 +0000</lastBuildDate><atom:link href="http://badu.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 08 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://badu.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Amice, ești impostor!</title>
+      <link>http://badu.github.io/post/2021/18_01_2021/</link>
+      <pubDate>Fri, 08 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/post/2021/18_01_2021/</guid>
+      <description>În loc de bun rămas De fiecare dată când mă agață un recrutăr, îi povestesc despre valorile mele : people, project, payments. Mă văd în situația neplăcută în care părăsesc (iar) un proiect, la nici un an de la ultimul.
+Știu, par mereu supărat, pe motive de perfecționism. Eu cred că sunt lucruri de bun simț, whatever that means these days.
+Scriitura aceasta nu este un atac la persoană. Este despre o situație, despre un context.</description>
+    </item>
+    
     <item>
       <title>Anul 2020 și rezoluții pentru 2021</title>
       <link>http://badu.github.io/post/2020/2020/</link>
@@ -153,16 +164,6 @@ package main import ( &amp;#34;io&amp;#34; &amp;#34;net/http&amp;#34; &amp;#34;l
       <description>TL;DR This series is about my questions and thoughts regarding net/http package. The process of learning is based on mistakes, therefor I&amp;rsquo;m inviting you to learn aside me.
 You are allowed to judge the code. You are not allowed to judge the people.
 First Glance I have a confession to make : despite the fact that &amp;ldquo;Keep types close&amp;rdquo; rule is fair enough, the architect in me needs to reorganize the code in such a manner that a 10000 feet view to be possible.</description>
-    </item>
-    
-    <item>
-      <title>Comparing Go with Other Languages is Wrong</title>
-      <link>http://badu.github.io/post/comparing-go-is-wrong/</link>
-      <pubDate>Wed, 15 Nov 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/post/comparing-go-is-wrong/</guid>
-      <description>TL;DR &amp;ldquo;Java is to Javascript like Car is to Carpet.&amp;rdquo; - Collective Genius
-My Computer Language is Better than Yours Some programming languages were - let&amp;rsquo;s say - discovered over time, whereas others were created academically by carefully selecting the features that would provide solutions to a set of problems. There’s nothing terribly new about spawning programming languages. However, haters gonna hate and will always find one, in an office near you or over the Internet.</description>
     </item>
     
   </channel>
