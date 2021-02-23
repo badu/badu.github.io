@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Observații despre cloud mindset</title>
+
+    <meta name="description" content="Divide et tâmpera!">
+
+    <meta property="site_name" content="recency-bias">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="http://badu.github.io/post/2021/23_02_2021/">
+    <meta property="og:title" content="Observații despre cloud mindset">
+    <meta property="og:image" content="">
+
+    <meta property="og:description" content="Divide et tâmpera!">
+
+    <meta name="twitter:url" content="http://badu.github.io/post/2021/23_02_2021/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@recency-bias">
+    <meta name="twitter:creator" content="@recency-bias">
+    <meta name="twitter:title" content="Observații despre cloud mindset">
+    <meta name="twitter:img:src" content="">
+
+    <meta name="twitter:label1" content="Author">
+    <meta name="twitter:data1" content="Bogdan Dinu">
+    <meta name="twitter:label2" content="Published On">
+    <meta name="twitter:data2" content="February 23, 2021">
+
+
+    <link rel="dns-prefetch" href="//www.google-analytics.com">
+    <link rel="dns-prefetch" href="//stats.g.doubleclick.net">
+
+    <link rel="canonical" href="http://badu.github.io/post/2021/23_02_2021/">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+    <link rel="shortcut icon" href="http://badu.github.io/favicon.ico">
+
+<style>
+    html body {
+        font-family: 'Roboto', sans-serif;
+        background-color: white;
+    }
+
+    :root {
+        --accent: #00bcd4;
+        --border-width:  5px ;
+    }
+</style>
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+
+
+
+<link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"> 
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+ 
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/go.min.js"></script> 
+    <script>hljs.initHighlightingOnLoad();</script>
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.75.0-DEV" />
+
+
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-687869-6"></script>
+    <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)};
+          gtag('js', new Date());
+
+          gtag('config', 'UA-687869-6');
+          (function() {
+          function ready(cb) {
+              /in/.test(document.readyState) 
+                      ? setTimeout(ready.bind(null, cb), 9)
+                      : cb();
+          }
+          ready(function() {
+              
+              var indicator = document.querySelector('.scroll-progress');
+              if (indicator) {
+                  document.addEventListener('scroll', function (e) {
+                      var dh = document.body.scrollHeight;
+                      var wh = window.innerHeight;
+                      var pos = window.scrollY;
+                      var footerHeight = 50;
+                      var perc = pos / (dh - footerHeight - wh) * 100;
+                      indicator.style.setProperty('--scale', (perc / 100));
+                  })
+              }
+              
+              var links = document.links;
+              for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+                  if (links[i].hostname != window.location.hostname) {
+                      links[i].target = '_blank';
+                  }
+              }
+          });
+          }());
+    </script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand visible-xs" href="#">Observații despre cloud mindset</a>
+            <button class="navbar-toggle" data-target=".navbar-collapse" data-toggle="collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse">
+        
+            <ul class="nav navbar-nav">
+            
+                <li><a href="/post/">Posts</a></li>
+            
+                <li><a href="/about/">About</a></li>
+            
+                <li><a href="/why-recency-bias/">Why Recency Bias?</a></li>
+            
+            </ul>
+        
+
+        
+            <ul class="nav navbar-nav navbar-right">
+            
+                <li class="navbar-icon"><a href="mailto:badu@badu.ro"><i class="fa fa-envelope-o"></i></a></li>
+            
+                <li class="navbar-icon"><a href="https://github.com/badu/"><i class="fa fa-github"></i></a></li>
+            
+                <li class="navbar-icon"><a href="https://twitter.com/baduro/"><i class="fa fa-twitter"></i></a></li>
+            
+                <li class="navbar-icon"><a href="https://www.linkedin.com/in/golangdeveloper/"><i class="fa fa-linkedin"></i></a></li>
+            
+            </ul>
+        
+
+        </div>
+
+    </div>
+    
+    <div class="scroll-progress"></div>
+</nav>
+
+<main>
+<div class="item">
+
+
+
+  
+    <h4><a href="/post/2021/23_02_2021/">Observații despre cloud mindset</a></h4>
+    <h5>Divide et tâmpera!</h5>
+    
+      <h5>Published on February 23, 2021</h5>
+    
+ <kbd class="item-tag">2021</kbd>  <kbd class="item-tag">cloud</kbd>  <kbd class="item-tag">mindset</kbd> 
+<p>About 7 minutes of reading.</p>
+</div>
+
+    <br>
+    <div class="text-justify"><h1 id="prefață">Prefață</h1>
+<p>Zilele astea am avut tot felul de conversații cu oameni dragi mie. Azi dimineață mi-am amintit ce simțeam acum trei ani despre cloud.
+Simțeam că e greu, că urmează să invăț (iar?!?) lucruri pe care unii și alții le-au inventat doar că să mai am eu ceva de priceput.
+M-am înșelat destul de tare, pentru că nu mi-a fost greu. Poate ție nu-ți este la fel de ușor să înveți, dar asta e altă discuție (să înveți să înveți e despre mentorat și scopul principal al unui om în devenire).</p>
+<p>Ca să poți urmări unde bat, citește interviul <a href="https://evrone.com/ryan-dahl-interview">ăsta</a> cu Ryan.
+Care Ryan? Ăla de-a scris NodeJS. Ăla de a scris pe urmă Deno, ca o alternativă de secol 21 a lui NodeJS.</p>
+<h2 id="părerile-lui-ryan">Părerile lui Ryan</h2>
+<p>La un moment dat, zice una profundă, la care - recunosc - nu m-am gândit s-o spun așa: „Scripting languages are good for beginners.”.
+N-am spus-o așa, probabil din prea mult respect pentru ceilalți. Simt organic că așa este.
+Dacă nu ți s-a terminat RAM-ul în fața ochilor niciodată, dacă nu te-a întrebat nimeni într-un interviu cum faci reverse la un string mare de două ori cât RAM-ul mașinii pe care lucrezi, atunci ești junior.
+Stai liniștit, dacă ești pasionat, o să cauți să migrezi singur. Departe de scripting.</p>
+<p>A doua spusă a lui Ryan este despre Go. Evanghelistul din mine nu se poate abține să nu spună: „băi, dacă pe mine nu mă credeți, credeți-l pe Ryan, că doar el a scris NodeJs și Deno!”.
+Zice așa : „Goroutines are wonderfully simple to use and achieve peak performance. Node and Deno are, like Go, built on non-blocking I/O and OS event notification systems (epoll, kqueue). JavaScript is inherently a single threaded system, so a single instance of Node or Deno generally cannot take advantage of all the CPU cores on a system without starting creating new instances. Node/Deno are optimal for JavaScript, but Go is ultimately a better choice for high concurrency systems in the absence of other requirements that might lean preference towards JS.”
+Pentru ăia care tot insistă că NodeJS e multi-threaded, sper că ne-am lămurit, da? Omul care a scris Node îți spune clar care-i treaba și gata.
+Considerând că ne-am înțeles până aici, să vedem de ce.</p>
+<h2 id="adevăratele-motive-pentru-dezvoltarea-de-aplicații-în-nodejs">Adevăratele motive pentru dezvoltarea de aplicații în NodeJS</h2>
+<p>Deși nu se spune explicit, adevăratele motive derivă din existența forței de muncă. E clar că un developer de Java e mult mai scump.
+La fel de clar (mie îmi e clar) e că termenul full stack developer a fost inventat de oameni care au înțeles că e mai ieftin să pui un frontend (developer) să scrie și backend-ul.
+Pe urmă e vorba de raritate: piața forței de muncă în IT este în criză. Și va mai fi (30% deficit până în 2024)!
+Angajatorii gândesc că este puțin probabil să găsească rapid programatori calificați în limbaje precum Go.
+De observat aici că foarte puțini angajatori se gândesc la conversie. Și extrem de puțini dezvoltatori sunt dispuși la conversie.
+Adică, de ce-ar face angajatorul investiția asta, în care să-ți permită ție să înveți alt limbaj, eventual unul care să te crească.
+Iar tu - care ai învățat atâtea hackuri în JavaScript - de ce-ai fi dispus să renunți la cunoștințele dobândite. Cum care hack-uri?
+Ăstea de <a href="https://blogtitle.github.io/i-am-switching-to-js/">aici</a>!</p>
+<p>De ce Asia a ales Go? Îmi pun întrebarea asta de mult timp, dar acum avem și <a href="https://blog.jetbrains.com/go/2021/02/03/the-state-of-go/">cifrele</a> o confirmă!
+Bănuiala mea - cu titlu de convingere - este că Go livrează. Adică, or fi încercat bieții oameni și cu PHP. Și cu NodeJS.
+N-a mers: sunt atât de mulți vizitatori ai site-urilor lor, încât le trebuia ceva care să livreze. Altfel, devenea prea scump.
+Alegerea lor s-a bazat pe motive economice (doh!?), întărind - parcă - proverbul „the right tool for the right job”.</p>
+<h2 id="ce-am-împotrivă">Ce am împotrivă</h2>
+<p>Păi&hellip; mind-set-ul. Când scrii cod pentru browser, devii domnul Singleton. Nu-ți apar probleme de sharding.
+Nu te pasionează concepte de cloud, pentru că nu-ți folosesc la nimic. Nu e o problemă, atât timp cât continui să scrii pentru browser.
+Chiar dacă devin sâcâitor, mai zic odată : n-ai să măsori RAM-ul consumat, decât dacă ți se cere explicit asta.</p>
+<p>Problemele apar când vii și scrii partea de backend. Folosind același limbaj, dar mai ales același mind-set.</p>
+<p>Să dezvolt:</p>
+<h3 id="database-migration">Database migration</h3>
+<p>E un pattern care l-am văzut și în Go. S-apucă omul, cu mare zel, să-și migreze baza de date dintr-un serviciu. Pentru el, în mintea lui, totul e ok.
+Pentru mine nu e. Scriem servicii pentru cloud, în general pentru Kubernetes. Dacă nu înțelegi diferența între serviciu și pod, ai o problemă: mind-set-ul de Singleton.
+Care va să zică, ce se întâmplă când două sau mai multe pod-uri rulează aceeași migrare? N-am încercat, dar nici nu mă pasionează să încerc.
+Pentru că e o prostie. Ăștia o numesc accidental complexity, fiindcă dacă nu merge, va trebui să scrii cod, să scrii un hack s-o faci să meargă.
+În loc să gândești pentru cloud de la bun început.</p>
+<h3 id="reutilizarea-clienților-http">Reutilizarea clienților HTTP</h3>
+<p>Asta e generalizată, în sensul că nu contează limbajul. Pornește aplicația, îți faci frumos un client HTTP către alt servicii, te conectezi și baftă.
+Nu ai idee cât de greu este să faci debug pe probleme apărute din motivul că Kubernetes îți stinge frumușel pod-uri și servicii cu varii motive.
+Și clientul tău a rezolvat DNS-ul. Și ești conectat cu un serviciu care nu mai este la IP-ul pe care serviciul tău l-a obținut când s-a rezolvat DNS-ul.
+Iar probleme (de data asta mari de tot), iar hack-uri.
+Again, în loc să gândești pentru cloud de la bun început.</p>
+<h3 id="event-bus-event-who">Event bus. Event who?</h3>
+<p>Da, event bus. Event bus e ăla de-l fac ăștia prin Vue 2, ca să fie reactivi care React-ul.
+Nu mă pricep eu la chestii din ăstea, dar nu înțeleg de ce nu folosești un event bus în aplicațiile tale de NodeJS care rulează în cloud.
+Nu pricep și basta. Ți-e frică, fiindcă nu seamănă cu ce știi? Ți-e lene să citești ce e ăla un dead letter queue?</p>
+<p>Sunt convins că drumul spre event bus e presărat cu pattern-uri cumplit de grele cum este Command Query Responsibility Segregation.
+Îți promit că te ajută să ții lucrurile sub control, chiar dacă tu ai ales calea scripting-ului pentru backend.</p>
+<p>Dacă cumva folosești event bus, vezi să nu-l folosești pe post de măciucă.
+Spun asta, pentru că am văzut și asta: aplicația ta consumă mai puțin decât măciuca poate produce.
+Și-ajungi să ai retenție de mesaje, de nu-ți vine să mai pornești consumatorii.</p>
+<h4 id="o-paranteză-despre-vue">O paranteză despre Vue</h4>
+<p>De câteva săptămâni, de acum, mă căznesc să scriu una bucățică aplicație cu Vue 3. Guess what?
+Nu am curaj pentru că nu găsesc destule „experimente” pentru așa o schimbare de paradigmă.
+Diferența majoră între Vue 2 și 3 constă în compoziție și reactivitate.
+De asta, nu mă arunc cu capul înainte, aducând mind-set-ul de Vue 2 în cel de Vue 3.
+Vreau să învăț bine ceea ce voi învăța, așa că la fiecare pas, mă gândesc la pericolele poluării cu concepte care nu mai sunt necesare.</p>
+<h3 id="lambda-function">Lambda function</h3>
+<p>Mi-amintesc de un client care vroia să facă login cu lambda function. Și care m-a enervat teribil, pentru că mi-a cheltuit timpul fix aiurea.
+Nu avea nevoie de mine, de expertiza mea. Știa mai bine decât mine, ce poate și cu ce se mănâncă lambda.</p>
+<p>Și lambda te poate ajuta, dar nu să faci login, fiindcă login-ul e ușor sincron. Lambda te ajută pe probleme asincrone.
+Cum ar fi să generezi un PDF, un raport sau whatever. Cum ar fi să faci audit (who did what), dacă aplicația ta nu e write intensive.
+Condiția e să te gândești la sincronicitate și la cât de des e folosit feature-ul respectiv.
+Dacă e „destul” de rar și nu stă nimeni după el, atunci, e lambda.</p>
+<h1 id="concluzie">Concluzie</h1>
+<p>Îți recomand în primul rând să gândești. Gândește-te bine ce faci, fiindcă nu rulezi în browser.
+Sparge problema în bucăți mici. Fă-le microservicii (ai grijă să nu confuzi cu module, fiindcă nu-s tot aia).</p>
+<p>În al doilea rând, învață Docker, Kubernetes, soluțiile de cloud existente (event bus, dead letter queue, metrics, etc).
+Cu cât le înțelegi mai bine, cu atât te-ajută mai mult să-ți structurezi aplicația, fără riscuri (cum e cel de reutilizare a clienților HTTP).</p>
+<p>În al treilea rând, pune-ți problema conversiei.
+Sunt ferm convins că deși pare mult și greu, nimic nu e imposibil pentru tine:
+doar ai supraviețuit atât de mult timp scriind într-un limbaj pe care nimeni nu-l știe, numit JavaScript.</p>
+<p>Dacă am părut condescendent, e din cauză că sunt.
+Motivul e simplu: tu scrii NodeJS în felul descris mai sus, iar eu stau să fac debug în cloud după tine.
+N-ai empatie, atunci eu îmi permit condescendența.</p>
+<p>Să ai o zi faină!</p>
+</div>
+    
+
+
+    <h4 class="page-header">Related</h4>
+ <div class="item">
+
+
+
+  
+    <h4><a href="/post/2021/18_01_2021/">Amice, ești impostor!</a></h4>
+    <h5>N-ai cu cine, mă! N-ai cu cine!</h5>
+    
+      <h5>Published on January 8, 2021</h5>
+    
+ <kbd class="item-tag">2021</kbd>  <kbd class="item-tag">harangues</kbd> 
+<p>About 8 minutes of reading.</p>
+</div>
+ 
+
+
+    <h4 class="page-header">Comments</h4>
+<div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "recency-bias" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+</main>
+<footer>
+    <p class="copyright text-muted"> Recency Bias &copy; 2021
+        - Powered by <a href="https://gohugo.io">Hugo</a>.</p>
+</footer>
+</body>
+</html>
+

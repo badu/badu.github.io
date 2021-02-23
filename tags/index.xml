@@ -6,13 +6,31 @@
     <description>Recent content in Tags on Recency Bias</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Fri, 08 Jan 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://badu.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 23 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://badu.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>2021</title>
       <link>http://badu.github.io/tags/2021/</link>
-      <pubDate>Fri, 08 Jan 2021 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/tags/2021/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cloud</title>
+      <link>http://badu.github.io/tags/cloud/</link>
+      <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/tags/cloud/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>mindset</title>
+      <link>http://badu.github.io/tags/mindset/</link>
+      <pubDate>Tue, 23 Feb 2021 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/tags/mindset/</guid>
       <description></description>
     </item>
     
@@ -121,24 +139,6 @@
       <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/tags/reflect/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Standard package</title>
-      <link>http://badu.github.io/tags/standard-package/</link>
-      <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/standard-package/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Psychology</title>
-      <link>http://badu.github.io/tags/psychology/</link>
-      <pubDate>Thu, 22 Mar 2018 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/psychology/</guid>
       <description></description>
     </item>
     
