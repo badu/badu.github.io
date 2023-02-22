@@ -85,8 +85,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.75.0-DEV" />
-
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.110.0">
 
 
     
@@ -299,25 +298,25 @@ Example. <a href="https://play.golang.org/p/e3f0SjPXhVc">here</a> [3 point]</p>
 <hr>
 <p>Q: Provide examples of the empty struct{} usage</p>
 <p>A: Implementing dataset or seen hash [1 point]</p>
-<pre><code>seen := make(map[string]struct{})
+<pre tabindex="0"><code>seen := make(map[string]struct{})
 for _, ok := seen[v]; ok {
-    // set the visited &quot;flag&quot;
+    // set the visited &#34;flag&#34;
     seen[v] = struct{}{}
 }
 </code></pre><p>A: Implementing dataset, seen hash as above, or grouping methods and no intermediary data, need a channel to signal an event, but do not really need to send any data. [3 points]</p>
-<pre><code>// grouping
+<pre tabindex="0"><code>// grouping
 type Doer struct{}
 func (d Doer) DoSomething(){
-    println(&quot;Done&quot;)
+    println(&#34;Done&#34;)
 }
 func (d Doer) DoSomethingElse(){
-    println(&quot;Something Else Done&quot;)
+    println(&#34;Something Else Done&#34;)
 }
 // or signaling
 func worker(ch chan struct{}) {
 	// Receive a message from the main program.
 	&lt;-ch
-	println(&quot;roger-roger&quot;)
+	println(&#34;roger-roger&#34;)
 	// Send a message to the main program.
 	close(ch)
 }
@@ -386,7 +385,7 @@ func worker(ch chan struct{}) {
     <h4 class="page-header">Comments</h4>
 <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

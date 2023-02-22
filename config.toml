@@ -75,7 +75,7 @@ pluralizeListTitles =         true
 # Preserve special characters in taxonomy names ("Gérard Depardieu" vs "Gerard Depardieu")
 preserveTaxonomyNames =       false
 # filesystem path to write files to
-publishDir =                  ""
+publishDir =                  "."
 # enables syntax guessing for code fences without specified language
 pygmentsCodeFencesGuessSyntax = false
 # color-codes for highlighting derived from this style

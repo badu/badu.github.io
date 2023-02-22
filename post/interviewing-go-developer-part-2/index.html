@@ -85,8 +85,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.75.0-DEV" />
-
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.110.0">
 
 
     
@@ -194,188 +193,187 @@
     <div class="text-justify"><h4 id="foreword">Foreword</h4>
 <p>See <a href="/post/interviewing-go-developer-part-1/">part 1</a>.</p>
 <p>Q: What will return the following code?</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">returnNormal</span>() <span style="color:#66d9ef">int</span> {
-	<span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>
-	<span style="color:#66d9ef">defer</span> <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> }()
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">i</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">returnNamed</span>() (<span style="color:#a6e22e">i</span> <span style="color:#66d9ef">int</span>) {
-	<span style="color:#a6e22e">i</span> = <span style="color:#ae81ff">1</span>
-	<span style="color:#66d9ef">defer</span> <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> }()
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">i</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;returnNormal() = %d\n&#34;</span>, <span style="color:#a6e22e">returnNormal</span>())
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;returnNamed() = %d\n&#34;</span>, <span style="color:#a6e22e">returnNamed</span>())
-}
-</code></pre></div><p>A: <code>returnNormal() = 1</code> and <code>returnNamed() = 2</code> [3 points] (why : lazy evaluation)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">returnNormal</span>() <span style="color:#66d9ef">int</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> }()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">i</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">returnNamed</span>() (<span style="color:#a6e22e">i</span> <span style="color:#66d9ef">int</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">i</span> = <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> }()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">i</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;returnNormal() = %d\n&#34;</span>, <span style="color:#a6e22e">returnNormal</span>())
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;returnNamed() = %d\n&#34;</span>, <span style="color:#a6e22e">returnNamed</span>())
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>A: <code>returnNormal() = 1</code> and <code>returnNamed() = 2</code> [3 points] (why : lazy evaluation)</p>
 <hr>
 <p>Q: What will print the following code?</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Inner</span> <span style="color:#66d9ef">struct</span> {}
-
-<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">InnerAgain</span> <span style="color:#66d9ef">struct</span> {}
-
-<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">A</span> <span style="color:#66d9ef">struct</span> {
-    <span style="color:#a6e22e">Inner</span>
-    <span style="color:#a6e22e">InnerAgain</span>
-    <span style="color:#a6e22e">FieldA</span> <span style="color:#66d9ef">string</span>
-}
-
-<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">i</span> <span style="color:#a6e22e">Inner</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
-    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;anything&#34;</span>
-}
-
-<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">i</span> <span style="color:#a6e22e">InnerAgain</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
-    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;nothing&#34;</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-    <span style="color:#a6e22e">myA</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">A</span>{<span style="color:#a6e22e">FieldA</span>: <span style="color:#e6db74">&#34;A&#34;</span>}
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%v&#34;</span>, <span style="color:#a6e22e">myA</span>)
-}
-</code></pre></div><p>A: <code>{anything nothing A}</code> [3 points] (why : ambiguous which String() to invoke)</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Inner</span> <span style="color:#66d9ef">struct</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">InnerAgain</span> <span style="color:#66d9ef">struct</span> {}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">A</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">Inner</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">InnerAgain</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">FieldA</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">i</span> <span style="color:#a6e22e">Inner</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;anything&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">i</span> <span style="color:#a6e22e">InnerAgain</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;nothing&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">myA</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">A</span>{<span style="color:#a6e22e">FieldA</span>: <span style="color:#e6db74">&#34;A&#34;</span>}
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%v&#34;</span>, <span style="color:#a6e22e">myA</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>A: <code>{anything nothing A}</code> [3 points] (why : ambiguous which String() to invoke)</p>
 <hr>
 <p>Q: Can I convert a []T to an []interface{}?</p>
 <p>A: Code below:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">t</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">int</span>{<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>}
-<span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">interface</span>{}, len(<span style="color:#a6e22e">t</span>))
-<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">t</span> {
-    <span style="color:#a6e22e">s</span>[<span style="color:#a6e22e">i</span>] = <span style="color:#a6e22e">v</span>
-}
-</code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">t</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">int</span>{<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">interface</span>{}, len(<span style="color:#a6e22e">t</span>))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">t</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">s</span>[<span style="color:#a6e22e">i</span>] = <span style="color:#a6e22e">v</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
 <p>Q: Can I convert []T1 to []T2 if T1 and T2 have the same underlying type?</p>
 <p>A: Code below:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">T1</span> <span style="color:#66d9ef">int</span>
-<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">T2</span> <span style="color:#66d9ef">int</span>
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">t1</span> <span style="color:#a6e22e">T1</span>
-<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">x</span> = <span style="color:#a6e22e">T2</span>(<span style="color:#a6e22e">t1</span>) <span style="color:#75715e">// OK
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">st1</span> []<span style="color:#a6e22e">T1</span>
-</code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">T1</span> <span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">T2</span> <span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">t1</span> <span style="color:#a6e22e">T1</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">x</span> = <span style="color:#a6e22e">T2</span>(<span style="color:#a6e22e">t1</span>) <span style="color:#75715e">// OK
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">st1</span> []<span style="color:#a6e22e">T1</span>
+</span></span></code></pre></div><hr>
 <p>Q: What&rsquo;s wrong with the following code?</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">info</span> <span style="color:#66d9ef">struct</span>{
-	<span style="color:#a6e22e">data</span> <span style="color:#66d9ef">string</span>
-}
-
-<span style="color:#a6e22e">test</span> <span style="color:#f92672">:=</span> []<span style="color:#a6e22e">info</span>{{<span style="color:#a6e22e">data</span>:<span style="color:#e6db74">&#34;data 1&#34;</span>}, {<span style="color:#a6e22e">data</span>:<span style="color:#e6db74">&#34;data 2&#34;</span>}, {<span style="color:#a6e22e">data</span>:<span style="color:#e6db74">&#34;data 3&#34;</span>}}
-<span style="color:#a6e22e">list</span> <span style="color:#f92672">:=</span> make([]<span style="color:#f92672">*</span><span style="color:#66d9ef">string</span>, <span style="color:#ae81ff">0</span>)
-<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">k</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">test</span>{
-    <span style="color:#a6e22e">list</span> = append(<span style="color:#a6e22e">list</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">k</span>.<span style="color:#a6e22e">data</span>)
-}
-<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">list</span> {
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">s</span>)
-}
-</code></pre></div><p>A: Don&rsquo;t use pointers inside loops [1 point]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">info</span> <span style="color:#66d9ef">struct</span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">data</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">test</span> <span style="color:#f92672">:=</span> []<span style="color:#a6e22e">info</span>{{<span style="color:#a6e22e">data</span>:<span style="color:#e6db74">&#34;data 1&#34;</span>}, {<span style="color:#a6e22e">data</span>:<span style="color:#e6db74">&#34;data 2&#34;</span>}, {<span style="color:#a6e22e">data</span>:<span style="color:#e6db74">&#34;data 3&#34;</span>}}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">list</span> <span style="color:#f92672">:=</span> make([]<span style="color:#f92672">*</span><span style="color:#66d9ef">string</span>, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">k</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">test</span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">list</span> = append(<span style="color:#a6e22e">list</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">k</span>.<span style="color:#a6e22e">data</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">list</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">s</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>A: Don&rsquo;t use pointers inside loops [1 point]
 A: Here. I&rsquo;ve fixed it [3 points]</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">info</span> <span style="color:#66d9ef">struct</span>{
-	<span style="color:#a6e22e">data</span> <span style="color:#66d9ef">string</span>
-}
-
-<span style="color:#a6e22e">test</span> <span style="color:#f92672">:=</span> []<span style="color:#a6e22e">info</span>{{<span style="color:#a6e22e">data</span>:<span style="color:#e6db74">&#34;data 1&#34;</span>}, {<span style="color:#a6e22e">data</span>:<span style="color:#e6db74">&#34;data 2&#34;</span>}, {<span style="color:#a6e22e">data</span>:<span style="color:#e6db74">&#34;data 3&#34;</span>}}
-<span style="color:#a6e22e">list</span> <span style="color:#f92672">:=</span> make([]<span style="color:#f92672">*</span><span style="color:#66d9ef">string</span>, <span style="color:#ae81ff">0</span>)
-<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">k</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">test</span>{
-	<span style="color:#a6e22e">nk</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">k</span> <span style="color:#75715e">// the pointer
-</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">list</span> = append(<span style="color:#a6e22e">list</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">nk</span>.<span style="color:#a6e22e">data</span>)
-}
-<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">list</span> {
-    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">s</span>)
-}
-</code></pre></div><hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">info</span> <span style="color:#66d9ef">struct</span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">data</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">test</span> <span style="color:#f92672">:=</span> []<span style="color:#a6e22e">info</span>{{<span style="color:#a6e22e">data</span>:<span style="color:#e6db74">&#34;data 1&#34;</span>}, {<span style="color:#a6e22e">data</span>:<span style="color:#e6db74">&#34;data 2&#34;</span>}, {<span style="color:#a6e22e">data</span>:<span style="color:#e6db74">&#34;data 3&#34;</span>}}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">list</span> <span style="color:#f92672">:=</span> make([]<span style="color:#f92672">*</span><span style="color:#66d9ef">string</span>, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">k</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">test</span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">nk</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">k</span> <span style="color:#75715e">// the pointer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">list</span> = append(<span style="color:#a6e22e">list</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">nk</span>.<span style="color:#a6e22e">data</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">list</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">*</span><span style="color:#a6e22e">s</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
 <p>Q: What will print the following code?</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">People</span> <span style="color:#66d9ef">struct</span>{}
-
-<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">People</span>) <span style="color:#a6e22e">ShowA</span>() {
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;showA&#34;</span>)
-	<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">ShowB</span>()
-}
-
-<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">People</span>) <span style="color:#a6e22e">ShowB</span>() {
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;showB&#34;</span>)
-}
-
-<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Teacher</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">People</span>
-}
-
-<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Teacher</span>) <span style="color:#a6e22e">ShowB</span>() {
-	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;teacher showB&#34;</span>)
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#a6e22e">t</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Teacher</span>{}
-	<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">ShowA</span>()
-}
-</code></pre></div><p>A: <code>showA</code>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">People</span> <span style="color:#66d9ef">struct</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">People</span>) <span style="color:#a6e22e">ShowA</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;showA&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">ShowB</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">People</span>) <span style="color:#a6e22e">ShowB</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;showB&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Teacher</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">People</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Teacher</span>) <span style="color:#a6e22e">ShowB</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;teacher showB&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">t</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Teacher</span>{}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">ShowA</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>A: <code>showA</code>
 <code>showB</code> [3 points]</p>
 <hr>
 <p>Q: Does this compile ?</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">GetValue</span>()
-
-	<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">i</span>.(<span style="color:#66d9ef">type</span>) {
-	<span style="color:#66d9ef">case</span> <span style="color:#66d9ef">int</span>:
-		println(<span style="color:#e6db74">&#34;int&#34;</span>)
-	<span style="color:#66d9ef">case</span> <span style="color:#66d9ef">string</span>:
-		println(<span style="color:#e6db74">&#34;string&#34;</span>)
-	<span style="color:#66d9ef">case</span> <span style="color:#66d9ef">interface</span>{}:
-		println(<span style="color:#e6db74">&#34;interface&#34;</span>)
-	<span style="color:#66d9ef">default</span>:
-		println(<span style="color:#e6db74">&#34;unknown&#34;</span>)
-	}
-
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">GetValue</span>() <span style="color:#66d9ef">int</span> {
-	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
-}
-
-</code></pre></div><p>A: No [1 point]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">GetValue</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">i</span>.(<span style="color:#66d9ef">type</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#66d9ef">int</span>:
+</span></span><span style="display:flex;"><span>		println(<span style="color:#e6db74">&#34;int&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#66d9ef">string</span>:
+</span></span><span style="display:flex;"><span>		println(<span style="color:#e6db74">&#34;string&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#66d9ef">interface</span>{}:
+</span></span><span style="display:flex;"><span>		println(<span style="color:#e6db74">&#34;interface&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">default</span>:
+</span></span><span style="display:flex;"><span>		println(<span style="color:#e6db74">&#34;unknown&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">GetValue</span>() <span style="color:#66d9ef">int</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>A: No [1 point]
 A: No, because <code>i</code> is not an interface, so you cannot <code>type switch</code> on it [3 points]</p>
 <hr>
 <p>Q: What will produce the following code ?</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">
-<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Param</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{}
-
-<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Show</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">Param</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">Show</span>)
-	<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Param</span>[<span style="color:#e6db74">&#34;AValue&#34;</span>] = <span style="color:#ae81ff">10000</span>
-}
-</code></pre></div><p>A : panic: assignment to entry in nil map [1 point]</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Param</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">interface</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Show</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Param</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> new(<span style="color:#a6e22e">Show</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Param</span>[<span style="color:#e6db74">&#34;AValue&#34;</span>] = <span style="color:#ae81ff">10000</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>A : panic: assignment to entry in nil map [1 point]</p>
 <hr>
 <p>Q: Does this compile ?</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">student</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">printName</span>(<span style="color:#a6e22e">v</span> <span style="color:#66d9ef">interface</span>{}) {
-	<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">msg</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">v</span>.(<span style="color:#66d9ef">type</span>) {
-	<span style="color:#66d9ef">case</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">student</span>, <span style="color:#a6e22e">student</span>:
-		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">msg</span>.<span style="color:#a6e22e">Name</span>)
-	}
-}
-</code></pre></div><p>A: No [1 point]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">student</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">printName</span>(<span style="color:#a6e22e">v</span> <span style="color:#66d9ef">interface</span>{}) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">msg</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">v</span>.(<span style="color:#66d9ef">type</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">student</span>, <span style="color:#a6e22e">student</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">msg</span>.<span style="color:#a6e22e">Name</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>A: No [1 point]
 A: No, error will be <code>type interface {} is interface with no methods</code> [3 points]</p>
 <hr>
 <p>Q: Is there a problem with the code below ?</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">
-<span style="color:#66d9ef">type</span> <span style="color:#a6e22e">People</span> <span style="color:#66d9ef">struct</span> {
-	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
-}
-
-<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">People</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
-	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;print: %v&#34;</span>, <span style="color:#a6e22e">p</span>)
-}
-
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-	<span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">People</span>{}
-	<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">String</span>()
-}
-</code></pre></div><p>A: Yes [1 point]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">People</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">p</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">People</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;print: %v&#34;</span>, <span style="color:#a6e22e">p</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">People</span>{}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">p</span>.<span style="color:#a6e22e">String</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>A: Yes [1 point]
 A: Yes, will recurse infinitely [3 points]</p>
 <hr>
 <p>To be continued.</p>
@@ -429,7 +427,7 @@ A: Yes, will recurse infinitely [3 points]</p>
     <h4 class="page-header">Comments</h4>
 <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

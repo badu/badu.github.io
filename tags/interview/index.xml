@@ -16,7 +16,7 @@
       <description>Foreword See part 1.
 Q: What will return the following code?
 func returnNormal() int { i := 1 defer func() { i++ }() return i } func returnNamed() (i int) { i = 1 defer func() { i++ }() return i } func main() { fmt.Printf(&amp;#34;returnNormal() = %d\n&amp;#34;, returnNormal()) fmt.Printf(&amp;#34;returnNamed() = %d\n&amp;#34;, returnNamed()) } A: returnNormal() = 1 and returnNamed() = 2 [3 points] (why : lazy evaluation)
- Q: What will print the following code?</description>
+Q: What will print the following code?</description>
     </item>
     
     <item>

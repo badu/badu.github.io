@@ -85,8 +85,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.75.0-DEV" />
-
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.110.0">
 
 
     
@@ -223,10 +222,10 @@
 <p>Am văzut o rezistență la învățare, cam peste tot. Când spui „ar trebui să folosim SAGA drept design pattern” sau „hai să nu reinventăm apa caldă, chestia asta pe care vreți s-o inventați are un nume, și anume event sourcing, command and query responsibility segregation, etc” și nu se întâmplă nimic, ceea ce se produce este în pericol de a fi absolut inutil. Oamenii ăia de le-au dat nume acestor pattern-uri, s-au întâlnit exact cu aceleași probleme pe care tu încerci să le rezolvi.</p>
 <p>Apropo de rezistență la învățare, unul dintre cele mai mari pericole este mind-set-ul. De exemplu, un programator de Javascript vine și-ți face un Future în Go.
 Și-i spui, „Gicule, uite tată aici:”</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)      <span style="color:#75715e">// future
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">c</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">f</span>() }() <span style="color:#75715e">// async
-</span><span style="color:#75715e"></span><span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">c</span>             <span style="color:#75715e">// await
-</span></code></pre></div><p>Dar el nu, și nu. Și exemple ca ăsta am o groază.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)      <span style="color:#75715e">// future
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() { <span style="color:#a6e22e">c</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">f</span>() }() <span style="color:#75715e">// async
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">c</span>             <span style="color:#75715e">// await
+</span></span></span></code></pre></div><p>Dar el nu, și nu. Și exemple ca ăsta am o groază.</p>
 <p>Întotdeauna mă gândesc întâi la transport. Asta pentru că pierderea de timp îmi pare să aibă drept sursă, modalitatea în care noi, dezvoltatorii de soluții, transformăm continuu ceva în altceva. Deci primești json, transformi în ceva pe care-l înțelege mysql. Și-l transformi și în protobuf, pe care-l înțelege alt microserviciu. Și-l transformi și în ceva pe care-l înțelege elastic search. Aparent, toate sunt necesare. Ei bine, nu sunt. Principalul e să le cauți, iar după ce le-ai găsit, să le eviți.</p>
 <h2 id="în-loc-de-concluzie">În loc de concluzie</h2>
 <p>Să transformi un monolit într-o gașcă de microservicii e un lucru foarte complicat. Și succesul depinde de foarte multe variabile.</p>
@@ -238,7 +237,7 @@
     <h4 class="page-header">Comments</h4>
 <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

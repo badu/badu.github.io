@@ -85,8 +85,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.75.0-DEV" />
-
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.110.0">
 
 
     
@@ -206,170 +205,170 @@
 <p>Let&rsquo;s try to forget about what a route really  is, by splitting it into three main properties : a http method (GET/POST/PUT/etc.), a path string and a function which needs to be called if that path string looks like something particular.</p>
 <p>From now on, we&rsquo;re going to deal with that string only. Leaving the theory alone, the <a href="https://en.wikipedia.org/wiki/Radix_tree">applications</a> of a radix tree are constructing a tree of pieces of strings which hold a reference to an object (fancy called associative arrays with keys).</p>
 <p>Let&rsquo;s get coding:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	<span style="color:#f92672">package</span> <span style="color:#a6e22e">radix</span>
-
-	<span style="color:#66d9ef">type</span> (
-		<span style="color:#a6e22e">Tree</span> <span style="color:#66d9ef">struct</span> {
-			<span style="color:#a6e22e">root</span> <span style="color:#a6e22e">Node</span>
-		}
-
-		<span style="color:#a6e22e">Edge</span> <span style="color:#66d9ef">struct</span> {
-			<span style="color:#a6e22e">label</span>  <span style="color:#66d9ef">string</span>
-			<span style="color:#a6e22e">parent</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>
-			<span style="color:#a6e22e">child</span>  <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>
-		}
-
-		<span style="color:#a6e22e">Edges</span> []<span style="color:#a6e22e">Edge</span>
-
-		<span style="color:#a6e22e">leafNode</span> <span style="color:#66d9ef">struct</span> {
-			<span style="color:#a6e22e">key</span>   <span style="color:#66d9ef">string</span>
-			<span style="color:#a6e22e">value</span> <span style="color:#66d9ef">interface</span>{}
-		}
-
-		<span style="color:#a6e22e">Node</span> <span style="color:#66d9ef">struct</span> {
-			<span style="color:#a6e22e">leaf</span>  <span style="color:#f92672">*</span><span style="color:#a6e22e">leafNode</span>
-			<span style="color:#a6e22e">edges</span> <span style="color:#a6e22e">Edges</span>
-		}
-	)
-
-	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>) <span style="color:#a6e22e">isLeaf</span>() <span style="color:#66d9ef">bool</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">leaf</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> len(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">edges</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>
-	}
-
-	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>) <span style="color:#a6e22e">createNode</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">leafKey</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">value</span> <span style="color:#66d9ef">interface</span>{}) {
-		<span style="color:#a6e22e">leafNode</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Node</span>{
-			<span style="color:#a6e22e">leaf</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">leafNode</span>{
-				<span style="color:#a6e22e">key</span>:   <span style="color:#a6e22e">leafKey</span>,
-				<span style="color:#a6e22e">value</span>: <span style="color:#a6e22e">value</span>,
-			},
-		}
-		<span style="color:#a6e22e">newEdge</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Edge</span>{
-			<span style="color:#a6e22e">label</span>:  <span style="color:#a6e22e">edgeKey</span>,
-			<span style="color:#a6e22e">parent</span>: <span style="color:#a6e22e">n</span>,
-			<span style="color:#a6e22e">child</span>:  <span style="color:#a6e22e">leafNode</span>,
-		}
-		<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">edges</span> = append(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">edges</span>, <span style="color:#a6e22e">newEdge</span>)
-	}
-
-	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>) <span style="color:#a6e22e">createNodeWithEdges</span>(<span style="color:#a6e22e">newKey</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">edgeKey</span> <span style="color:#66d9ef">string</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span> {
-		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">isLeaf</span>() {
-			<span style="color:#75715e">//node is leaf node could not split, return nil
-</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-		}
-
-		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">idx</span>, <span style="color:#a6e22e">edge</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">edges</span> {
-			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">edgeKey</span> {
-				<span style="color:#75715e">// backup for split
-</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">oldNode</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>
-				<span style="color:#75715e">// create a new node
-</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">newNode</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Node</span>{}
-				<span style="color:#75715e">// replace current edge with a new one
-</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">edges</span>[<span style="color:#a6e22e">idx</span>] = <span style="color:#a6e22e">Edge</span>{
-					<span style="color:#a6e22e">label</span>:  <span style="color:#a6e22e">newKey</span>,
-					<span style="color:#a6e22e">parent</span>: <span style="color:#a6e22e">n</span>,
-					<span style="color:#a6e22e">child</span>:  <span style="color:#a6e22e">newNode</span>,
-				}
-				<span style="color:#75715e">// connect to original node
-</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">remainKey</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">newKey</span>)
-				<span style="color:#a6e22e">newEdge</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Edge</span>{
-					<span style="color:#a6e22e">label</span>:  <span style="color:#a6e22e">remainKey</span>,
-					<span style="color:#a6e22e">parent</span>: <span style="color:#a6e22e">newNode</span>,
-					<span style="color:#a6e22e">child</span>:  <span style="color:#a6e22e">oldNode</span>,
-				}
-				<span style="color:#75715e">// append the edges with that new edge
-</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">newNode</span>.<span style="color:#a6e22e">edges</span> = append(<span style="color:#a6e22e">newNode</span>.<span style="color:#a6e22e">edges</span>, <span style="color:#a6e22e">newEdge</span>)
-				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">newNode</span>
-			}
-		}
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
-	}
-
-	<span style="color:#75715e">// it&#39;s recursive
-</span><span style="color:#75715e"></span>	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Tree</span>) <span style="color:#a6e22e">insert</span>(<span style="color:#a6e22e">target</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>, <span style="color:#a6e22e">edgeKey</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">leafKey</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">value</span> <span style="color:#66d9ef">interface</span>{}) {
-		<span style="color:#75715e">// we&#39;ve reached leaf
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">isLeaf</span>() {
-			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">leafKey</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">leaf</span>.<span style="color:#a6e22e">key</span> {
-				<span style="color:#75715e">// the same leaf key, update value
-</span><span style="color:#75715e"></span>				<span style="color:#75715e">// if overwriting values is by convention forbidden, should panic
-</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">leaf</span>.<span style="color:#a6e22e">value</span> = <span style="color:#a6e22e">value</span>
-			} <span style="color:#66d9ef">else</span> {
-				<span style="color:#75715e">// insert leaf key value as new child node of target
-</span><span style="color:#75715e"></span>				<span style="color:#75715e">// original leaf node, became another leaf of target
-</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">createNode</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">leafKey</span>, <span style="color:#a6e22e">value</span>)
-				<span style="color:#75715e">// we have a convention here, regarding empty strings
-</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">createNode</span>(<span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">leaf</span>.<span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">leaf</span>.<span style="color:#a6e22e">value</span>)
-				<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">leaf</span> = <span style="color:#66d9ef">nil</span>
-			}
-			<span style="color:#66d9ef">return</span>
-		}
-
-		<span style="color:#75715e">// second case, checking edges
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">edge</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">edges</span> {
-			<span style="color:#a6e22e">compare</span>, <span style="color:#a6e22e">found</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">longestPrefix</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>)
-			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">found</span> {
-				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">compare</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span> {
-					<span style="color:#75715e">// trim edge.label from new key
-</span><span style="color:#75715e"></span>					<span style="color:#a6e22e">nextTargetKey</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>)
-					<span style="color:#75715e">// recurse
-</span><span style="color:#75715e"></span>					<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">insert</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>, <span style="color:#a6e22e">nextTargetKey</span>, <span style="color:#a6e22e">leafKey</span>, <span style="color:#a6e22e">value</span>)
-				} <span style="color:#66d9ef">else</span> {
-					<span style="color:#75715e">// using compare to create new node and separate two edges
-</span><span style="color:#75715e"></span>					<span style="color:#a6e22e">splitNode</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">createNodeWithEdges</span>(<span style="color:#a6e22e">compare</span>, <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>)
-					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">splitNode</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
-						panic(<span style="color:#e6db74">&#34;Unexpected error on creating new node and separating edges&#34;</span>)
-					}
-					<span style="color:#a6e22e">splitContainKey</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">compare</span>)
-					<span style="color:#a6e22e">splitNode</span>.<span style="color:#a6e22e">createNode</span>(<span style="color:#a6e22e">splitContainKey</span>, <span style="color:#a6e22e">leafKey</span>, <span style="color:#a6e22e">value</span>)
-				}
-				<span style="color:#66d9ef">return</span>
-			}
-		}
-		<span style="color:#75715e">// new edge with new leaf key on leaf node
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">createNode</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">leafKey</span>, <span style="color:#a6e22e">value</span>)
-	}
-
-	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Tree</span>) <span style="color:#a6e22e">Insert</span>(<span style="color:#a6e22e">what</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">value</span> <span style="color:#66d9ef">interface</span>{}) {
-		<span style="color:#75715e">//leaf key and edge key are the same
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">insert</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">root</span>, <span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">value</span>)
-	}
-
-	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Tree</span>) <span style="color:#a6e22e">search</span>(<span style="color:#a6e22e">where</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>, <span style="color:#a6e22e">what</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">interface</span>{}, <span style="color:#66d9ef">bool</span>) {
-		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">where</span>.<span style="color:#a6e22e">isLeaf</span>() {
-			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">where</span>.<span style="color:#a6e22e">leaf</span>.<span style="color:#a6e22e">value</span>, <span style="color:#66d9ef">true</span>
-		}
-		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">edge</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">where</span>.<span style="color:#a6e22e">edges</span> {
-			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">compare</span>, <span style="color:#a6e22e">found</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">longestPrefix</span>(<span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>); <span style="color:#a6e22e">found</span> {
-				<span style="color:#a6e22e">nextSearchKey</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">compare</span>)
-				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">search</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>, <span style="color:#a6e22e">nextSearchKey</span>)
-			}
-		}
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#66d9ef">false</span>
-	}
-
-	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Tree</span>) <span style="color:#a6e22e">Search</span>(<span style="color:#a6e22e">what</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">interface</span>{}, <span style="color:#66d9ef">bool</span>) {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">search</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">root</span>, <span style="color:#a6e22e">what</span>)
-	}
-
-	<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">longestPrefix</span>(<span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">s2</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">bool</span>) {
-		<span style="color:#a6e22e">found</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">false</span>
-		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; len(<span style="color:#a6e22e">s1</span>) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">i</span> &lt; len(<span style="color:#a6e22e">s2</span>); <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
-			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">s1</span>[<span style="color:#a6e22e">i</span>] <span style="color:#f92672">!=</span> <span style="color:#a6e22e">s2</span>[<span style="color:#a6e22e">i</span>] {
-				<span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s1</span>[:<span style="color:#a6e22e">i</span>]
-				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>, <span style="color:#a6e22e">found</span>
-			}
-			<span style="color:#a6e22e">found</span> = <span style="color:#66d9ef">true</span>
-		}
-
-		<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">s1</span>) &gt; len(<span style="color:#a6e22e">s2</span>) {
-			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s2</span>, <span style="color:#a6e22e">found</span>
-		} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">s1</span>) <span style="color:#f92672">==</span> len(<span style="color:#a6e22e">s2</span>) {
-			<span style="color:#75715e">// special case : &#34;&#34; is not a subset of &#34;&#34;
-</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">s1</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">s2</span>
-		}
-
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">found</span>
-	}
-</code></pre></div><p>The code is pretty straight forward, however I&rsquo;ve placed some comments here and there, just in case.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>	<span style="color:#f92672">package</span> <span style="color:#a6e22e">radix</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">type</span> (
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Tree</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">root</span> <span style="color:#a6e22e">Node</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Edge</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">label</span>  <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">parent</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">child</span>  <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Edges</span> []<span style="color:#a6e22e">Edge</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">leafNode</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">key</span>   <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">value</span> <span style="color:#66d9ef">interface</span>{}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Node</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">leaf</span>  <span style="color:#f92672">*</span><span style="color:#a6e22e">leafNode</span>
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">edges</span> <span style="color:#a6e22e">Edges</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>) <span style="color:#a6e22e">isLeaf</span>() <span style="color:#66d9ef">bool</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">leaf</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> len(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">edges</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>) <span style="color:#a6e22e">createNode</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">leafKey</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">value</span> <span style="color:#66d9ef">interface</span>{}) {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">leafNode</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Node</span>{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">leaf</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">leafNode</span>{
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">key</span>:   <span style="color:#a6e22e">leafKey</span>,
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">value</span>: <span style="color:#a6e22e">value</span>,
+</span></span><span style="display:flex;"><span>			},
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">newEdge</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Edge</span>{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">label</span>:  <span style="color:#a6e22e">edgeKey</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">parent</span>: <span style="color:#a6e22e">n</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">child</span>:  <span style="color:#a6e22e">leafNode</span>,
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">edges</span> = append(<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">edges</span>, <span style="color:#a6e22e">newEdge</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">n</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>) <span style="color:#a6e22e">createNodeWithEdges</span>(<span style="color:#a6e22e">newKey</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">edgeKey</span> <span style="color:#66d9ef">string</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">isLeaf</span>() {
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e">//node is leaf node could not split, return nil
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">idx</span>, <span style="color:#a6e22e">edge</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">edges</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">edgeKey</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// backup for split
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#a6e22e">oldNode</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// create a new node
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#a6e22e">newNode</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Node</span>{}
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// replace current edge with a new one
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#a6e22e">n</span>.<span style="color:#a6e22e">edges</span>[<span style="color:#a6e22e">idx</span>] = <span style="color:#a6e22e">Edge</span>{
+</span></span><span style="display:flex;"><span>					<span style="color:#a6e22e">label</span>:  <span style="color:#a6e22e">newKey</span>,
+</span></span><span style="display:flex;"><span>					<span style="color:#a6e22e">parent</span>: <span style="color:#a6e22e">n</span>,
+</span></span><span style="display:flex;"><span>					<span style="color:#a6e22e">child</span>:  <span style="color:#a6e22e">newNode</span>,
+</span></span><span style="display:flex;"><span>				}
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// connect to original node
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#a6e22e">remainKey</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">newKey</span>)
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">newEdge</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Edge</span>{
+</span></span><span style="display:flex;"><span>					<span style="color:#a6e22e">label</span>:  <span style="color:#a6e22e">remainKey</span>,
+</span></span><span style="display:flex;"><span>					<span style="color:#a6e22e">parent</span>: <span style="color:#a6e22e">newNode</span>,
+</span></span><span style="display:flex;"><span>					<span style="color:#a6e22e">child</span>:  <span style="color:#a6e22e">oldNode</span>,
+</span></span><span style="display:flex;"><span>				}
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// append the edges with that new edge
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#a6e22e">newNode</span>.<span style="color:#a6e22e">edges</span> = append(<span style="color:#a6e22e">newNode</span>.<span style="color:#a6e22e">edges</span>, <span style="color:#a6e22e">newEdge</span>)
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">newNode</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// it&#39;s recursive
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Tree</span>) <span style="color:#a6e22e">insert</span>(<span style="color:#a6e22e">target</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>, <span style="color:#a6e22e">edgeKey</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">leafKey</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">value</span> <span style="color:#66d9ef">interface</span>{}) {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// we&#39;ve reached leaf
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">isLeaf</span>() {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">leafKey</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">leaf</span>.<span style="color:#a6e22e">key</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// the same leaf key, update value
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#75715e">// if overwriting values is by convention forbidden, should panic
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">leaf</span>.<span style="color:#a6e22e">value</span> = <span style="color:#a6e22e">value</span>
+</span></span><span style="display:flex;"><span>			} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// insert leaf key value as new child node of target
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#75715e">// original leaf node, became another leaf of target
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">createNode</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">leafKey</span>, <span style="color:#a6e22e">value</span>)
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// we have a convention here, regarding empty strings
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">createNode</span>(<span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">leaf</span>.<span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">leaf</span>.<span style="color:#a6e22e">value</span>)
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">leaf</span> = <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// second case, checking edges
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">edge</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">edges</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">compare</span>, <span style="color:#a6e22e">found</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">longestPrefix</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">found</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">compare</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span> {
+</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// trim edge.label from new key
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#a6e22e">nextTargetKey</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>)
+</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// recurse
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">insert</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>, <span style="color:#a6e22e">nextTargetKey</span>, <span style="color:#a6e22e">leafKey</span>, <span style="color:#a6e22e">value</span>)
+</span></span><span style="display:flex;"><span>				} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// using compare to create new node and separate two edges
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#a6e22e">splitNode</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">createNodeWithEdges</span>(<span style="color:#a6e22e">compare</span>, <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>)
+</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">splitNode</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>						panic(<span style="color:#e6db74">&#34;Unexpected error on creating new node and separating edges&#34;</span>)
+</span></span><span style="display:flex;"><span>					}
+</span></span><span style="display:flex;"><span>					<span style="color:#a6e22e">splitContainKey</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">compare</span>)
+</span></span><span style="display:flex;"><span>					<span style="color:#a6e22e">splitNode</span>.<span style="color:#a6e22e">createNode</span>(<span style="color:#a6e22e">splitContainKey</span>, <span style="color:#a6e22e">leafKey</span>, <span style="color:#a6e22e">value</span>)
+</span></span><span style="display:flex;"><span>				}
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// new edge with new leaf key on leaf node
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">target</span>.<span style="color:#a6e22e">createNode</span>(<span style="color:#a6e22e">edgeKey</span>, <span style="color:#a6e22e">leafKey</span>, <span style="color:#a6e22e">value</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Tree</span>) <span style="color:#a6e22e">Insert</span>(<span style="color:#a6e22e">what</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">value</span> <span style="color:#66d9ef">interface</span>{}) {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">//leaf key and edge key are the same
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">insert</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">root</span>, <span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">value</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Tree</span>) <span style="color:#a6e22e">search</span>(<span style="color:#a6e22e">where</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>, <span style="color:#a6e22e">what</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">interface</span>{}, <span style="color:#66d9ef">bool</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">where</span>.<span style="color:#a6e22e">isLeaf</span>() {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">where</span>.<span style="color:#a6e22e">leaf</span>.<span style="color:#a6e22e">value</span>, <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">edge</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">where</span>.<span style="color:#a6e22e">edges</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">compare</span>, <span style="color:#a6e22e">found</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">longestPrefix</span>(<span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>); <span style="color:#a6e22e">found</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">nextSearchKey</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">compare</span>)
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">search</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>, <span style="color:#a6e22e">nextSearchKey</span>)
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Tree</span>) <span style="color:#a6e22e">Search</span>(<span style="color:#a6e22e">what</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">interface</span>{}, <span style="color:#66d9ef">bool</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">search</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">root</span>, <span style="color:#a6e22e">what</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">longestPrefix</span>(<span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">s2</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">bool</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">found</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; len(<span style="color:#a6e22e">s1</span>) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">i</span> &lt; len(<span style="color:#a6e22e">s2</span>); <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">s1</span>[<span style="color:#a6e22e">i</span>] <span style="color:#f92672">!=</span> <span style="color:#a6e22e">s2</span>[<span style="color:#a6e22e">i</span>] {
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">s1</span>[:<span style="color:#a6e22e">i</span>]
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">result</span>, <span style="color:#a6e22e">found</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">found</span> = <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">s1</span>) &gt; len(<span style="color:#a6e22e">s2</span>) {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s2</span>, <span style="color:#a6e22e">found</span>
+</span></span><span style="display:flex;"><span>		} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">s1</span>) <span style="color:#f92672">==</span> len(<span style="color:#a6e22e">s2</span>) {
+</span></span><span style="display:flex;"><span>			<span style="color:#75715e">// special case : &#34;&#34; is not a subset of &#34;&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">s1</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">s2</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">found</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span></code></pre></div><p>The code is pretty straight forward, however I&rsquo;ve placed some comments here and there, just in case.</p>
 <p>As you can see inside the <a href="https://github.com/badu/badu.github.io/blob/master/code/2/radix_test.go">test</a>, I&rsquo;ve tested the search against some HTTP headers, just in case someone might find it useful to discard any unwanted headers inside a middleware. Later on, I&rsquo;ll probably benchmark the classical method of collecting HTTP headers against this method. However, this is not the point here.</p>
 <p>Usually, we, developers need to match URLs like <code>/posts/{tag}/{id:[0-9]+}</code> in the HTTP path and while we&rsquo;re at it also extract those meaningful arguments. Things seem even more complicated when the string contains query values, like <code>/posts/{tag}?filter=date&amp;author=3</code>.</p>
 <h4 id="the-star-lookup">The Star Lookup</h4>
@@ -377,104 +376,104 @@
 <p>Given the above convention, the path <code>/posts/{tag}/{id:[0-9]+}</code> would translate to <code>/posts/*/*</code>, ok?</p>
 <p>Also, in order to capture the query values <code>/posts/{id:[0-9]+}?filter=date</code> would translate to <code>/posts/*?*</code>.</p>
 <p>Here&rsquo;s the code :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">Edge</span>) <span style="color:#a6e22e">isStar</span>() <span style="color:#66d9ef">bool</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">label</span>, <span style="color:#e6db74">&#34;*&#34;</span>) <span style="color:#f92672">||</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">label</span>, <span style="color:#e6db74">&#34;/*&#34;</span>) <span style="color:#f92672">||</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">label</span>, <span style="color:#e6db74">&#34;?*&#34;</span>)
-	}
-
-	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Tree</span>) <span style="color:#a6e22e">starSearch</span>(<span style="color:#a6e22e">where</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>, <span style="color:#a6e22e">what</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">interface</span>{}, <span style="color:#66d9ef">bool</span>) {
-		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">where</span>.<span style="color:#a6e22e">isLeaf</span>() {
-			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">where</span>.<span style="color:#a6e22e">leaf</span>.<span style="color:#a6e22e">value</span>, <span style="color:#66d9ef">true</span>
-		}
-
-		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">edge</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">where</span>.<span style="color:#a6e22e">edges</span> {
-			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">isStar</span>() {
-				<span style="color:#75715e">// search key is empty and we&#39;re on the &#34;/*&#34; means we&#39;re looking for the last sibling of the edge
-</span><span style="color:#75715e"></span>				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">what</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>, <span style="color:#e6db74">&#34;/*&#34;</span>) {
-					<span style="color:#66d9ef">continue</span>
-				}
-				<span style="color:#75715e">// different kind of star... (&#34;*&#34; or &#34;?*&#34;)
-</span><span style="color:#75715e"></span>
-				<span style="color:#75715e">// remove the common parts
-</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">remove</span>, <span style="color:#a6e22e">found</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">longestPrefix</span>(<span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>)
-				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">found</span> {
-					<span style="color:#a6e22e">what</span> = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">remove</span>)
-				}
-
-				<span style="color:#75715e">// split by slashes so we can build a new key
-</span><span style="color:#75715e"></span>				<span style="color:#a6e22e">parts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">what</span>, <span style="color:#e6db74">&#34;/&#34;</span>)
-
-				<span style="color:#66d9ef">switch</span> len(<span style="color:#a6e22e">parts</span>) {
-				<span style="color:#66d9ef">case</span> <span style="color:#ae81ff">1</span>:
-					<span style="color:#75715e">// ok, we had one piece
-</span><span style="color:#75715e"></span>					<span style="color:#75715e">// looking for the question mark - might be handy to give up on this for speed
-</span><span style="color:#75715e"></span>					<span style="color:#a6e22e">index</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Index</span>(<span style="color:#a6e22e">what</span>, <span style="color:#e6db74">&#34;?&#34;</span>)
-					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">index</span> &gt; <span style="color:#ae81ff">0</span> {
-						<span style="color:#75715e">//TODO : collect star key after question mark
-</span><span style="color:#75715e"></span>						<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Collect after question mark &#34;</span>, <span style="color:#a6e22e">what</span>[<span style="color:#a6e22e">index</span>:])
-						<span style="color:#75715e">// lookup question marks - down in the tree
-</span><span style="color:#75715e"></span>						<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">starSearch</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>, <span style="color:#a6e22e">what</span>[<span style="color:#a6e22e">index</span>:])
-					}
-					<span style="color:#75715e">// don&#39;t have a question mark, but we have a star (continue) - looking for the last sibling edge
-</span><span style="color:#75715e"></span>					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>, <span style="color:#e6db74">&#34;?*&#34;</span>) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">remove</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;?&#34;</span> {
-						<span style="color:#66d9ef">continue</span>
-					}
-					<span style="color:#75715e">//TODO : collect star key
-</span><span style="color:#75715e"></span>					<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Collect Path Part&#34;</span>, <span style="color:#a6e22e">what</span>)
-					<span style="color:#75715e">// we have a star, no question mark - looking for the node leaf
-</span><span style="color:#75715e"></span>					<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">starSearch</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>, <span style="color:#e6db74">&#34;&#34;</span>)
-				<span style="color:#66d9ef">default</span>:
-					<span style="color:#75715e">//TODO : collect star key part of the path
-</span><span style="color:#75715e"></span>					<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Collect Path Part&#34;</span>, <span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">0</span>])
-					<span style="color:#75715e">// building a new key with the parts that we have
-</span><span style="color:#75715e"></span>					<span style="color:#a6e22e">what</span> = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Join</span>(<span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">1</span>:], <span style="color:#e6db74">&#34;/&#34;</span>)
-					<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">starSearch</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>, <span style="color:#a6e22e">what</span>)
-				}
-			}
-
-			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">compare</span>, <span style="color:#a6e22e">found</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">longestPrefix</span>(<span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>); <span style="color:#a6e22e">found</span> {
-				<span style="color:#a6e22e">nextSearchKey</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">compare</span>)
-				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">starSearch</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>, <span style="color:#a6e22e">nextSearchKey</span>)
-			}
-		}
-
-		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#66d9ef">false</span>
-	}
-
-	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Tree</span>) <span style="color:#a6e22e">StarSearch</span>(<span style="color:#a6e22e">what</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">interface</span>{}, <span style="color:#66d9ef">bool</span>) {
-		<span style="color:#75715e">// TODO : use a mutex here if you are using this concurrent
-</span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">starSearch</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">root</span>, <span style="color:#a6e22e">what</span>)
-	}
-</code></pre></div><p>Remember, you have to adapt this to your specific needs and for this reason I haven&rsquo;t imposed a way of capturing path parts that match star (<code>*</code>). I&rsquo;ve left comments where you can do that.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">Edge</span>) <span style="color:#a6e22e">isStar</span>() <span style="color:#66d9ef">bool</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">label</span>, <span style="color:#e6db74">&#34;*&#34;</span>) <span style="color:#f92672">||</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">label</span>, <span style="color:#e6db74">&#34;/*&#34;</span>) <span style="color:#f92672">||</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">label</span>, <span style="color:#e6db74">&#34;?*&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Tree</span>) <span style="color:#a6e22e">starSearch</span>(<span style="color:#a6e22e">where</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Node</span>, <span style="color:#a6e22e">what</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">interface</span>{}, <span style="color:#66d9ef">bool</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">where</span>.<span style="color:#a6e22e">isLeaf</span>() {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">where</span>.<span style="color:#a6e22e">leaf</span>.<span style="color:#a6e22e">value</span>, <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">edge</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">where</span>.<span style="color:#a6e22e">edges</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">isStar</span>() {
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// search key is empty and we&#39;re on the &#34;/*&#34; means we&#39;re looking for the last sibling of the edge
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">what</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>, <span style="color:#e6db74">&#34;/*&#34;</span>) {
+</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>				}
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// different kind of star... (&#34;*&#34; or &#34;?*&#34;)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// remove the common parts
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#a6e22e">remove</span>, <span style="color:#a6e22e">found</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">longestPrefix</span>(<span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>)
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">found</span> {
+</span></span><span style="display:flex;"><span>					<span style="color:#a6e22e">what</span> = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">remove</span>)
+</span></span><span style="display:flex;"><span>				}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// split by slashes so we can build a new key
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#a6e22e">parts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">what</span>, <span style="color:#e6db74">&#34;/&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">switch</span> len(<span style="color:#a6e22e">parts</span>) {
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">case</span> <span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// ok, we had one piece
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#75715e">// looking for the question mark - might be handy to give up on this for speed
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#a6e22e">index</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Index</span>(<span style="color:#a6e22e">what</span>, <span style="color:#e6db74">&#34;?&#34;</span>)
+</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">index</span> &gt; <span style="color:#ae81ff">0</span> {
+</span></span><span style="display:flex;"><span>						<span style="color:#75715e">//TODO : collect star key after question mark
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>						<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Collect after question mark &#34;</span>, <span style="color:#a6e22e">what</span>[<span style="color:#a6e22e">index</span>:])
+</span></span><span style="display:flex;"><span>						<span style="color:#75715e">// lookup question marks - down in the tree
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>						<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">starSearch</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>, <span style="color:#a6e22e">what</span>[<span style="color:#a6e22e">index</span>:])
+</span></span><span style="display:flex;"><span>					}
+</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// don&#39;t have a question mark, but we have a star (continue) - looking for the last sibling edge
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>, <span style="color:#e6db74">&#34;?*&#34;</span>) <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">remove</span> <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;?&#34;</span> {
+</span></span><span style="display:flex;"><span>						<span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>					}
+</span></span><span style="display:flex;"><span>					<span style="color:#75715e">//TODO : collect star key
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Collect Path Part&#34;</span>, <span style="color:#a6e22e">what</span>)
+</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// we have a star, no question mark - looking for the node leaf
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">starSearch</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>, <span style="color:#e6db74">&#34;&#34;</span>)
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">default</span>:
+</span></span><span style="display:flex;"><span>					<span style="color:#75715e">//TODO : collect star key part of the path
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Collect Path Part&#34;</span>, <span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// building a new key with the parts that we have
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#a6e22e">what</span> = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Join</span>(<span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">1</span>:], <span style="color:#e6db74">&#34;/&#34;</span>)
+</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">starSearch</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>, <span style="color:#a6e22e">what</span>)
+</span></span><span style="display:flex;"><span>				}
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">compare</span>, <span style="color:#a6e22e">found</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">longestPrefix</span>(<span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">label</span>); <span style="color:#a6e22e">found</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">nextSearchKey</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">what</span>, <span style="color:#a6e22e">compare</span>)
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">starSearch</span>(<span style="color:#a6e22e">edge</span>.<span style="color:#a6e22e">child</span>, <span style="color:#a6e22e">nextSearchKey</span>)
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Tree</span>) <span style="color:#a6e22e">StarSearch</span>(<span style="color:#a6e22e">what</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">interface</span>{}, <span style="color:#66d9ef">bool</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// TODO : use a mutex here if you are using this concurrent
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">starSearch</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">t</span>.<span style="color:#a6e22e">root</span>, <span style="color:#a6e22e">what</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span></code></pre></div><p>Remember, you have to adapt this to your specific needs and for this reason I haven&rsquo;t imposed a way of capturing path parts that match star (<code>*</code>). I&rsquo;ve left comments where you can do that.</p>
 <p>In the above starSearch function there is a catch : if the edges slice is not sorted, so the last sibling is the star (<code>*</code>), the search will not work. To sort those slices, we need the following:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">Edges</span>) <span style="color:#a6e22e">Len</span>() <span style="color:#66d9ef">int</span> {
-		<span style="color:#66d9ef">return</span> len(<span style="color:#a6e22e">e</span>)
-	}
-
-	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">Edges</span>) <span style="color:#a6e22e">Less</span>(<span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">j</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">bool</span> {
-		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">label</span> &gt; <span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">j</span>].<span style="color:#a6e22e">label</span>
-	}
-
-	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">Edges</span>) <span style="color:#a6e22e">Swap</span>(<span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">j</span> <span style="color:#66d9ef">int</span>) {
-		<span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">i</span>], <span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">j</span>] = <span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">j</span>], <span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">i</span>]
-	}
-
-	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">Edges</span>) <span style="color:#a6e22e">Sort</span>() {
-		<span style="color:#a6e22e">sort</span>.<span style="color:#a6e22e">Sort</span>(<span style="color:#a6e22e">e</span>)
-	}
-</code></pre></div><p>The functions createNode and createNodeWithEdges will have the following additional piece of code:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">useSortEdges</span> {
-		<span style="color:#75715e">// we&#39;re always sorting in reverse, so stars are last siblings
-</span><span style="color:#75715e"></span>		<span style="color:#a6e22e">newNode</span>.<span style="color:#a6e22e">edges</span>.<span style="color:#a6e22e">Sort</span>()
-	}
-</code></pre></div><h4 id="recommendations">Recommendations</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">Edges</span>) <span style="color:#a6e22e">Len</span>() <span style="color:#66d9ef">int</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> len(<span style="color:#a6e22e">e</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">Edges</span>) <span style="color:#a6e22e">Less</span>(<span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">j</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">bool</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">i</span>].<span style="color:#a6e22e">label</span> &gt; <span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">j</span>].<span style="color:#a6e22e">label</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">Edges</span>) <span style="color:#a6e22e">Swap</span>(<span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">j</span> <span style="color:#66d9ef">int</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">i</span>], <span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">j</span>] = <span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">j</span>], <span style="color:#a6e22e">e</span>[<span style="color:#a6e22e">i</span>]
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#a6e22e">Edges</span>) <span style="color:#a6e22e">Sort</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">sort</span>.<span style="color:#a6e22e">Sort</span>(<span style="color:#a6e22e">e</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span></code></pre></div><p>The functions createNode and createNodeWithEdges will have the following additional piece of code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">useSortEdges</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// we&#39;re always sorting in reverse, so stars are last siblings
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">newNode</span>.<span style="color:#a6e22e">edges</span>.<span style="color:#a6e22e">Sort</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span></code></pre></div><h4 id="recommendations">Recommendations</h4>
 <p>First, don&rsquo;t forget to use mutex for search - I&rsquo;ve left a comment there - if you are using it in a concurrent way.</p>
 <p>Secondly, the problem of defining one route is that you can&rsquo;t do this <code>/*/*</code> and expect it to work only in one route. In order to make it work you need an <code>exception string</code> (see TestStarOneRoute) and that exception string to look like <code>*/something-never-matched</code>.</p>
 <p>Regarding leafNode struct value property, which is typed <code>interface{}</code> in the above code - you should do whatever you like with it. To give you an obvious example:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go">	<span style="color:#a6e22e">leafNode</span> <span style="color:#66d9ef">struct</span> {
-        <span style="color:#a6e22e">key</span>   <span style="color:#66d9ef">string</span>
-		<span style="color:#a6e22e">value</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandlerFunc</span>
-	}
-</code></pre></div><p>Last, but not least, you can alter things like adding a flag to the tree to mark it as dirty, then process all the edges in the tree and mark them as isStar <code>true/false</code> so <code>isStar() bool</code> function can be replaced like that. Or you could rewrite some parts to reduce allocations.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>	<span style="color:#a6e22e">leafNode</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">key</span>   <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">value</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">HandlerFunc</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span></code></pre></div><p>Last, but not least, you can alter things like adding a flag to the tree to mark it as dirty, then process all the edges in the tree and mark them as isStar <code>true/false</code> so <code>isStar() bool</code> function can be replaced like that. Or you could rewrite some parts to reduce allocations.</p>
 <h4 id="other-usages">Other usages</h4>
 <p>Besides request routing, radix trees can be used in building ACLs (storing capabilities/permissions in the <code>value</code> property), spell checkers, auto-complete suggestions and <a href="https://github.com/hashicorp/go-memdb">in memory database</a>.</p>
 <h4 id="code">Code</h4>
@@ -529,7 +528,7 @@
     <h4 class="page-header">Comments</h4>
 <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

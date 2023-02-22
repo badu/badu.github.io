@@ -85,8 +85,7 @@
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
 
-<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.75.0-DEV" />
-
+<script>$(document).on('click', function() { $('.collapse').collapse('hide'); })</script> <meta name="generator" content="Hugo 0.110.0">
 
 
     
@@ -212,9 +211,9 @@ func runtime_registerPoolCleanup(cleanup func())
 </li>
 <li>
 <p>use the directive :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//go:linkname registerCacheCleanupFn sync.runtime_registerPoolCleanup
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">registerCacheCleanupFn</span>(<span style="color:#a6e22e">f</span> <span style="color:#66d9ef">func</span>())
-</code></pre></div></li>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">//go:linkname registerCacheCleanupFn sync.runtime_registerPoolCleanup
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">registerCacheCleanupFn</span>(<span style="color:#a6e22e">f</span> <span style="color:#66d9ef">func</span>())
+</span></span></code></pre></div></li>
 <li>
 <p>in the same file, declare the <code>init()</code> function and call <code>registerCacheCleanupFn</code> with our cleaning function implementation as parameter.</p>
 </li>
@@ -223,35 +222,35 @@ func runtime_registerPoolCleanup(cleanup func())
 <p>Advantages of using this technique are obvious. However, we have to keep in mind that our cleaning up implementation should NOT allocate and should NOT call any runtime functions - unless you think you are Mario (the plumber) and can deal with any kind of leak.</p>
 <h4 id="what-else-can-we-use">What else can we use?</h4>
 <p>If we to avoid importing &ldquo;strings&rdquo; just like <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/parse.go#L86">parse.go</a> inside &ldquo;net&rdquo; package does, but still be able to call IndexByte, we need the following declaration :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//go:linkname ByteIndex strings.IndexByte
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ByteIndex</span>(<span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">c</span> <span style="color:#66d9ef">byte</span>) <span style="color:#66d9ef">int</span>
-</code></pre></div><p>You might find these below useful as well.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">//go:linkname ByteIndex strings.IndexByte
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">ByteIndex</span>(<span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">c</span> <span style="color:#66d9ef">byte</span>) <span style="color:#66d9ef">int</span>
+</span></span></code></pre></div><p>You might find these below useful as well.</p>
 <p>Bytes :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//go:linkname BytesEqual bytes.Equal
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BytesEqual</span>(<span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span> []<span style="color:#66d9ef">byte</span>) <span style="color:#66d9ef">bool</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//go:linkname IndexByte bytes.IndexByte
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">IndexByte</span>(<span style="color:#a6e22e">s</span> []<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">c</span> <span style="color:#66d9ef">byte</span>) <span style="color:#66d9ef">int</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//go:linkname Compare bytes.Compare
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Compare</span>(<span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">b</span> []<span style="color:#66d9ef">byte</span>) <span style="color:#66d9ef">int</span>
-</code></pre></div><p>Time :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//go:linkname TimeSleep time.Sleep
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TimeSleep</span>(<span style="color:#a6e22e">ns</span> <span style="color:#66d9ef">int64</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//go:linkname StartTimer time.startTimer
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">StartTimer</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">timer</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//go:linkname StopTimer time.stopTimer
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">StopTimer</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">timer</span>) <span style="color:#66d9ef">bool</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//go:linkname PollNano internal/poll.runtimeNano
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">PollNano</span>() <span style="color:#66d9ef">int64</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//go:linkname TimeNano time.runtimeNano
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TimeNano</span>() <span style="color:#66d9ef">int64</span>
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#75715e">//go:linkname Now time.now
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Now</span>() (<span style="color:#a6e22e">sec</span> <span style="color:#66d9ef">int64</span>, <span style="color:#a6e22e">nsec</span> <span style="color:#66d9ef">int32</span>, <span style="color:#a6e22e">mono</span> <span style="color:#66d9ef">int64</span>)
-</code></pre></div><h4 id="a-side-note">A Side Note</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">//go:linkname BytesEqual bytes.Equal
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">BytesEqual</span>(<span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span> []<span style="color:#66d9ef">byte</span>) <span style="color:#66d9ef">bool</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">//go:linkname IndexByte bytes.IndexByte
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">IndexByte</span>(<span style="color:#a6e22e">s</span> []<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">c</span> <span style="color:#66d9ef">byte</span>) <span style="color:#66d9ef">int</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">//go:linkname Compare bytes.Compare
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Compare</span>(<span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">b</span> []<span style="color:#66d9ef">byte</span>) <span style="color:#66d9ef">int</span>
+</span></span></code></pre></div><p>Time :</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">//go:linkname TimeSleep time.Sleep
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TimeSleep</span>(<span style="color:#a6e22e">ns</span> <span style="color:#66d9ef">int64</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">//go:linkname StartTimer time.startTimer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">StartTimer</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">timer</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">//go:linkname StopTimer time.stopTimer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">StopTimer</span>(<span style="color:#a6e22e">t</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">timer</span>) <span style="color:#66d9ef">bool</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">//go:linkname PollNano internal/poll.runtimeNano
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">PollNano</span>() <span style="color:#66d9ef">int64</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">//go:linkname TimeNano time.runtimeNano
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TimeNano</span>() <span style="color:#66d9ef">int64</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">//go:linkname Now time.now
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Now</span>() (<span style="color:#a6e22e">sec</span> <span style="color:#66d9ef">int64</span>, <span style="color:#a6e22e">nsec</span> <span style="color:#66d9ef">int32</span>, <span style="color:#a6e22e">mono</span> <span style="color:#66d9ef">int64</span>)
+</span></span></code></pre></div><h4 id="a-side-note">A Side Note</h4>
 <p>By the way : I&rsquo;ve noticed that strings.Index is sometimes unnecessary called when the second parameter is just a byte (e.g. <code>strings.Index(url, &quot;?&quot;)</code> in <a href="https://github.com/golang/go/blob/release-branch.go1.9/src/net/http/server.go#L2002">server.go</a>). I know it is a micro optimization, but hey, let&rsquo;s use the right tool for the right job, shall we?</p>
 <p>Same observation goes for bytes.IndexByte too.</p>
 <p>Another observation regards strings.TrimPrefix and strings.TrimSuffix - I&rsquo;ve notice that sometimes developers checks if string has prefix or suffix before calling them, which is unnecessary because the check is done inside those functions. Perhaps it would be better to change the signatures of those functions like this :</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">prefix</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">bool</span>, <span style="color:#66d9ef">string</span>) <span style="color:#75715e">// returning true if string had that prefix and the trimmed string
-</span></code></pre></div><h4 id="directive-wish">Directive Wish</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">TrimPrefix</span>(<span style="color:#a6e22e">s</span>, <span style="color:#a6e22e">prefix</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">bool</span>, <span style="color:#66d9ef">string</span>) <span style="color:#75715e">// returning true if string had that prefix and the trimmed string
+</span></span></span></code></pre></div><h4 id="directive-wish">Directive Wish</h4>
 <p>Would be really useful for testing to have a directive that instructs the compiler to include or exclude portions of code, thus we can avoid including testing portions in the production.</p>
 </div>
     
@@ -303,7 +302,7 @@ func runtime_registerPoolCleanup(cleanup func())
     <h4 class="page-header">Comments</h4>
 <div id="disqus_thread"></div>
 <script type="application/javascript">
-    var disqus_config = function () {
+    window.disqus_config = function () {
     
     
     

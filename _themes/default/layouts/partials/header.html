@@ -13,7 +13,7 @@
 {{ end }}
     <meta property="site_name" content="{{ .Site.DisqusShortname }}">
     <meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
-    <meta property="og:url" content="{{ .URL | absURL }}">
+    <meta property="og:url" content="{{ .Permalink | absURL }}">
     <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }}{{ end }}">
     <meta property="og:image" content="{{ .Site.Params.banner }}">
 {{ if .IsHome }}
@@ -22,7 +22,7 @@
 {{ else }}
     <meta property="og:description" content="{{ .Description }}">
 {{ end }}
-    <meta name="twitter:url" content="{{ .URL | absURL }}">
+    <meta name="twitter:url" content="{{ .Permalink | absURL }}">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@{{ .Site.DisqusShortname }}">
     <meta name="twitter:creator" content="@{{ .Site.DisqusShortname }}">
@@ -38,15 +38,15 @@
     <link rel="dns-prefetch" href="//www.google-analytics.com">
     <link rel="dns-prefetch" href="//stats.g.doubleclick.net">
 {{ end }}
-    <link rel="canonical" href="{{ .URL | absURL }}">
+    <link rel="canonical" href="{{ .Permalink | absURL }}">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
     <link rel="shortcut icon" href="{{ "favicon.ico" | absURL }}">
 
-{{ partial "css" . }} {{ partial "js" . }} {{ .Hugo.Generator }}
-{{ if .RSSLink }}
-    <link href="{{ .RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}"/>
-    <link href="{{ .RSSLink }}" rel="feed" type="application/rss+xml" title="{{ .Site.Title }}"/>
-{{ end }}
+{{ partial "css" . }} {{ partial "js" . }} {{ hugo.Generator }}
+
+{{ with .OutputFormats.Get "rss" -}}
+    {{ printf `<link rel="%s" type="%s" href="%s" title="%s" />` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+{{ end -}}
 
 {{ if .Site.GoogleAnalytics }}
     <!-- Global Site Tag (gtag.js) - Google Analytics -->
