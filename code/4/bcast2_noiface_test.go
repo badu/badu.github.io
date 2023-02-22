@@ -94,8 +94,8 @@ func ArtilleryNoIface(ctx context.Context, f Fire) {
 
 /*
 *
-This doesn't work at all! No message gets received, because you always get a copy of the Fire object.
-
+This doesn't work at all!
+No message gets received, because you always get a copy of the Fire object.
 So, we should use a pointer!
 */
 func TestBroadcastNoIface(t *testing.T) {
