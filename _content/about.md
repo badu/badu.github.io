@@ -13,7 +13,7 @@ lastmod: 2023-02-23
 #### Note for Recruiters
 
 For those of you that are trying to relocate me, please understand this is not the case. At least not for now. Please
-read [this](/post/recruiters/) and [F.A.Q.](#recruiters-frequently-asked-questions) prior to contacting me. Thanks in
+read [this](/post/recruiters/) and [F.A.Q.](#recruiters-frequently-asked-questions) before contacting me. Thanks in
 advance!
 
 ---
@@ -23,15 +23,15 @@ advance!
 my name is Bogdan and I am a Go language enthusiast. In case you want to skip to Go language skills,
 click [here](#golang).
 
-I've started to program computers in 1991.
+I started to program computers in 1991.
 
 I was an entrepreneur. I've been a mentor.
 
-Proven leader and project manager, providing technical oversight for small teams of software developers.
+A proven leader and project manager, providing technical oversight for small teams of software developers.
 
-I've driven architecture decisions and lead projects from concept through the release process.
+I've driven architecture decisions and led projects from concept through the release process.
 
-I learn quickly, care about detail, and love computers, physics and mathematics.
+I learn quickly, care about detail, and love computers, physics, and mathematics.
 
 #### Contact information
 
@@ -39,14 +39,14 @@ You can write me on badu[at]badu.ro, contact me on Skype as badu[dot]bogdan or u
 
 ## Skills
 
-* Architect and lead projects from concept until released
+* Architect and lead projects from the concept until released
 * Broad and deep technical knowledge of several technological stacks
 * Take the most responsible approach regarding work and decisions made
-* Provide technical leadership for software engineers and oversee development
+* Provide technical leadership for software engineers and oversee the development
 * Communicate effectively and relate well to people
 * Represent an abstract problem in the form of some finite real object of the system, so everyone understands it
 * Write tools and automated test software
-* Always look at the solutions costs and how to optimize them
+* Always look at the costs of the solutions and how to optimize them
 
 ## Experience
 
@@ -54,18 +54,18 @@ You can write me on badu[at]badu.ro, contact me on Skype as badu[dot]bogdan or u
 
 ###### (October 2022 - Present day)
 
-* Mentorship for my colleagues which were interested in Go language
+* Mentorship for my colleagues who are interested in Go language
 
 #### Dev Technical Coordinator at [Cognizant-Softvision](https://www.cognizantsoftvision.com/)
 
 ###### (December 2018 - September 2022)
 
 * Technical leadership for the same organization
-* Mentorship for my colleagues which were interested in Go language
+* Mentorship for my colleagues who were interested in Go language
 * Driven architecture and development for our partner [Appetize](https://appetizeapp.com/)
 * Build micro-services using [GoKit](http://gokit.io) as a standard
-* Payments systems for largest client of Appetize (Disney)
-* Solution architect in a energy startup built with microservices (Google Cloud)
+* Payments systems for the largest client of Appetize (Disney)
+* Solution architect in an energy startup built with microservices (Google Cloud)
 * Payments systems for the clients of the energy startup
 * Cost optimization for cloud solution (Amazon Web Services) - reduced 5 (five) times the invoice amount
 * Solution architect for an internal office booking solution (Amazon Web Services)
@@ -75,17 +75,17 @@ You can write me on badu[at]badu.ro, contact me on Skype as badu[dot]bogdan or u
 ###### (November 2017 - November 2018)
 
 * Freelancing for various customers
-* Implementation of a dependency injection middleware that would conform with best practices while simplifying workflow
-  of controllers of those servers.
-* Created an automated trading bot which is listening on the exchange service and that initiates trades and hedge
+* Implementation of a dependency injection middleware that would conform with best practices while simplifying the
+  workflow of controllers of those servers.
+* Created an automated trading bot which is listening to the exchange service and initiates trades and hedges
   against the market.
-* Contributed on building of a bidirectional synchronization automation tool between internal data and sales force for
-  business operations.
-* Reduce coupling on [reflect package](https://github.com/badu/reflect), so it can be used on low memory devices.
-* Fixed the standard [json package](https://github.com/badu/json) omit empty bug. Reduced the number of allocations and
+* Contributed to the building of a bidirectional synchronization automation tool between internal data and sales force
+  for business operations.
+* Reduce coupling on [reflect package](https://github.com/badu/reflect), so it can be used on low-memory devices.
+* Fixed the standard [json package](https://github.com/badu/json) omits empty bug. Reduced the number of allocations and
   added a few enhancements.
-* Several [Codility](https://www.codility.com/) Golden awards, challenges solved in Go (links are available on my
-  LinkedIn profile page).
+* Several [Codility](https://www.codility.com/) Golden awards and challenges were solved in Go (links are available on
+  my LinkedIn profile page).
 * Solved over 400 problems on HackerRank for fun - see my profile [here](https://www.hackerrank.com/badu_ro?hr_r=1)
 * Dug deep into [radix trees](https://github.com/badu/radix)
 
@@ -93,10 +93,10 @@ You can write me on badu[at]badu.ro, contact me on Skype as badu[dot]bogdan or u
 
 ###### (April 2015 - October 2017)
 
-* Provided technical leadership and consultancy which resulted in two European funded projects
+* Provided technical leadership and consultancy which resulted in two European-funded projects
 * Overseen a small team of developers using SCRUM / Agile technique
-* Built a platform for photographers which performed calculus based on customers choices
-* Built publish-free ads website using a innovative taxonomy system
+* Built a platform for photographers which performed calculus based on customer's choices
+* Built a publish-free ads website using an innovative taxonomy system
 * Driven architecture and development for a voice over ip selling solution
 * Developed a platform for farmers using google maps for keeping work history on soil
 * Left the company because I want to work remotely
@@ -105,7 +105,7 @@ You can write me on badu[at]badu.ro, contact me on Skype as badu[dot]bogdan or u
 
 ###### (October 2013 - March 2015)
 
-* Built a second screen application prototype, running on smart TV, tablet and server
+* Built a second screen application prototype, running on smart TV, tablet and, server
 * Built an educational platform for quizzes
 * Left the company because it split-up
 
@@ -115,8 +115,8 @@ You can write me on badu[at]badu.ro, contact me on Skype as badu[dot]bogdan or u
 
 * Designed and implemented an advanced and scalable platform for the delivery and management of video content
 * Wrote automated workflow for uploading video resources to a centralized server cluster
-* Live broadcasting tool with control a live event and combine video with synchronized slides
-* Delivered an experimental Android application (ahead of it's time) for live broadcasts
+* Live broadcasting tool with controls a live event and combine video with synchronized slides
+* Delivered an experimental Android application (ahead of its time) for live broadcasts
 * Left the company because the contract was over
 
 #### [Adobe](http://www.adobe.com) User Group Manager for Romanian Flex User Group
@@ -124,12 +124,12 @@ You can write me on badu[at]badu.ro, contact me on Skype as badu[dot]bogdan or u
 ###### (2009 - 2012)
 
 * Started mentoring a group of young pupils
-* Started to broad my communication skills
+* Started to broaden my communication skills
 * Blogging regarding Adobe Flex
-* Host for events like launch parties and popularizing Flex
+* Host events like launch parties and popularize Flex
 * Wrote an Actionscript dependency injection framework called Roless
 * I've started enjoying Java because the Flex compiler was written with it
-* Left the position because Flash was discontinued and I've fell in love with Spring Boot
+* Left the position because Flash was discontinued and I've fallen in love with Spring Boot
 
 #### Freelancer for various clients (U.S. and Europe)
 
@@ -138,39 +138,39 @@ You can write me on badu[at]badu.ro, contact me on Skype as badu[dot]bogdan or u
 * Built a bookmarks manager with social networking capabilities - learned a lot about taxonomies and group theory
 * Built an application for a client that synchronized sales data with a [SAP](https://www.sap.com) server
 * Multitouch SDK based on FLOSC for [SensyTouch](http://www.sensytouch.ro/) - a startup that took off
-* Code generators for SQLite, Zend, Actionscript Message Format and many others
+* Code generators for SQLite, Zend, Actionscript Message Format, and many others
 * Stopped freelancing because Workzone hired me
 
 #### Entrepreneur Synergy Design
 
 ###### (2003 - 2007)
 
-* Planned, designed and implemented web and desktop applications
+* Planned, designed, and implemented web and desktop applications
 * Managed a small team of developers and marketers
-* Biggest project was called Eurobiz - a 60000 Romanian companies database organized by their domain of activity
-* Closed the company due to economical climate
+* The biggest project was called Eurobiz - a 60000 Romanian companies database organized by their domain of activity
+* Closed the company due to the economical climate
 
 #### Programmer at Secure Software
 
 ###### (2002)
 
-* Contributed in choosing the right tool for the right job, after management tried Delphi and C# (solution was Adobe
+* Contributed to choosing the right tool for the right job, after management tried Delphi and C# (the solution was Adobe
   Flash)
 * Left the company so I can start my own
 
 ## Education
 
-I have a master degree in naval engineering and graduated from
+I have a master's degree in naval engineering and graduated from
 the [University of Low Danube Galati](http://www.en.ugal.ro/faculties/faculty-of-naval-arhitecture) in 2002.
 
-During studies, I have developed engineering software to help with calculus in various disciplines like mechanics and
+During my studies, I have developed engineering software to help with calculus in various disciplines like mechanics and
 materials resistance.
 
-For my final-year project I designed a software being able to calculate the heat transfer in the galley, using the
+For my final-year project, I designed software able to calculate the heat transfer in the galley, using the
 finite element method.
 
-Master degree's project was also a software based on finite element method, which calculates vibration and noises on
-main crankshaft of the ships.
+Master's degree project was also software based on the finite element method, which calculates vibration and noises on
+the main crankshaft of the ships.
 
 ---
 
@@ -180,44 +180,44 @@ After more than 27 years of experience, I can say "what a journey"! I won't bore
 to program or the fact that I know the assembly language for 8086 CPUs.
 
 The reason for this section here is not to brag about my accomplishments, but that I feel that there is no faster way to
-get introduced, other than briefly present my journey.
+get introduced, other than briefly presenting my journey.
 
 I have grouped some of my experiences by categories, presenting you briefly with what I have learned in my life (not
 only as a developer) along the way.
 
 #### Videos
 
-A large project I've been working on was code named `Fluvi`.
+A large project I've been working on was code-named `Fluvi`.
 
-It was the era of Adobe Flash, Flex and all the neat work that Adobe did to push the browser experience farther.
+It was the era of Adobe Flash, Flex and all the neat work that Adobe did to push the browser experience further.
 
 What could you do with Fluvi : you could deliver recorded videos or live streams to Internet consumers. The live
 streaming was done with `Wowza Media Server`, which was written in Java and you could develop plugins for it. As a side
 note, because of Wowza, I've started my Java era.
 
 Fluvi had an automated workflow for uploading videos to a server cluster from which those videos were tagged using
-metadata, encoded to various formats (e.g. ".mp4" to ".flv"). We've called that `transcoding`. That's how I gained
-experience in video encoding, decoding, streaming and all the real time related problems.
+metadata, and encoded to various formats (e.g. ".mp4" to ".flv"). We've called that `transcoding`. That's how I gained
+experience in video encoding, decoding, streaming, and all the real-time related problems.
 
-All video content could be used either as an embed video in an article (using integration with content management
+All video content could be used either as an embedded video in an article (using integration with content management
 systems) or as a standalone solution using a video portal.
 
-Fluvi was also an archive system for videos and other resources as well, so we had to build an Elasticsearch based
+Fluvi was also an archive system for videos and other resources as well, so we had to build an Elasticsearch-based
 search engine.
 
-Both player and portal were customizable in terms of look-and-feel and their tools for skinning them. This customization
-could be done for each client-company.
+Both player and portal were customizable in terms of look and feel and their tools for skinning them. This customization
+could be done for each client company.
 
-The live broadcasting tool (code named Livecaster), allowed users to control a live event and combine video with
+The live broadcasting tool (code-named Livecaster), allowed users to control a live event and combine video with
 synchronized slides, near or on top of the player. Livecaster was suitable for transmission of press conferences,
-lectures, council meetings.
+lectures, and council meetings.
 
-For live events the participants that were attending the event via Internet, could post live questions that were sent in
-real time to the moderators (and, of course, the answers were live).
+For live events, the participants that were attending the event via Internet, could post live questions that were sent
+in real-time to the moderators (and, of course, the answers were live).
 
 Last but not least, I've built an Android application, packed with `Adobe AIR` and written entirely in ActionScript that
 allowed live webcasts from an Android device. The application connected to Fluvi backend and started to stream from the
-mobile-phone video camera. In order to save mobile-phone battery and optimize application's speed, I've used OpenGL
+mobile-phone video camera. In order to save mobile-phone battery and optimize the application's speed, I've used OpenGL
 capabilities.
 
 As you can tell, this was probably the most experience bringer project of them all : Java, live streaming, heavy search
@@ -243,7 +243,7 @@ Another experimental project dear to me was `eduSofa`. In 2013 I joined a local 
 that could solve a tight deadline on a very interesting project.
 
 The project was a second screen application prototype - tells you nothing, I know. Imagine you are watching TV, and you
-have a tablet in your lap. While watching a TV show, the tabled would synchronise with the TV and provide contextual
+have a tablet in your lap. While watching a TV show, the tablet would synchronize with the TV and provide contextual
 information about what you were watching. That contextual information was actually a micro website having a metadata
 that should match the metadata of the TV show data. To be more explicit, if you were watching a TV program with a show
 about whales, then the tablet would have presented you with what could you find out more about whales.
@@ -262,7 +262,7 @@ protocol we had to define for exchanging commands with smart TV application.
 I've managed to build a working prototype (frontend and backend) in just three months.
 
 We have continued the development of eduSofa, until it's death due to unnatural causes. In that process we've been using
-Hadoop and Akka for making TV shows recommendations based on the social side of the application, had to build an custom
+Hadoop and Akka for making TV shows recommendations based on the social side of the application, had to build a custom
 Electronic program guide display Android component, which was challenging in terms of speed of updates and scrolling in
 both directions in the same time (for neat looking).
 
@@ -276,14 +276,14 @@ needed to be displayed (coordinates were collected with total station - a GPS de
 measurements).
 
 The solution was to use an algorithm to eliminate points that were not needed for displaying a good enough approximate.
-Having a node with two neighbours, we've measured how much distance is between that node and the line that its
-neighbours define and if it was beyond a certain tolerance, the node was removed from the polygon that needed to be
+Having a node with two neighbors, we've measured how much distance is between that node and the line that its
+neighbors define and if it was beyond a certain tolerance, the node was removed from the polygon that needed to be
 drawn.
 
 We had to detect if the polygons do not overlap and solved that using a Gilbert-Johnson-Keerthi collision detection
 algorithm.
 
-I enjoy working with maps and coordinates, so if your project has challenges related with maps, I'll be more than happy
+I enjoy working with maps and coordinates, so if your project has challenges related to maps, I'll be more than happy
 to dive into them.
 
 #### Education
@@ -296,7 +296,7 @@ The challenges were small compared with those described above, but nevertheless 
 project using AngularJS, so I had re-enter the "wonderful" world of Javascript via a framework with a love-hate
 relationship with it. So, yes, I have the modern front end developer skills too (Grunt, Babel, Node, etc).
 
-The modelling - I love building data centric application - was interesting because we had to support a number of species
+The modeling - I love building data centric application - was interesting because we had to support a number of species
 of exams, each with certain conditions like shuffling, allow retaking and resuming the exams, measuring points and
 statistics.
 
@@ -328,8 +328,8 @@ referrals, etc.) with the core.
 
 #### Code Generators and Frameworks
 
-Yes, I'm lazy, like all developers are. For lazy part of me, I had to build myself tools, all sort of tools, that would
-write those boring pieces of code instead of me.
+Yes, I'm lazy, like all developers are. For the lazy part of me, I had to build myself tools, all sort of tools, that
+would write those boring pieces of code instead of me.
 
 For that reason, Dynamic Form Generator Library was an SDK that used Apache Flex SDK to auto-magically build forms from
 XML document descriptors. It supported check boxes, combo boxes, date-time, expandable text inputs and areas,
@@ -348,15 +348,15 @@ I have created and donated to the Apache Software Foundation some components tha
 Alert, ColorPicker, Dividers (horizontal and vertical), Menu and MenuBar, ProgressBar.
 
 Maybe you don't consider this relevant for my current Go related work, but rest assured I am using code generation in
-Go, as well and posses my own custom built tools for that. Last year I have returned to those programming languages
+Go, as well and possess my own custom built tools for that. Last year I have returned to those programming languages
 grammars (PEG, ANTLR) this time in Go, because Go's YACC was not enough for what I was intended.
 
 #### Databases
 
 In almost every project I've worked on since 2002, I've been using databases. Due to the nature of developer roles that
-I had over time, I have become what one might call an optimisation freak. The sets of problems that I encountered over
-time and the fact that I favour model centric development, won't allow me to be happy having two tables named "prices"
-and "discounts" in the same database, or the lack of minimum one index per table.
+I had over time, I have become what one might call an optimization freak. The sets of problems that I encountered over
+time and the fact that I favor model centric development, won't allow me to be happy having two tables named "prices"
+and "discounts" in the same database, or the lack of a minimum one index per table.
 
 I'm always searching for ways of representing data for human readability while helping the database engine to run as
 fast as possible. Even if harder to read, I would always trade a `closure table` to a classical (naive) tree approach -
