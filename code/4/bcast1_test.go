@@ -54,9 +54,11 @@ Artillery: I'm done
 func TestBrokenBroadcast(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	c := make(chan string)
+
 	go Rifleman(ctx, c)
 	go Tank(ctx, c)
 	go Artilery(ctx, c)
+
 	c <- "Fire!"
 
 	cancel()

@@ -6,7 +6,43 @@
     <description>Recent content in Tags on Recency Bias</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Tue, 23 Feb 2021 00:00:00 +0000</lastBuildDate><atom:link href="http://badu.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 23 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://badu.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>broadcast</title>
+      <link>http://badu.github.io/tags/broadcast/</link>
+      <pubDate>Thu, 23 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/tags/broadcast/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>channels</title>
+      <link>http://badu.github.io/tags/channels/</link>
+      <pubDate>Thu, 23 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/tags/channels/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>chatGPT</title>
+      <link>http://badu.github.io/tags/chatgpt/</link>
+      <pubDate>Thu, 23 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/tags/chatgpt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pubsub</title>
+      <link>http://badu.github.io/tags/pubsub/</link>
+      <pubDate>Thu, 23 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/tags/pubsub/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>2021</title>
       <link>http://badu.github.io/tags/2021/</link>
@@ -103,42 +139,6 @@
       <pubDate>Fri, 07 Dec 2018 00:00:00 +0000</pubDate>
       
       <guid>http://badu.github.io/tags/go/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Interview</title>
-      <link>http://badu.github.io/tags/interview/</link>
-      <pubDate>Fri, 07 Dec 2018 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/interview/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Channels</title>
-      <link>http://badu.github.io/tags/channels/</link>
-      <pubDate>Tue, 20 Nov 2018 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/channels/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Grouping Methods</title>
-      <link>http://badu.github.io/tags/grouping-methods/</link>
-      <pubDate>Tue, 20 Nov 2018 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/grouping-methods/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Reflect</title>
-      <link>http://badu.github.io/tags/reflect/</link>
-      <pubDate>Fri, 15 Jun 2018 00:00:00 +0000</pubDate>
-      
-      <guid>http://badu.github.io/tags/reflect/</guid>
       <description></description>
     </item>
     

@@ -113,7 +113,8 @@ type IFire interface { // use interface, it's more elegant
 // 2. do not do heavy load operations inside 'listeners'. Use another goroutine to take over a copy of the payload they have received.
 // 3. use interface (`IFire` here), in order to avoid pointers (the elegant solution).
 // 4. when you close a channel, all 'listeners' of that channel will receive an 'empty' payload. This can be used in the same manner as 'context.Done()', by checking if the payload received is empty (channel was closed).
-// 5. last, but not least, it seems the AI has no idea how to solve this problem. To me, that's funny.
+// 5. do not use more channels in the select. It will increment 'gets'.
+// 6. last, but not least, it seems the AI has no idea how to solve this problem. To me, that's funny.
 
 func TestBroadcastLastExperiment(t *testing.T) {
 	fire := NewFire()

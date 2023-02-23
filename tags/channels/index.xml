@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Channels on Recency Bias</title>
+    <title>channels on Recency Bias</title>
     <link>http://badu.github.io/tags/channels/</link>
-    <description>Recent content in Channels on Recency Bias</description>
+    <description>Recent content in channels on Recency Bias</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-US</language>
-    <lastBuildDate>Tue, 20 Nov 2018 00:00:00 +0000</lastBuildDate><atom:link href="http://badu.github.io/tags/channels/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 23 Feb 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://badu.github.io/tags/channels/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Canalul</title>
+      <link>http://badu.github.io/post/2023/23_02_2023/</link>
+      <pubDate>Thu, 23 Feb 2023 00:00:00 +0000</pubDate>
+      
+      <guid>http://badu.github.io/post/2023/23_02_2023/</guid>
+      <description>Totul a pornit de la o discuție cu unul dintre oamenii care învață Go împreună cu mine. M-a întrebat despre „separation of concerns”, în sensul în care își dorea ca aplicația lui să folosească canale pentru componentele care trebuie să anunțe alte componente despre acțiuni, de tipul „fire and forget”.
+Un user își face cont, venind de pe Google.
+După ce scriem în baza de date, scriem într-un canal care este ascultat de o componentă care trimite emailul de bun venit, aceasta îl primește și într-un mod separat de răspunsul pe care-l întoarce serverul, încearcă să trimită emailul.</description>
+    </item>
+    
     <item>
       <title>Changing Perspective</title>
       <link>http://badu.github.io/post/changing-perspective/</link>

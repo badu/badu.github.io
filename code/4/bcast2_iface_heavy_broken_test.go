@@ -49,12 +49,12 @@ func (f *Fire) Send(payload Payload) {
 		return
 	}
 
-	f.mu.Lock()
-	defer f.mu.Unlock()
-
 	for i := f.gets; i > 0; i-- {
 		*ch <- payload
 	}
+
+	f.mu.Lock()
+	defer f.mu.Unlock()
 
 	f.gets = 0
 }
