@@ -49,42 +49,13 @@
 {{ end -}}
 
 {{ if .Site.GoogleAnalytics }}
-    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <!-- Google tag (gtag.js) for Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.GoogleAnalytics }}"></script>
     <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments)};
-          gtag('js', new Date());
-
-          gtag('config', '{{ .Site.GoogleAnalytics }}');
-          (function() {
-          function ready(cb) {
-              /in/.test(document.readyState) // in = loadINg
-                      ? setTimeout(ready.bind(null, cb), 9)
-                      : cb();
-          }
-          ready(function() {
-              // reading progress
-              var indicator = document.querySelector('.scroll-progress');
-              if (indicator) {
-                  document.addEventListener('scroll', function (e) {
-                      var dh = document.body.scrollHeight;
-                      var wh = window.innerHeight;
-                      var pos = window.scrollY;
-                      var footerHeight = 50;
-                      var perc = pos / (dh - footerHeight - wh) * 100;
-                      indicator.style.setProperty('--scale', (perc / 100));
-                  })
-              }
-              // all external links should open in a new page
-              var links = document.links;
-              for (var i = 0, linksLength = links.length; i < linksLength; i++) {
-                  if (links[i].hostname != window.location.hostname) {
-                      links[i].target = '_blank';
-                  }
-              }
-          });
-          }());
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ .Site.GoogleAnalytics }}');
     </script>
 {{ end }}
 </head>

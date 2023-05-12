@@ -45,7 +45,7 @@ enableMissingTranslationPlaceholders = false
 footnoteAnchorPrefix =        ""
 footnoteReturnLinkContents =  ""
 # google analytics tracking id
-googleAnalytics =             "UA-687869-6"
+googleAnalytics =             "G-SQR897110S"
 # if true, auto-detect Chinese/Japanese/Korean Languages in the content. (.Summary and .WordCount can work properly in CJKLanguage)
 hasCJKLanguage =              false
 languageCode =                "en-US"
